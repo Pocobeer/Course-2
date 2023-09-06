@@ -33,18 +33,30 @@ int main()
 	for (i = 0; i < koloda_B.size(); i++) {
 		cout << koloda_A[i] << "\t\t" << koloda_B[i] << endl;
 	}
-	if (koloda_A[0] > koloda_B[0]) {
-		koloda_A.push_back(koloda_A[0]);
-		koloda_A.push_back(koloda_B[0]);
-		koloda_A.erase(koloda_A.begin());
-		koloda_B.erase(koloda_B.begin());
-	}
-	cout << "Koloda A:" << endl;
-	for (i = 0; i < koloda_A.size(); i++) {
-		cout << koloda_A[i]  << endl;
-	}
-	cout << "Koloda B:" << endl;
-	for (i = 0; i < koloda_B.size(); i++) {
-		cout << koloda_B[i] << endl;
+	for (i = 0; i < koloda.size() + 10; i++) {
+		if (koloda_A[i] > koloda_B[i]) {
+			koloda_A.push_back(koloda_A[i]);
+			koloda_A.push_back(koloda_B[i]);
+			koloda_A.erase(koloda_A.begin());
+			koloda_B.erase(koloda_B.begin());
+		}
+		else {
+			koloda_B.push_back(koloda_A[i]);
+			koloda_B.push_back(koloda_B[i]);
+			koloda_A.erase(koloda_A.begin());
+			koloda_B.erase(koloda_B.begin());
+		}
+		if (koloda_A.size() > koloda_B.size()) {
+			cout << "Koloda A:\t" << "Koloda B" << endl;
+			for (i = 0; i < koloda_A.size(); i++) {
+				cout << koloda_A[i] << "\t\t" << koloda_B[i] << endl;
+			}
+		}
+		else {
+			cout << "Koloda A:\t" << "Koloda B" << endl;
+			for (i = 0; i < koloda_B.size(); i++) {
+				cout << koloda_A[i] << "\t\t" << koloda_B[i] << endl;
+			}
+		}
 	}
 }
