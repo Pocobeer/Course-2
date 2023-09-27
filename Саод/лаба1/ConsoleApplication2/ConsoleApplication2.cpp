@@ -31,5 +31,5 @@ int main() {
 	cout << "Enter the expression: " << endl;
 	cin >> expression;
 	int result = calculating_expression(expression, index);
-	cout << "Expression value: " << result << endl;
+	cout << "Expression value: " << abs(result) << endl;
 }
