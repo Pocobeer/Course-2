@@ -48,6 +48,7 @@ int main() {
 	root->right->left = new node(f);
 	root->right->right = new node(g);
 	vector<int> leafElements = LeafElement(root);
+	cout << "Leafes of tree: " << endl;
 	for (int element : leafElements) {
 		cout << element << " ";
 	}
