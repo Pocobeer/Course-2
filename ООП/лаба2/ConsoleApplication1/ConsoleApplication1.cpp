@@ -7,10 +7,10 @@ int main() {
 	double x1 = -1.5;
 	double x2 = 1.5;
 	double dx;
-	double epsilon = 1e-6;
+	double epsilon = 1e-4;
 	cout << "Введите длину шага: " << endl;
 	cin >> dx;
-	cout << "Значение x:" << setw(25) << "Приближенное значение f(x):" << setw(25) << "Истинное значение f(x)" << setw(20) << "Количество элементов:" << endl;
+	cout << "Значение x: " << setw(26) << "Приближенное значение f(x):" << setw(25) << "Истинное значение f(x): " << setw(20) << "Количество элементов:" << endl;
 	for (double x = x1; x < x2; x += dx) {
 		double result = 0.0;
 		int n = 0;

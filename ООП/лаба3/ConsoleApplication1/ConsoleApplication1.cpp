@@ -15,6 +15,7 @@ int main() {
 	cin >> n;
 	for (int i = 0; i < n; i++) {
 		int randNum = dist(gen);
+		if (i == n/2) arr.push_back(0);
 		arr.push_back(randNum);
 	}
 	bool f1 = false, f2 = false; int sum = 0;//f1 - 1 positive, f2 - 2 positive
@@ -33,7 +34,16 @@ int main() {
 			sum += arr[i];
 		}
 	}
+	for (int i = 0; i < arr.size(); i++) {
+		auto a = partition(arr.begin(), arr.end(), [](int num) {
+			return num != 0;
+			});
+	}
 	cout << endl;
 	cout << "Max abs element: " << maxabs << endl;
 	cout << "Sum between 1st and 2nd positive numbers: " << sum << endl;
+	cout << "vector with 0 at end: ";
+	for (auto& a : arr) {
+		cout << a << " ";
+	}
 }
