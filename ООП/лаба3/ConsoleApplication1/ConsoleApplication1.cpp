@@ -2,6 +2,10 @@
 #include<vector>
 #include<random>
 using namespace std;
+struct Structure {
+	int a;
+	float b;
+};
 int main() {
 	random_device rd;
 	mt19937 gen(rd());
@@ -46,4 +50,7 @@ int main() {
 	for (auto& a : arr) {
 		cout << a << " ";
 	}
+	Structure array[10];
+	array[0].a = 10;
+	(array + 5)->b = 3.14;
 }
