@@ -2,11 +2,11 @@
 #include <vector>
 #include <cmath>
 using namespace std;
-bool is_prime(int n) {
+bool isPrime(int n) {
     if (n <= 1) {
         return false;
     }
-    for (int i = 2; i * i <= n; i++) {
+    for (int i = 2; i <= sqrt(n); ++i) {
         if (n % i == 0) {
             return false;
         }
@@ -15,21 +15,26 @@ bool is_prime(int n) {
 }
 
 int main() {
-    int n;
-    cout << "Enter N: ";
-    cin >> n;
+    int N; // Заданный параметр N
+    cout << "Enter N: " << endl;
+    cin >> N;
+    vector<int> mersenneNumbers;
 
-    int m = 0;
-    while (true) {
-        m++;
-        if (is_prime(m) && is_prime(2 * m - 1)) {
-            if (m > n) {
-                break;
+    for (int p = 2; p < N; ++p) {  // Перебираем все числа до N
+        if (isPrime(p)) {  // Проверяем, является ли p простым числом
+            int mersenne = pow(2, p) - 1;
+            if (mersenne < 0) continue;
+            if (mersenne < N) {
+                mersenneNumbers.push_back(mersenne);
             }
-            cout << m << " ";
-            
         }
     }
+
+    cout << "Mersenn's numbers less than " << N << ":\n";
+    for (int num : mersenneNumbers) {
+        cout << num << " ";
+    }
+    cout << endl;
 
     return 0;
 }

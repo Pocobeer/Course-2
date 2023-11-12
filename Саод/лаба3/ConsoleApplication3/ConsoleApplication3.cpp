@@ -1,20 +1,57 @@
-﻿// ConsoleApplication3.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
+﻿#include <iostream>
+#include <vector>
+#include <limits>
 
-#include <iostream>
+const int MAXN = 100;
+int cost[MAXN][MAXN];  // Максимальное количество работников и работ
 
-int main()
-{
-    std::cout << "Hello World!\n";
+int n; // количество работников
+
+int minCost(int worker, std::vector<bool>& assigned, std::vector<int>& assignment) {
+    if (worker == n) {
+        int totalCost = 0;
+        for (int i = 0; i < n; ++i) {
+            totalCost += cost[i][assignment[i]];
+        }
+        return totalCost;
+    }
+
+    int min_cost = std::numeric_limits<int>::max();
+
+    for (int job = 0; job < n; ++job) {
+        if (!assigned[job]) {
+            assigned[job] = true;
+            assignment[worker] = job;
+            int current_cost = minCost(worker + 1, assigned, assignment);
+            if (current_cost < min_cost) {
+                min_cost = current_cost;
+            }
+            assigned[job] = false;
+        }
+    }
+
+    return min_cost;
 }
 
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
+int main() {
+    // Инициализация стоимости назначения работников на работы
+    // cost[i][j] - стоимость назначения i-го работника на j-ю работу
+    cost[0][0] = 3; cost[0][1] = 4; cost[0][2] = 1;
+    cost[1][0] = 2; cost[1][1] = 5; cost[1][2] = 6;
+    cost[2][0] = 7; cost[2][1] = 0; cost[2][2] = 2;
 
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
+    n = 3;  // количество работников
+
+    std::vector<bool> assigned(n, false); // флаги, указывающие, назначен ли работник на работу
+    std::vector<int> assignment(n);  // назначения работников на работы
+
+    int totalCost = minCost(0, assigned, assignment);
+
+    std::cout << "Assignment: ";
+    for (int i = 0; i < n; ++i) {
+        std::cout << "(" << i << ", " << assignment[i] << ") ";
+    }
+    std::cout << "with total cost " << totalCost << std::endl;
+
+    return 0;
+}
