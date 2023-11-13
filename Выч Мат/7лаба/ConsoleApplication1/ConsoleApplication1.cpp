@@ -30,23 +30,35 @@ int main()
     int k=0;
     float q;
     float yx;
-
-    for (int i = 0; i < 13; i++) {
+    int count;
+    for (int i = 0; i < 12; i++) {
         if (x1 > x[i]) {
             k++;
+            count = i + 1;
         }
 
     }
-    if (k / 6 == 0) {
-        q = (x1 - x[0]) / 0.01;
+    if (count / 6 == 0) {
+        q = (x1 - x[count-1]) / 0.01;
         cout << "yx = y[0] + dy1[0] * q + (q * (q - 1) * dy2[0]) / 2 + (q * (q - 1) * (q - 2) * dy3[0]) / 6" << endl;
-        yx = y[0] + dy1[0] * q + (q * (q - 1) * dy2[0]) / 2 + (q * (q - 1) * (q - 2) * dy3[0]) / 6;
+        yx = y[count-1] + dy1[count-1] * q + (q * (q - 1) * dy2[count-1]) / 2 + (q * (q - 1) * (q - 2) * dy3[count-1]) / 6;
     }
     else {
-        q = (x1 - x[11]) / 0.01;
+        q = (x1 - x[count]) / 0.01;
         cout << "yx = y[11] + q* dy1[10] + (q * (q + 1) * dy2[9]) / 2 + (q * (q + 1) * (q + 2) * dy3[8]) / 6" << endl;
-        yx = y[11] + q * dy1[10] + (q * (q + 1) * dy2[9]) / 2 + (q * (q + 1) * (q + 2) * dy3[8]) / 6;
+        yx = y[count] + q * dy1[count-1] + (q * (q + 1) * dy2[count-2]) / 2 + (q * (q + 1) * (q + 2) * dy3[count-3]) / 6;
     }
-
+    float sum = 0;
+    for (int i = 0; i < 12; i++) {
+         float pr = 1;
+        for (int j = 0; j < 12; j++) {
+            if (i == j) continue;
+            else {
+                pr = pr * (x1 - x[j]) / (x[i] - x[j]);
+            }
+        }
+        sum += pr * y[i];
+    }
     cout << "yx = " << yx << endl;
+    cout << "L(x) = " << sum << endl;
 }
