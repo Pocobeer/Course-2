@@ -31,9 +31,6 @@ void print_arr(const int* arr, const int size) {
 	}
 	cout << endl;
 }
-void Zadanie_2(void(*ptr_2)(double, double, double), double x1, double x2, double eps) {
-	ptr_2(x1, x2, eps);
-}
 int max_abs(int* arr, int SIZE) {
 	int maxabs = 0;
 	for (int i = 0; i < SIZE; i++) {
@@ -59,6 +56,10 @@ int sum_elements_between_positive(int* arr, int size) {
 	}
 	return sum;
 }
+void Zadanie_2(void(*ptr_2)(double, double, double), double x1, double x2, double eps) {
+	ptr_2(x1, x2, eps);
+}
+
 int char_count(const char* str) {
 	int count = 0;
 	for (str; *str != '\0'; str++) {
@@ -214,7 +215,7 @@ int main() {
 	cout << "Сумма между положительными числами: " << sum_elements_between_positive(array, array_size) << endl;
 	cout << "Максимальное по модулю число: " << max_abs(array, array_size) << endl;
 	cout << "Задание 4: " << endl;
-	const char* char_ptr = "qwe45ks54a3d4k24ksdk";
+	const char* char_ptr = "qwe45k s54a 3d4k24ksdk";
 	cout << "Строка : " << char_ptr << endl;
 	cout << "Колво чисел в строке: " << char_count(char_ptr) << endl;
 	cout << "Задание 5: " << endl;
@@ -238,13 +239,20 @@ int main() {
 	f.b = 5;
 	struct_print(f);
 	cout << "Задание 7: " << endl;
+	cout << "Array: " << endl;
+	print_arr(array, array_size);
 	cout << array_size << endl;
 	sort_arr(array, array_size);
 	cout << "Array after sort: " << endl;
 	print_arr(array, array_size);
 	cout << "Задание 8: " << endl;
+	cout << "Array_int: " << endl;
+	int array1[] = { 1,-2,-3,-4,5 };
+	print_arr(array1, array_size);
+	cout << "Сумма между положительными числами: " << sum_elements_between_positive(array1, array_size) << endl;
+	cout << "Максимальное по модулю число: " << max_abs(array1, array_size) << endl;
 	double array2[] = { 1.4,-2.6,-3.8,-4.4,5.5 };
-	cout << "Array: " << endl;
+	cout << "Array_double: " << endl;
 	print_arr(array2, array_size);
 	cout << "Сумма между положительными числами: " << sum_elements_between_positive(array2, array_size) << endl;
 	cout << "Максимальное по модулю число: " << max_abs(array2, array_size) << endl;
