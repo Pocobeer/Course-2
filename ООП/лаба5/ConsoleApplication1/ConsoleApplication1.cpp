@@ -1,5 +1,6 @@
 ﻿#include<iostream>
 #include<iomanip>
+#include<random>
 using namespace std;
 
 
@@ -181,6 +182,24 @@ template<class Type> void smooth_9(Type** m, int rows, int columns) {
 		}
 	}
 }
+template<class Rand> void rand_matrix_9(Rand** m, int rows, int columns) {
+
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < columns; j++) {
+			m[i][j] = rand_num(0.0, 100.0);
+		}
+	}
+}
+template<class Print> void print_matrix_9(Print** m, int rows, int columns) {
+	cout << "Matrix: " << "\n";
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < columns; j++) {
+			cout << int(m[i][j]) << " ";
+		}
+		cout << "\n";
+	}
+	cout << "\n";
+}
 int main() {
 	setlocale(LC_ALL, "Russian");
 	cout << "Звдвние 1: " << endl;
@@ -230,15 +249,30 @@ int main() {
 	cout << "Сумма между положительными числами: " << sum_elements_between_positive(array2, array_size) << endl;
 	cout << "Максимальное по модулю число: " << max_abs(array2, array_size) << endl;
 	cout << "Задание 9: " << endl;
-	int rows = 5, columns = 5;
 	int** mass_int = new int* [rows];
 	for (int i = 0; i < rows; i++) {
 		mass_int[i] = new int[columns];
 	}
-	int rows = 5, columns = 5;
-	double** mass = new double* [rows];
+	double** mass_double = new double* [rows];
 	for (int i = 0; i < rows; i++) {
-		mass[i] = new double[columns];
+		mass_double[i] = new double[columns];
 	}
-
+	rand_matrix_9(mass_int, rows, columns);
+	print_matrix_9(mass_int, rows, columns);
+	smooth_9(mass_int, rows, columns);
+	print_matrix_9(mass_int, rows, columns);
+	for (unsigned i{}; i < rows; i++) // delete dynamic massive
+	{
+		delete[] mass_int[i];
+	}
+	delete[] mass_int;
+	rand_matrix_9(mass_double, rows, columns);
+	print_matrix_9(mass_double, rows, columns);
+	smooth_9(mass_double, rows, columns);
+	print_matrix_9(mass_double, rows, columns);
+	for (unsigned i{}; i < rows; i++) // delete dynamic massive
+	{
+		delete[] mass_double[i];
+	}
+	delete[] mass_double;
 }
