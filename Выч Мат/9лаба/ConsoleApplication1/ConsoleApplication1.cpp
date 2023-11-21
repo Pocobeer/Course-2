@@ -29,24 +29,20 @@ int main()
     int count = 1;
     
     n = 2;
-    while (count > 0) {
-        double fr1 = 0, fr2 = 0;
-        int k = 2;
+    double fr1 = 0, fr2 = 0;
+    do {
+        fr1 = 0, fr2 = 0;
+        h = (b - a) / n;
         for (double i = a; i < b - h; i += h) {
             fr1 += h * (func(i) + func(i + h)) / 2;
         }
-        h = (b - a) / n / 2;
+        
+        n *= 2;
+        h = (b - a) / n;
         for (double i = a; i < b - h; i += h) {
             fr2 += h * (func(i) + func(i + h)) / 2;
         }
-        if (abs(fr2 - fr1) / 3 < eps) {
-            cout << count << "fR = " << fr1 << " n = " << n << endl;
-            count = 0;
-        }
-        else {
-            cout << count << "fR = " << fr1 << " n = " << n << endl;
-            n = n * 2;
-            count++;
-        }
-    }
+        cout << count << "fR = " << fr2 << " n = " << n << endl;
+        n = n * 2;
+    } while (fabs(fr2 - fr1) / 3 > eps);
 }
