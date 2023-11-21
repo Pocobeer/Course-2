@@ -26,7 +26,7 @@ int main()
     cout <<"S trap = " << Spr << endl;
     Simp = h / 3 * (func(a) + func(b) + 4 * sum + 2 * sum1);
     cout << "S simp = " << Simp << endl;
-    int count = 1;
+    int count = 0;
     
     n = 2;
     double fr1 = 0, fr2 = 0;
@@ -42,7 +42,8 @@ int main()
         for (double i = a; i < b - h; i += h) {
             fr2 += h * (func(i) + func(i + h)) / 2;
         }
-        cout << count << "fR = " << fr2 << " n = " << n << endl;
+        cout << count << ". fR2 = " << fr2 << " n = " << n << endl;
         n = n * 2;
-    } while (fabs(fr2 - fr1) / 3 > eps);
+        count++;
+    } while (fabs(fr2 - fr1) / 3 > 0.00001);
 }
