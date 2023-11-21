@@ -70,8 +70,7 @@ int char_count(const char* str) {
 	return count;
 }
 double rand_num(double start, double end) {
-	return rand() % (int)(end - start + 1) + start;
-	//return rand() * (end - start) / RAND_MAX + start;
+	return (rand() % (int)(end - start + 1) + start);
 }
 void rand_matrix(double** m, int rows, int columns) {
 	for (int i = 0; i < rows; i++) {
