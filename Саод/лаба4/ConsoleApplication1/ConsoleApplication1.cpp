@@ -84,16 +84,16 @@ int avl_tree_search(int arr[], int size1, int target, int pos) {
 	else if(arr[pos] < target){
 		return avl_tree_search(arr, size1, target, 2*pos+2);
 	}
-	else {
+	else if (arr[pos] > target) {
 		return avl_tree_search(arr, size1, target, 2*pos+1);
 	}
 }
 int hash_function(int key, int array_size) {
 	return key & array_size;
 }
-int digital_search(int arr[], int array_size, int key) {
-	int index = hash_function(key, array_size);
-	if (index >= 0 && index < array_size && arr[index] == key) {
+int digital_search(int arr[], int size1, int key) {
+	int index = hash_function(key, size1);
+	if (index >= 0 && index < size1 && arr[index] == key) {
 		return index;
 	}
 	return -1;
@@ -164,6 +164,7 @@ int main() {
 	if (index == -1) cout << "Element wasn't found" << endl;
 	cout << "Avl binary tree search" << endl;\
 	size1 = sizeof(arr) / sizeof(arr[0]);
+	//cout << size1 << endl;
 	index = avl_tree_search(arr, size1, target, 0);
 	if (index != -1) cout << "Element " << target << " was found in position " << index << endl;
 	if (index == -1) cout << "Element wasn't found" << endl;
