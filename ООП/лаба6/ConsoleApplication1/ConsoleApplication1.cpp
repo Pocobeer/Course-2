@@ -45,6 +45,7 @@ public:
 			return salary;
 		}
 	};
+
 	void Print1() {
 		Salary amount;
 		amount.SetSalary(2000);
@@ -92,15 +93,29 @@ public:
 	Float(const Float& f) :value(f.value) {};
 };
 class Complex {
+
+public:
 	Float Re;
 	Float Im;
-public:
 	Complex(float re, float im) : Re(re), Im(im) {};
+	Complex(float Re) {
+		this->Re = Re;
+	}
 	void Out() {
 		cout << Re.Get() << "/" << Im.Get() << endl;
 	}
-	Complex(const Complex& c, const Complex& c1) : Re(c.Im), Im(c1.Im) {};
+	Complex(const Complex& c) : Re(c.Re), Im(c.Im) {
+		cout << "Copy constructor" << endl;
+	}
+	//Complex(const Complex& c);
+	Complex& operator = (const Complex& c) {
+		Re = c.Re;
+		Im = c.Im;
+		return *this;
+	}
+
 };
+
 int main()
 {
 	Family Me("Ivanov", "Vladimir", "Sergeevich");
@@ -113,6 +128,10 @@ int main()
 	const_Family.showage();
 	Value Triple(10, 20, 30);
 	Triple.Out();
-	Complex Re(3.15, 4.6);
-	Re.Out();
+	Complex Re1(3.15, 4.6);
+	Complex Re2 = Re1;
+	Re1.Out();
+	Re2.Out();
+	Complex Re3(2.5);
+	Re3.Out();
 }
