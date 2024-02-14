@@ -101,8 +101,16 @@ public:
 	Complex(float Re) {
 		this->Re = Re;
 	}
-	void Out() {
+	Complex() {}
+	Complex* operator->() {
+		cout << "Operator" << endl;
+		return this;
+	}
+	void Out_1() {
 		cout << Re.Get() << "/" << Im.Get() << endl;
+	}
+	void Out_2() {
+		cout << Re.Get() << endl;
 	}
 	Complex(const Complex& c) : Re(c.Re), Im(c.Im) {
 		cout << "Copy constructor" << endl;
@@ -113,7 +121,18 @@ public:
 		Im = c.Im;
 		return *this;
 	}
-
+	void* operator new(size_t size) {
+		cout << "New operation for class Complex, bytes need: " << size << endl;
+		void* storage = malloc(size);
+		if (NULL == storage) {
+			cout << "Lack of memory" << endl;
+		}
+		return storage;
+	}
+	void operator delete(void* p) {
+		cout << "Operation delete for class Complex" << endl;
+		free(p);
+	}
 };
 class Test_2;
 class Test_1 {
@@ -165,6 +184,34 @@ public:
 		this->Ext[0] = Other.Ext[0];
 	}
 };
+class Ex_15 {
+	int size;
+	int* p;
+public:
+	explicit Ex_15(int n = 5);
+	Ex_15(const int arr[], int n) :size(n) {
+		p = new int[size];
+		for (int i = 0; i < size; i++) {
+			p[i] = arr[i];
+		}
+	}
+	~Ex_15() {
+		delete[]p;
+	}
+	int& operator[](int i) {
+		if (i<1 || i>size) {
+			cout << "Out of array" << endl;
+			exit(0);
+		}
+		return p[i];
+	}
+	void Out() {
+		for (int i = 0; i < size; i++) {
+			cout << p[i] << ' ';
+		}
+		cout << endl;
+	}
+};
 int main()
 {
 	Family Me("Ivanov", "Vladimir", "Sergeevich");
@@ -179,15 +226,30 @@ int main()
 	Triple.Out();
 	Complex Re1(3.15, 4.6);
 	Complex Re2 = Re1;
-	Re1.Out();
-	Re2.Out();
+	Re1.Out_1();
+	Re2.Out_1();
 	Complex Re3(2.5);
-	Re3.Out();
+	Re3.Out_2();
 	Test_1 T_1(10);
-	cin >> T_1;
+	//cin >> T_1;
 	cout << T_1 << endl;
 	Test_14 c1(15);
 	Test_14 c2 = c1;
-	cout << c1.Ext << "/" << c2.Ext << endl;
-
+	cout << *c1.Ext << "/" << *c2.Ext << endl;
+	int array_15[10] = { 1,2,3,4,5 };
+	Ex_15 arr(array_15, 10);
+	arr.Out();
+	cout << arr[1] << endl;
+	//cout << arr[19] << endl;
+	float re_1 = 2.6, re_2 = 5.2;
+	Complex Ex_16(re_1, re_2);
+	//(Ex_16.operator->())->Out();
+	//Ex_16->Out();
+	//cout << Ex_16->Im << "/" << Ex_16->Re << endl;
+	Complex *complex_17_1 = new Complex(10.8);
+	//complex_17_1->Out_2();
+	//Complex *complex_17_2 = ::new Complex(24.3);
+	//complex_17_2->Out_2();
+	//delete complex_17_1;
+	//::delete complex_17_2;
 }
