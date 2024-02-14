@@ -115,7 +115,56 @@ public:
 	}
 
 };
+class Test_2;
+class Test_1 {
+	
+	int test;
+public:
+	int num;
+	Test_1(int num) {
+		this->num = num;
 
+	}
+	void fun(Test_2);
+	friend istream& operator>>(istream& a_1, Test_1& a) {
+		cout << "Enter num: " << endl;
+		a_1 >> a.num;
+		return a_1;
+	}
+	friend ostream& operator<<(ostream& b_1, const Test_1& b) {
+		b_1 << "Num:" << b.num << endl;
+		return b_1;
+	}
+	/*friend Test_1& operator++(Test_1& tst, int) {
+		++tst.num;
+		return tst;
+
+	}*/
+};
+Test_1 operator++(Test_1& tst, int) {
+	++tst.num;
+	return tst;
+}
+class Test_2 {
+public:
+	friend void Test_1::fun(Test_2);
+};
+class Test_14 {
+	
+public:
+	int* Ext;
+	Test_14(int a) {
+		Ext = new int[1];
+		Ext[0] = a;
+		
+	}
+	~Test_14() {
+		delete Ext;
+	}
+	Test_14& operator=(const Test_14& Other) {
+		this->Ext[0] = Other.Ext[0];
+	}
+};
 int main()
 {
 	Family Me("Ivanov", "Vladimir", "Sergeevich");
@@ -134,4 +183,11 @@ int main()
 	Re2.Out();
 	Complex Re3(2.5);
 	Re3.Out();
+	Test_1 T_1(10);
+	cin >> T_1;
+	cout << T_1 << endl;
+	Test_14 c1(15);
+	Test_14 c2 = c1;
+	cout << c1.Ext << "/" << c2.Ext << endl;
+
 }
