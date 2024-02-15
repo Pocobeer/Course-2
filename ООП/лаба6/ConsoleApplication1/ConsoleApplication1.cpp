@@ -168,10 +168,11 @@ class Test_2 {
 public:
 	friend void Test_1::fun(Test_2);
 };
-class Test_14 {
+/*class Test_14 {
 	
 public:
 	int* Ext;
+	Test_14() {};
 	Test_14(int a) {
 		Ext = new int[1];
 		Ext[0] = a;
@@ -182,8 +183,12 @@ public:
 	}
 	Test_14& operator=(const Test_14& Other) {
 		this->Ext[0] = Other.Ext[0];
+		return *this;
 	}
-};
+	void Out() {
+		cout << "Element: " << Ext[0] << endl;
+	}
+};*/
 class Ex_15 {
 	int size;
 	int* p;
@@ -233,9 +238,11 @@ int main()
 	Test_1 T_1(10);
 	//cin >> T_1;
 	cout << T_1 << endl;
-	Test_14 c1(15);
+	/*Test_14 c1(15);
 	Test_14 c2 = c1;
-	cout << *c1.Ext << "/" << *c2.Ext << endl;
+	c1.Out();
+	c2.Out();*/
+	//cout << *c1.Ext << "/" << *c2.Ext << endl;
 	int array_15[10] = { 1,2,3,4,5 };
 	Ex_15 arr(array_15, 10);
 	arr.Out();
@@ -243,13 +250,13 @@ int main()
 	//cout << arr[19] << endl;
 	float re_1 = 2.6, re_2 = 5.2;
 	Complex Ex_16(re_1, re_2);
-	//(Ex_16.operator->())->Out();
-	//Ex_16->Out();
+	(Ex_16.operator->())->Out_1();
+	Ex_16->Out_1();
 	//cout << Ex_16->Im << "/" << Ex_16->Re << endl;
 	Complex *complex_17_1 = new Complex(10.8);
-	//complex_17_1->Out_2();
-	//Complex *complex_17_2 = ::new Complex(24.3);
-	//complex_17_2->Out_2();
-	//delete complex_17_1;
-	//::delete complex_17_2;
+	complex_17_1->Out_2();
+	Complex *complex_17_2 = ::new Complex(24.3);
+	complex_17_2->Out_2();
+	delete complex_17_1;
+	::delete complex_17_2;
 }
