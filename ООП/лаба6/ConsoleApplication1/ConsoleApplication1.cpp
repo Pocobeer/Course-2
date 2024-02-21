@@ -91,6 +91,16 @@ public:
 		Float = f.value;
 	}*/
 	Float(const Float& f) :value(f.value) {};
+	Float operator+(Float& a) {
+		return this->value + a.value;
+	}
+	/*Float operator<<(ostream& stream) {
+		stream << value;
+	}*/
+	friend ostream& operator<<(ostream& b_1, const Float& b) {
+		b_1 << b.value << endl;
+		return b_1;
+	}
 };
 class Complex {
 
@@ -105,6 +115,12 @@ public:
 	Complex* operator->() {
 		cout << "Operator" << endl;
 		return this;
+	}
+	Float* Complex_18() {
+		return &Re;
+	}
+	Float Complex_18_summ() {
+		return Re + Im;
 	}
 	void Out_1() {
 		cout << Re.Get() << "/" << Im.Get() << endl;
@@ -134,6 +150,8 @@ public:
 		free(p);
 	}
 };
+Float*(Complex::* Complex_18_ptr)() = &Complex::Complex_18;
+Float(Complex::* Complex_18_summptr)() = &Complex::Complex_18_summ;
 class Test_2;
 class Test_1 {
 	
@@ -259,4 +277,11 @@ int main()
 	complex_17_2->Out_2();
 	delete complex_17_1;
 	::delete complex_17_2;
+	Complex ex_18(9.8, 14.6);
+	cout << "Sum: " << (ex_18.*Complex_18_summptr)() << endl;
+	Complex* ptr_18 = &ex_18;
+	cout << "Sum: " << (ptr_18->*Complex_18_summptr)() << endl;
+	cout << "Re:" << *(ex_18.*Complex_18_ptr)() << endl;
+	cout << "Re:" << *(ptr_18->*Complex_18_ptr)() << endl;
+	return 0;
 }
