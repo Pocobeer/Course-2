@@ -1,98 +1,130 @@
 #pragma once
+
+// Структура узла AVL дерева
 struct Node {
-	int key;
-	unsigned char height;
-	Node* left;
-	Node* right;
-	Node(int k) {
-		key = k;
-		left = right = 0;
-		height = 1;
-	}
+    int data;
+    int height;
+    Node* left;
+    Node* right;
+
+    // Конструктор узла
+    Node(int value) {
+        data = value;
+        height = 1;
+        left = nullptr;
+        right = nullptr;
+    }
 };
-unsigned char height(Node* p) {
-	if (p) {
-		return p->height;
-	}
-	else return 0;
-	//return p ? p->height : 0;
+
+// Функция для вычисления высоты узла
+int getHeight(Node* node) {
+    if (node == nullptr)
+        return 0;
+    return node->height;
 }
-int balance_factor(Node* p) {
-	return height(p->right) - height(p->left);
+
+// Функция для вычисления баланса узла (разница высот поддеревьев)
+int getBalance(Node* node) {
+    if (node == nullptr)
+        return 0;
+    return getHeight(node->left) - getHeight(node->right);
 }
-void fix_height(Node* p) {
-	unsigned char h_l = height(p->left);
-	unsigned char h_r = height(p->right);
-	p->height = (h_l > h_r ? h_l : h_r) + 1;
+
+// Функция для вращения узлов вправо
+Node* rotateRight(Node* y) {
+    Node* x = y->left;
+    Node* T = x->right;
+
+    // Поворот
+    x->right = y;
+    y->left = T;
+
+    // Обновление высот
+    y->height = max(getHeight(y->left), getHeight(y->right)) + 1;
+    x->height = max(getHeight(x->left), getHeight(x->right)) + 1;
+
+    return x;
 }
-Node* rotate_right(Node* p) {
-	Node* q = p->left;
-	p->left = q->left;
-	q->right = p;
-	fix_height(p);
-	fix_height(q);
-	return q;
+
+// Функция для вращения узлов влево
+Node* rotateLeft(Node* x) {
+    Node* y = x->right;
+    Node* T = y->left;
+
+    // Поворот
+    y->left = x;
+    x->right = T;
+
+    // Обновление высот
+    x->height = max(getHeight(x->left), getHeight(x->right)) + 1;
+    y->height = max(getHeight(y->left), getHeight(y->right)) + 1;
+
+    return y;
 }
-Node* rotate_left(Node* q) {
-	Node* p = q->right;
-	q->right = p->left;
-	p->left = q;
-	fix_height(q);
-	fix_height(p);
-	return p;
+
+// Функция для вставки узла в AVL дерево
+Node* insert(Node* node, int value) {
+    // Шаг 1: Обычная вставка узла в BST
+    if (node == nullptr) {
+        return new Node(value);
+    }
+
+    // Шаг 2: Вставка четных чисел
+    if (value % 2 == 0) {
+        if (value < node->data) {
+            node->left = insert(node->left, value);
+        }
+        else if (value > node->data) {
+            node->right = insert(node->right, value);
+        }
+        else {
+            return node;
+        }
+
+        // Шаг 3: Обновление высоты узла
+        node->height = 1 + max(getHeight(node->left), getHeight(node->right));
+
+        // Шаг 4: Получение баланса узла и проверка на нарушение баланса
+        int balance = getBalance(node);
+
+        // Если узел несбалансирован, есть четыре случая для поворотов
+
+        // Лево-Лево случай
+        if (balance > 1 && value < node->left->data)
+            return rotateRight(node);
+
+        // Право-Право случай
+        if (balance < -1 && value > node->right->data)
+            return rotateLeft(node);
+
+        // Лево-Право случай
+        if (balance > 1 && value > node->left->data) {
+            node->left = rotateLeft(node->left);
+            return rotateRight(node);
+        }
+
+        // Право-Лево случай
+        if (balance < -1 && value < node->right->data) {
+            node->right = rotateRight(node->right);
+            return rotateLeft(node);
+        }
+    }
+
+    return node;
 }
-Node* balance(Node* p) {
-	fix_height(p);
-	if (balance_factor(p) == 2) {
-		if (balance_factor(p->right) < 0) {
-			p->right = rotate_right(p->right);
-		}
-		return rotate_left(p);
-	}
-	if (balance_factor(p) == -2) {
-		if (balance_factor(p->left) > 0) {
-			p->left = rotate_left(p->left);
-		}
-		return rotate_right(p);
-	}
-	return p;
-}
-Node* insert(Node* p, int k) {
-	if (!p) return new Node(k);
-	if (k < p->key)
-		p->left = insert(p->left, k);
-	else
-		p->right = insert(p->right, k);
-	return balance(p);
-}
-Node* find_min(Node* p) {
-	if (p->left)
-		return find_min(p->left);
-	else
-		return p;
-	//return p->left ? find_min(p->left) : p;
-}
-Node* remove_min(Node* p) {
-	if (p->left == 0)
-		return p->right;
-	p->left = remove_min(p->left);
-	return balance(p);
-}
-Node* remove(Node* p, int k) {
-	if (!p) return 0;
-	if (k < p->key)
-		p->left = remove(p->left, k);
-	else if (k > p->key)
-		p->right = remove(p->right, k);
-	else {
-		Node* q = p->left;
-		Node* r = p->right;
-		delete p;
-		if (!r) return q;
-		Node* min = find_min(r);
-		min->right = remove_min(r);
-		min->left = q;
-		return balance(min);
-	}
-	return balance(p);
+// Поиск в AVL дереве
+bool avl_search(Node* root, int value) {
+    if (root == nullptr) {
+        return false;
+    }
+
+    if (root->data == value) {
+        return true;
+    }
+    else if (value < root->data) {
+        return avl_search(root->left, value);
+    }
+    else {
+        return avl_search(root->right, value);
+    }
 }

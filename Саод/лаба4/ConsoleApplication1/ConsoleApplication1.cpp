@@ -4,14 +4,88 @@
 #include "search.h"
 #include "binary_search.h"
 #include "interpolation_search.h"
-#include "binary_tree_search.h"
-#include "avl_search.h"
+//#include "binary_tree_search.h"
+//#include "avl_search.h"
+#include<algorithm>
 using namespace std;
-bool avl_search(set<int>& avlTree, int value) {
-	set<int>::iterator it = avlTree.find(value);
-	return it != avlTree.end();
+// Структура узла AVL дерева
+struct Node {
+	int data;
+	int height;
+	Node* left;
+	Node* right;
+
+	// Конструктор узла
+	Node(int value) {
+		data = value;
+		height = 1;
+		left = nullptr;
+		right = nullptr;
+	}
+	~Node() {
+		delete left;
+		delete right;
+	}
+};
+
+// Вставка узла в бинарное дерево
+Node* binaryInsert(Node* node, int value) {
+	if (node == nullptr)
+		return new Node(value);
+
+	if (value < node->data)
+		node->left = binaryInsert(node->left, value);
+	else if (value > node->data)
+		node->right = binaryInsert(node->right, value);
+
+	return node;
 }
 
+// Поиск в бинарном дереве
+bool binary_search(Node* root, int value) {
+	if (root == nullptr)
+		return false;
+
+	if (root->data == value)
+		return true;
+	else if (value < root->data)
+		return binary_search(root->left, value);
+	else
+		return binary_search(root->right, value);
+}
+
+// Вставка узла в AVL дерево
+Node* avl_insert(Node* node, int value) {
+	if (node == nullptr)
+		return new Node(value);
+
+	if (value < node->data)
+		node->left = avl_insert(node->left, value);
+	else if (value > node->data)
+		node->right = avl_insert(node->right, value);
+
+	return node;
+}
+
+// Функция для вычисления высоты узла
+int getHeight(Node* node) {
+	if (node == nullptr)
+		return 0;
+	return node->height;
+}
+
+// Поиск в AVL дереве
+bool avl_search(Node* root, int value) {
+	if (root == nullptr)
+		return false;
+
+	if (root->data == value)
+		return true;
+	else if (value < root->data)
+		return avl_search(root->left, value);
+	else
+		return avl_search(root->right, value);
+}
 int hash_function(int key, int array_size) {
 	return key & array_size;
 }
@@ -58,16 +132,21 @@ public:
 	}
 };
 int main() {
-	const int size = 100000;
+	
+	
+	const int size = 6300;
 	int arr[size];
-	int target = 106;
+	int target = 10;
 	int index;
-	set<int> avlTree;
-	for (int i = 0; i < size; i++) {
-		arr[i] = (i+1)*2;
+	//set<int> avlTree;
+	//Node* binaryroot = nullptr;
+	for (int i = 1; i < size; i++) {
+		arr[i] = i*2;
+		//binaryroot = binaryInsert(binaryroot, i);
 	}
-	for (int i = 0; i < size; i++) {
-		avlTree.insert(arr[i]);
+	Node* avlroot = nullptr;
+	for (int i = 2; i < size; i +=2) {
+		avlroot = avl_insert(avlroot,i);
 	}
 	cout << "Sequental search" << endl;
 	index = search(arr, size, target);
@@ -87,13 +166,10 @@ int main() {
 	if (index == -1) cout << "Element wasn't found" << endl;
 	cout << "\nBinary tree search" << endl;
 	int size1 = sizeof(arr) / sizeof(arr[0]);
-	index = binary_tree_search(arr, size1, target, 1);
-	if (index != -1) cout << "Element " << target << " was found in position " << index << endl;
-	if (index == -1) cout << "Element wasn't found" << endl;
-	cout << "\nAvl binary tree search" << endl;
-		//size1 = sizeof(arr) / sizeof(arr[0]);
-		//cout << size1 << endl;
-	if (avl_search(avlTree, target)) cout << "Element " << target << " was found in position " << index << endl;
+	//if (binary_search(binaryroot, target)) cout << "Element " << target << " was found in position " << index << endl;
+	//else cout << "Element wasn't found" << endl;
+	cout << "\nAvl tree search" << endl;
+	if (avl_search(avlroot, target)) cout << "Element " << target << " was found in position " << index << endl;
 	else cout << "Element wasn't found" << endl;
 	cout << "\nDigital search" << endl;
 	index = digital_search(arr, size1, target);
