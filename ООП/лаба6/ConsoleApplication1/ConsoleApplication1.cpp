@@ -278,9 +278,10 @@ int main()
 	delete complex_17_1;
 	::delete complex_17_2;
 	Complex ex_18(9.8, 14.6);
-	cout << "Sum: " << ex_18.Complex_18_summ() << endl;
+	cout << "Sum: " << (ex_18.*Complex_18_summptr)() << endl;
 	Complex* ptr_18 = &ex_18;
-	cout << "Sum: " << (ptr_18->Complex_18_summ)() << endl;
-	cout << "Re:" << *(ex_18.Complex_18)() << endl;
-	cout << "Re:" << *(ptr_18->Complex_18)() << endl;
+	cout << "Sum: " << (ptr_18->*Complex_18_summptr)() << endl;
+	cout << "Re:" << *(ex_18.*Complex_18_ptr)() << endl;
+	cout << "Re:" << *(ptr_18->*Complex_18_ptr)() << endl;
+	return 0;
 }
