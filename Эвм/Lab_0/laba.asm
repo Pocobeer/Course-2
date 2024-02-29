@@ -9,76 +9,58 @@
 sseg segment stack 'stack'
  dw 256 dup(?)
 sseg ends
-; Определение данных
 data segment
-; Сообщения пользователю
-msg1 db 10,13,'Programm that adding two numbers'
+msg1 db 10,13,'Programm that subbing two numbers'
  db 10,13,'Enter first number: ','$'
 msg2 db 10,13,'Enter second num: ','$'
 msg3 db 10,13,'Result = ','$'
 data ends
-; Сегмент кода
 code segment
 assume cs:code,ds:data,ss:sseg
-start: mov ax,data ; настроить сегментный
- mov ds,ax ; регистр DS на данные
- lea dx,msg1 ; вывести сообщение
+start: mov ax,data 
+ mov ds,ax 
+ lea dx,msg1 
  call print_msg
- call input_digit; ввести первое число
- mov bl,al ; и сохранить в регистре BL
- lea dx,msg2 ; вывести сообщение
+ call input_digit
+ mov bl,al 
+ lea dx,msg2 
  call print_msg
- call input_digit ; ввести второе число
- lea dx,msg3 ; вывести сообщение
+ call input_digit
+ lea dx,msg3 
  call print_msg
- call add_and_show; сложить и вывести
- ; результат
- mov ah,4ch ; завершить программу
- int 21h ; и выйти в DOS
-; Подпрограмма вывода сообщения на дисплей
-; Вход: DS:DX - адрес сообщения
-; Выход: вывод сообщения на дисплей
+ call sub_and_show
+ mov ah,4ch 
+ int 21h 
 print_msg proc
- push ax ; сохранить AX
- mov ah,09h ; вывести сообщение
- int 21h ; с помощью функции DOS
- pop ax ; восстановить AX
- ret ; вернуться в вызывающую программу
+ push ax 
+ mov ah,09h 
+ int 21h 
+ pop ax 
+ ret 
 print_msg endp
-; Подпрограмма ввода числа с клавиатуры
-; Вход: набранная с клавиатуры цифра
-; Выход: в AL - введенное число
 input_digit proc
 input_again:
- mov ah,01h ; ввести символ с клавиатуры
- int 21h ; с помощью функции DOS
- cmp al,'0' ; если символ не цифра,
- jl input_again ; то повторить ввод
+ mov ah,01h 
+ int 21h
+ cmp al,'0' 
+ jl input_again 
  cmp al,'9'
  jg input_again
- sub al,30h; преобразовать код символа
- ; в число
- ret ; вернуться в вызывающую программу
+ sub al,30h
+ ret 
 input_digit endp
-; Подпрограмма сложения двух чисел
-;Вход: AL,BL – слагаемые,
-;выход: вывод результата на дисплей
-add_and_show proc
- add al,bl ; сложить (AL=AL+BL)
- cmp al,9 ; если результат > 9,
- jle not_carry ; то уменьшить сумму на
- sub al,10 ; 10 и вывести на дисплей
- push ax ; символ '1' – старшую
- mov ah,2h ; цифру результата
- mov dl,'1' ; c помощью функции DOS
+sub_and_show proc
+ sub bl,al
+ jns not_carry
+ neg bl
+ mov ah,2h
+ mov dl,'-' 
  int 21h
- pop ax
-not_carry: add al,30h ; преобразовать число
- ; в код символа
- mov ah,2h ; вывести младшую цифру
- mov dl,al ; результата с помощью
- int 21h ; функции DOS
- ret ; вернуться в вызывающую программу
-add_and_show endp
+not_carry: add bl,30h 
+ mov ah,2h 
+ mov dl,bl 
+ int 21h 
+ ret 
+sub_and_show endp
 code ends
 end start
