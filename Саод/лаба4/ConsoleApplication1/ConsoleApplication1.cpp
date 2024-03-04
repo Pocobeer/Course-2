@@ -134,7 +134,7 @@ public:
 int main() {
 	
 	
-	const int size = 6300;
+	const int size = 1300;
 	int arr[size];
 	int target = 10;
 	int index;

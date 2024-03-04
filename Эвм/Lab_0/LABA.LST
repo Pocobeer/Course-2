@@ -1,0 +1,118 @@
+Turbo Assembler	 Version 4.1	    03/01/24 13:30:53	    Page 1
+laba.asm
+
+
+
+      1				     ;Демонстрационная программа сложения двух
+      2				     ;одноразрядных беззнаковых	чисел
+      3				     ;Для построения рабочей версии используйте
+      4				     ;команды:
+      5				     ; >tasm demo;
+      6				     ; >tlink demo;
+      7				     ; >demo
+      8				     ; Резервирoвание места под стек
+      9	0000			     sseg segment stack	'stack'
+     10	0000  0100*(????)	      dw 256 dup(?)
+     11	0200			     sseg ends
+     12	0000			     data segment
+     13	0000  0A 0D 50 72 6F 67	72+  msg1 db 10,13,'Programm that subbing two numbers'
+     14	      61 6D 6D 20 74 68	61+
+     15	      74 20 73 75 62 62	69+
+     16	      6E 67 20 74 77 6F	20+
+     17	      6E 75 6D 62 65 72	73
+     18	0023  0A 0D 45 6E 74 65	72+   db 10,13,'Enter first number: ','$'
+     19	      20 66 69 72 73 74	20+
+     20	      6E 75 6D 62 65 72	3A+
+     21	      20 24
+     22	003A  0A 0D 45 6E 74 65	72+  msg2 db 10,13,'Enter second num: ','$'
+     23	      20 73 65 63 6F 6E	64+
+     24	      20 6E 75 6D 3A 20	24
+     25	004F  0A 0D 52 65 73 75	6C+  msg3 db 10,13,'Result = ','$'
+     26	      74 20 3D 20 24
+     27	005B			     data ends
+     28	0000			     code segment
+     29				     assume cs:code,ds:data,ss:sseg
+     30	0000  B8 0000s		     start: mov	ax,data
+     31	0003  8E D8		      mov ds,ax
+     32	0005  BA 0000r		      lea dx,msg1
+     33	0008  E8 001B		      call print_msg
+     34	000B  E8 001F		      call input_digit
+     35	000E  8A D8		      mov bl,al
+     36	0010  BA 003Ar		      lea dx,msg2
+     37	0013  E8 0010		      call print_msg
+     38	0016  E8 0014		      call input_digit
+     39	0019  BA 004Fr		      lea dx,msg3
+     40	001C  E8 0007		      call print_msg
+     41	001F  E8 001A		      call sub_and_show
+     42	0022  B4 4C		      mov ah,4ch
+     43	0024  CD 21		      int 21h
+     44	0026			     print_msg proc
+     45	0026  50		      push ax
+     46	0027  B4 09		      mov ah,09h
+     47	0029  CD 21		      int 21h
+     48	002B  58		      pop ax
+     49	002C  C3		      ret
+     50	002D			     print_msg endp
+     51	002D			     input_digit proc
+     52	002D			     input_again:
+     53	002D  B4 01		      mov ah,01h
+     54	002F  CD 21		      int 21h
+     55	0031  3C 30		      cmp al,'0'
+     56	0033  7C F8		      jl input_again
+     57	0035  3C 39		      cmp al,'9'
+Turbo Assembler	 Version 4.1	    03/01/24 13:30:53	    Page 2
+laba.asm
+
+
+
+     58	0037  7F F4		      jg input_again
+     59	0039  2C 30		      sub al,30h
+     60	003B  C3		      ret
+     61	003C			     input_digit endp
+     62	003C			     sub_and_show proc
+     63	003C  2A D8		      sub bl,al
+     64	003E  79 08		      jns not_carry
+     65	0040  F6 DB		      neg bl
+     66	0042  B4 02		      mov ah,2h
+     67	0044  B2 2D		      mov dl,'-'
+     68	0046  CD 21		      int 21h
+     69	0048  80 C3 30		     not_carry:	add bl,30h
+     70	004B  B4 02		      mov ah,2h
+     71	004D  8A D3		      mov dl,bl
+     72	004F  CD 21		      int 21h
+     73	0051  C3		      ret
+     74	0052			     sub_and_show endp
+     75	0052			     code ends
+     76				     end start
+Turbo Assembler	 Version 4.1	    03/01/24 13:30:53	    Page 3
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "03/01/24"
+??FILENAME			  Text	 "laba	  "
+??TIME				  Text	 "13:30:53"
+??VERSION			  Number 040A
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODE
+@FILENAME			  Text	 LABA
+@WORDSIZE			  Text	 2
+INPUT_AGAIN			  Near	 CODE:002D
+INPUT_DIGIT			  Near	 CODE:002D
+MSG1				  Byte	 DATA:0000
+MSG2				  Byte	 DATA:003A
+MSG3				  Byte	 DATA:004F
+NOT_CARRY			  Near	 CODE:0048
+PRINT_MSG			  Near	 CODE:0026
+START				  Near	 CODE:0000
+SUB_AND_SHOW			  Near	 CODE:003C
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE				  16  0052 Para	  none
+DATA				  16  005B Para	  none
+SSEG				  16  0200 Para	  Stack	  STACK
+

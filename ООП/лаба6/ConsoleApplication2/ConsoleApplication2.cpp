@@ -1,35 +1,46 @@
 ﻿#include <iostream>
 #include<string>
 using namespace std;
-class Test_14 {
-	int* Ext;
+class Student {
+	const char *Name;
+	const char *Surname;
+	int Age;
 public:
-	
-	Test_14() {
-		Ext = new int;
+	Student() {}
+	Student(const char *name,const char *surname, int age) {
+		Name = name;
+		Surname = surname;
+		Age = age;
 	}
-	Test_14(int a) {
-		Ext = new int(a);
-
-	}
-	~Test_14() = default;
-		//delete Ext;
-	//}
-	Test_14& operator=(const Test_14& Other) {
-		/*if (this != &Other) {
-			delete Ext;
+	/*void Out() {
+		cout << "Name: " << Name << "\nSurname: " << Surname << "\nAge: " << Age << endl;
+	}*/
+	class Grant {
+		
+	public:
+		int Value;
+		Grant(int value) {
+			Value = value;
+		}
+		/*void Out_1() {
+			cout << "Value: " << Value << endl;
 		}*/
-		Ext = new int;
-		Ext = Other.Ext;
-		return *this;
-	}
-	void Out() {
-		cout << "Element: " << *Ext << endl;
-	}
+		//friend void Out_1(Student&,Student::Grant&);
+	};
+	friend void Out(Student&, Student::Grant&);
 };
+
+/*void Out_1(Student::Grant& Val) {
+	cout << "Grant: " << Val.Value << endl;
+}
+void Out(Student& stud) {
+	cout << "Name: " << stud.Name << "\nSurname: " << stud.Surname << "\nAge: " << stud.Age << endl;
+}*/
+void Out(Student& stud, Student::Grant& val) {
+	cout << "Name: " << stud.Name << "\nSurname: " << stud.Surname << "\nAge: " << stud.Age << "\nSalary: " << val.Value << endl;
+}
 int main() {
-	Test_14 c1(15);
-	Test_14 c2 = c1;
-	c1.Out();
-	c2.Out();
+	Student Ve("Vladimir", "Ivanov", 17);
+	Student::Grant sal(2000);
+	Out(Ve,sal);
 }

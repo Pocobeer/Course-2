@@ -186,27 +186,32 @@ class Test_2 {
 public:
 	friend void Test_1::fun(Test_2);
 };
-/*class Test_14 {
-	
-public:
+class Test_14 {
 	int* Ext;
-	Test_14() {};
+public:
+
+	Test_14() {
+		Ext = new int;
+	}
 	Test_14(int a) {
-		Ext = new int[1];
-		Ext[0] = a;
-		
+		Ext = new int(a);
+
 	}
-	~Test_14() {
-		delete Ext;
-	}
+	~Test_14() = default;
+	//delete Ext;
+//}
 	Test_14& operator=(const Test_14& Other) {
-		this->Ext[0] = Other.Ext[0];
+		/*if (this != &Other) {
+			delete Ext;
+		}*/
+		Ext = new int;
+		Ext = Other.Ext;
 		return *this;
 	}
 	void Out() {
-		cout << "Element: " << Ext[0] << endl;
+		cout << "Element: " << *Ext << endl;
 	}
-};*/
+};
 class Ex_15 {
 	int size;
 	int* p;
