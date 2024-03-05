@@ -43,23 +43,47 @@ bool searchAVL(Node* root, int target) {
 
 // Функция для вставки элемента в дерево
 Node* insert(Node* root, int key) {
+    Node* newNode = new Node(key);
+
     if (root == nullptr) {
-        return new Node(key);
+        return newNode;
     }
 
-    if (key < root->key) {
-        root->left = insert(root->left, key);
-    }
-    else if (key > root->key) {
-        root->right = insert(root->right, key);
+    Node* current = root;
+    Node* parent = nullptr;
+
+    while (current) {
+        parent = current;
+
+        if (key < current->key) {
+            current = current->left;
+            if (current == nullptr) {
+                parent->left = newNode;
+                return root;
+            }
+        }
+        else if (key > current->key) {
+            current = current->right;
+            if (current == nullptr) {
+                parent->right = newNode;
+                return root;
+            }
+        }
+        else {
+            // Если ключ уже существует, то просто освобождаем память для нового узла и возвращаем исходное дерево
+            delete newNode; // Освобождаем память
+            return root;
+        }
     }
 
+    // Недостижимый код, но для корректности можно добавить
     return root;
 }
 
+
 int main() {
     setlocale(LC_ALL, "ru");
-    const int size = 1000;
+    const int size = 10000;
     // Пример создания и заполнения обычного бинарного дерева поиска
     Node* rootBST = nullptr;
     for (int i = 0; i < size; i++) {
@@ -72,7 +96,7 @@ int main() {
         rootAVL = insert(rootAVL, i*2);
     }
 
-    int target = 15;
+    int target = 16540;
     if (searchBST(rootBST, target)) {
         std::cout << "Элемент найден в обычном бинарном дереве поиска!\n";
     }
