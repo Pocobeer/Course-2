@@ -1,130 +1,80 @@
 #pragma once
 
 // Структура узла AVL дерева
+// Структура узла для деревьев
 struct Node {
-    int data;
-    int height;
-    Node* left;
-    Node* right;
-
-    // Конструктор узла
-    Node(int value) {
-        data = value;
-        height = 1;
-        left = nullptr;
-        right = nullptr;
-    }
+	int key;
+	Node* left;
+	Node* right;
+	Node(int k) : key(k), left(nullptr), right(nullptr) {}
 };
 
-// Функция для вычисления высоты узла
-int getHeight(Node* node) {
-    if (node == nullptr)
-        return 0;
-    return node->height;
+// Функция для поиска элемента в обычном бинарном дереве поиска
+bool searchBST(Node* root, int target) {
+	while (root != nullptr) {
+		if (root->key == target) {
+			return true; // Нашли элемент
+		}
+		else if (target < root->key) {
+			root = root->left;
+		}
+		else {
+			root = root->right;
+		}
+	}
+	return false; // Элемент не найден
 }
 
-// Функция для вычисления баланса узла (разница высот поддеревьев)
-int getBalance(Node* node) {
-    if (node == nullptr)
-        return 0;
-    return getHeight(node->left) - getHeight(node->right);
+// Функция для поиска элемента в AVL-дереве
+bool searchAVL(Node* root, int target) {
+	while (root != nullptr) {
+		if (root->key == target) {
+			return true; // Нашли элемент
+		}
+		else if (target < root->key) {
+			root = root->left;
+		}
+		else {
+			root = root->right;
+		}
+	}
+	return false; // Элемент не найден
 }
 
-// Функция для вращения узлов вправо
-Node* rotateRight(Node* y) {
-    Node* x = y->left;
-    Node* T = x->right;
+// Функция для вставки элемента в дерево
+Node* insert(Node* root, int key) {
+	Node* newNode = new Node(key);
 
-    // Поворот
-    x->right = y;
-    y->left = T;
+	if (root == nullptr) {
+		return newNode;
+	}
 
-    // Обновление высот
-    y->height = max(getHeight(y->left), getHeight(y->right)) + 1;
-    x->height = max(getHeight(x->left), getHeight(x->right)) + 1;
+	Node* current = root;
+	Node* parent = nullptr;
 
-    return x;
-}
+	while (current) {
+		parent = current;
 
-// Функция для вращения узлов влево
-Node* rotateLeft(Node* x) {
-    Node* y = x->right;
-    Node* T = y->left;
+		if (key < current->key) {
+			current = current->left;
+			if (current == nullptr) {
+				parent->left = newNode;
+				return root;
+			}
+		}
+		else if (key > current->key) {
+			current = current->right;
+			if (current == nullptr) {
+				parent->right = newNode;
+				return root;
+			}
+		}
+		else {
+			// Если ключ уже существует, то просто освобождаем память для нового узла и возвращаем исходное дерево
+			delete newNode; // Освобождаем память
+			return root;
+		}
+	}
 
-    // Поворот
-    y->left = x;
-    x->right = T;
-
-    // Обновление высот
-    x->height = max(getHeight(x->left), getHeight(x->right)) + 1;
-    y->height = max(getHeight(y->left), getHeight(y->right)) + 1;
-
-    return y;
-}
-
-// Функция для вставки узла в AVL дерево
-Node* insert(Node* node, int value) {
-    // Шаг 1: Обычная вставка узла в BST
-    if (node == nullptr) {
-        return new Node(value);
-    }
-
-    // Шаг 2: Вставка четных чисел
-    if (value % 2 == 0) {
-        if (value < node->data) {
-            node->left = insert(node->left, value);
-        }
-        else if (value > node->data) {
-            node->right = insert(node->right, value);
-        }
-        else {
-            return node;
-        }
-
-        // Шаг 3: Обновление высоты узла
-        node->height = 1 + max(getHeight(node->left), getHeight(node->right));
-
-        // Шаг 4: Получение баланса узла и проверка на нарушение баланса
-        int balance = getBalance(node);
-
-        // Если узел несбалансирован, есть четыре случая для поворотов
-
-        // Лево-Лево случай
-        if (balance > 1 && value < node->left->data)
-            return rotateRight(node);
-
-        // Право-Право случай
-        if (balance < -1 && value > node->right->data)
-            return rotateLeft(node);
-
-        // Лево-Право случай
-        if (balance > 1 && value > node->left->data) {
-            node->left = rotateLeft(node->left);
-            return rotateRight(node);
-        }
-
-        // Право-Лево случай
-        if (balance < -1 && value < node->right->data) {
-            node->right = rotateRight(node->right);
-            return rotateLeft(node);
-        }
-    }
-
-    return node;
-}
-// Поиск в AVL дереве
-bool avl_search(Node* root, int value) {
-    if (root == nullptr) {
-        return false;
-    }
-
-    if (root->data == value) {
-        return true;
-    }
-    else if (value < root->data) {
-        return avl_search(root->left, value);
-    }
-    else {
-        return avl_search(root->right, value);
-    }
+	return root;
 }
