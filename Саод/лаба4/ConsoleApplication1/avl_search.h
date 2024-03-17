@@ -1,80 +1,60 @@
-#pragma once
+#include <stack>
 
-// Структура узла AVL дерева
-// Структура узла для деревьев
-struct Node {
-	int key;
-	Node* left;
-	Node* right;
-	Node(int k) : key(k), left(nullptr), right(nullptr) {}
+struct Node_avl {
+    int key;
+    Node_avl* left;
+    Node_avl* right;
 };
 
-// Функция для поиска элемента в обычном бинарном дереве поиска
-bool searchBST(Node* root, int target) {
-	while (root != nullptr) {
-		if (root->key == target) {
-			return true; // Нашли элемент
-		}
-		else if (target < root->key) {
-			root = root->left;
-		}
-		else {
-			root = root->right;
-		}
-	}
-	return false; // Элемент не найден
+// Функция поиска в AVL-дереве
+Node_avl* search(Node_avl* root, int key) {
+    std::stack<Node_avl*> s;
+    Node_avl* current = root;
+
+    while (current != nullptr || !s.empty()) {
+        while (current != nullptr) {
+            s.push(current);
+            current = current->left;
+        }
+
+        current = s.top();
+        s.pop();
+
+        if (current->key == key) {
+            return current;
+        }
+
+        current = current->right;
+    }
+
+    return nullptr; // Если ключ не найден
 }
 
-// Функция для поиска элемента в AVL-дереве
-bool searchAVL(Node* root, int target) {
-	while (root != nullptr) {
-		if (root->key == target) {
-			return true; // Нашли элемент
-		}
-		else if (target < root->key) {
-			root = root->left;
-		}
-		else {
-			root = root->right;
-		}
-	}
-	return false; // Элемент не найден
-}
+// Функция вставки узла в AVL-дерево
+Node_avl* insert(Node_avl* root, int key) {
+    if (root == nullptr) {
+        return new Node_avl{ key, nullptr, nullptr };
+    }
 
-// Функция для вставки элемента в дерево
-Node* insert(Node* root, int key) {
-	Node* newNode = new Node(key);
+    Node_avl* current = root;
+    Node_avl* parent = nullptr;
 
-	if (root == nullptr) {
-		return newNode;
-	}
+    while (current != nullptr) {
+        parent = current;
+        if (key < current->key) {
+            current = current->left;
+        }
+        else {
+            current = current->right;
+        }
+    }
 
-	Node* current = root;
-	Node* parent = nullptr;
+    if (key < parent->key) {
+        parent->left = new Node_avl{ key, nullptr, nullptr };
+    }
+    else {
+        parent->right = new Node_avl{ key, nullptr, nullptr };
+    }
 
-	while (current) {
-		parent = current;
-
-		if (key < current->key) {
-			current = current->left;
-			if (current == nullptr) {
-				parent->left = newNode;
-				return root;
-			}
-		}
-		else if (key > current->key) {
-			current = current->right;
-			if (current == nullptr) {
-				parent->right = newNode;
-				return root;
-			}
-		}
-		else {
-			// Если ключ уже существует, то просто освобождаем память для нового узла и возвращаем исходное дерево
-			delete newNode; // Освобождаем память
-			return root;
-		}
-	}
-
-	return root;
+    return root;
 }

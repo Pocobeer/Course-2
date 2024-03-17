@@ -1,9 +1,9 @@
 #pragma once
-int search(int arr[], int size, int target) {
+bool search(int arr[], int size, int target) {
 	for (int i = 0; i < size; i++) {
 		if (arr[i] == target) {
-			return i;
+			return true;
 		}
 	}
-	return -1;
+	return false;
 }
