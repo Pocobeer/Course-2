@@ -133,7 +133,9 @@
     <ClInclude Include="avl_search.h" />
     <ClInclude Include="binary_search.h" />
     <ClInclude Include="binary_tree_search.h" />
+    <ClInclude Include="dig_search.h" />
     <ClInclude Include="fibonacci.h" />
+    <ClInclude Include="hash_search.h" />
     <ClInclude Include="interpolation_search.h" />
     <ClInclude Include="search.h" />
   </ItemGroup>

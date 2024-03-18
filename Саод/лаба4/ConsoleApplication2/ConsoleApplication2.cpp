@@ -1,118 +1,87 @@
 ﻿#include <iostream>
-//#include <stack>
+#include <stack>
 
-// Структура узла для деревьев
 struct Node {
     int key;
     Node* left;
     Node* right;
-    Node(int k) : key(k), left(nullptr), right(nullptr) {}
 };
 
-// Функция для поиска элемента в обычном бинарном дереве поиска
-bool searchBST(Node* root, int target) {
-    while (root != nullptr) {
-        if (root->key == target) {
-            return true; // Нашли элемент
+// Функция поиска в AVL-дереве
+Node* search(Node* root, int key) {
+    std::stack<Node*> s;
+    Node* current = root;
+
+    while (current != nullptr || !s.empty()) {
+        while (current != nullptr) {
+            s.push(current);
+            current = current->left;
         }
-        else if (target < root->key) {
-            root = root->left;
+
+        current = s.top();
+        s.pop();
+
+        if (current->key == key) {
+            return current;
         }
-        else {
-            root = root->right;
-        }
+
+        current = current->right;
     }
-    return false; // Элемент не найден
+
+    return nullptr; // Если ключ не найден
 }
 
-// Функция для поиска элемента в AVL-дереве
-bool searchAVL(Node* root, int target) {
-    while (root != nullptr) {
-        if (root->key == target) {
-            return true; // Нашли элемент
-        }
-        else if (target < root->key) {
-            root = root->left;
-        }
-        else {
-            root = root->right;
-        }
-    }
-    return false; // Элемент не найден
-}
-
-// Функция для вставки элемента в дерево
+// Функция вставки узла в AVL-дерево
 Node* insert(Node* root, int key) {
-    Node* newNode = new Node(key);
-
     if (root == nullptr) {
-        return newNode;
+        return new Node{ key, nullptr, nullptr };
     }
 
     Node* current = root;
     Node* parent = nullptr;
 
-    while (current) {
+    while (current != nullptr) {
         parent = current;
-
         if (key < current->key) {
+            if (current->left == nullptr) {
+                current->left = new Node{ key, nullptr, nullptr };
+                break;
+            }
             current = current->left;
-            if (current == nullptr) {
-                parent->left = newNode;
-                return root;
-            }
-        }
-        else if (key > current->key) {
-            current = current->right;
-            if (current == nullptr) {
-                parent->right = newNode;
-                return root;
-            }
         }
         else {
-            // Если ключ уже существует, то просто освобождаем память для нового узла и возвращаем исходное дерево
-            delete newNode; // Освобождаем память
-            return root;
+            if (current->right == nullptr) {
+                current->right = new Node{ key, nullptr, nullptr };
+                break;
+            }
+            current = current->right;
         }
     }
 
-    // Недостижимый код, но для корректности можно добавить
     return root;
 }
 
-
 int main() {
-    setlocale(LC_ALL, "ru");
-    const int size = 10000;
-    // Пример создания и заполнения обычного бинарного дерева поиска
-    Node* rootBST = nullptr;
+    // Создание и заполнение AVL-дерева с помощью цикла
+    Node* root = nullptr;
+    const int size = 200000;
+    int arr[size];
     for (int i = 0; i < size; i++) {
-        rootBST = insert(rootBST, i*2);
+        arr[i] = i * 2;
+    }
+    for (int key : arr) {
+        root = insert(root, key);
     }
 
-    // Пример создания и заполнения AVL-дерева
-    Node* rootAVL = new Node(size);
-    for (int i = 0; i < size; i ++) {
-        rootAVL = insert(rootAVL, i*2);
-    }
+    int keyToFind = 156800;
+    Node* result = search(root, keyToFind);
 
-    int target = 16540;
-    if (searchBST(rootBST, target)) {
-        std::cout << "Элемент найден в обычном бинарном дереве поиска!\n";
+    if (result != nullptr) {
+        std::cout << "Found" << std::endl;
     }
     else {
-        std::cout << "Элемент не найден в обычном бинарном дереве поиска.\n";
+        std::cout << "Wasn't found" << std::endl;
     }
-
-    if (searchAVL(rootAVL, target)) {
-        std::cout << "Элемент найден в AVL-дереве!\n";
-    }
-    else {
-        std::cout << "Элемент не найден в AVL-дереве.\n";
-    }
-
-    // Освобождаем память после использования
-    // Допиши свой код
 
     return 0;
 }
