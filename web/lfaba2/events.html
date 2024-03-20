@@ -3,15 +3,26 @@
     <head>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+        <!-- <link rel="stylesheet" href="fonts/MoscowMetro.otf"> -->
+        <style>
+            @font-face{
+                font-family: Metro;
+                src: url(fonts/MoscowMetro.otf);
+            }
+            /* #abd{
+                border-image: linear-gradient(#f6b73c, #4d9f0c) 30;
+            } */
+        </style>
         <title>Лаба1</title>
         
     </head>
     <body>
-        <div class = "main">
+        <div class = "main"     >
             <a name = "ch1"></a>
             <h1 align = "center"> Детство</h1>
-            <p align="justify"> Маттиас родился в Австрии. Отец мальчика занимался тяжелой атлетикой, но не хотел, чтобы сын посвятил свою жизнь штанге.
-                 Штайнер-старший считал, что у тяжелой атлетики нет никаких перспектив.
+            <p align="justify" style="font-family: Metro;"> Маттиас родился в Австрии. Отец мальчика занимался тяжелой атлетикой, но не хотел, чтобы сын посвятил свою жизнь штанге.
+                 Штайнер-старший считsал, что у тяжелой атлетики нет никаких перспектив.
                 Маттиас играл в футбол, увлекался другими играми и получал от них удовольствие. Но до определенного момента. 
                 Мальчику захотелось не зависеть от партнеров по команде и представлять лишь самого себя. Для этой цели тяжелая атлетика подходила идеально.
                 К Маттиасу быстро пришло понимание, что когда ты поднимаешь штангу, то все в твоих руках и всем одинаково тяжело.
@@ -19,7 +30,7 @@
             <a name = "ch2"></a>
             <h1 align = "center"> Проблемы со здоровьем</h1>
             <p>
-                После окончания общеобразовательной школы Маттиас выучился на сантехника. 
+                <p class="px-wide">После окончания общеобразовательной школы Маттиас выучился на сантехника.</p>
                 Он продолжал заниматься тяжелой атлетикой и рассчитывал на успешную карьеру, но за сутки до наступления совершеннолетия парень узнал, что болен сахарным диабетом. 
                 За несколько месяцев до похода к врачу Маттиас Штайнер стал испытывать сильную жажду, затем пропал аппетит, начал снижаться вес, ухудшилось зрение. 
                 Выяснилось, что болезнь развилась из-за невылеченной инфекции.
@@ -31,7 +42,7 @@
             </p>
             <a name=ch3></a>
             <h1 align = "center"> Смена гражданства</h1>
-            <p>
+            <p id="gradient">
                 Вот так, пересиливая себя, Штайнер начал выступать на высоком уровне, ездить по юниорским соревнованиям и выигрывать медали. 
                 Спортсмен прогрессировал и смог отобраться на Олимпийские игры — 2004. В Афинах тяжелоатлет показал неплохой для дебютанта результат и занял седьмое место.
                 Отношения между Маттиасом и австрийскими спортивными чиновниками накалились настолько, что атлет принял решение сменить спортивное гражданство на немецкое. 
@@ -72,18 +83,18 @@
         </div>
         <div class = "nav">
             <br>
-        <ul>
-            <li><a href="index.html">&nbsp;О событии</a></li>
-            <li><a href="events.html">&nbsp;Биография</a>
-                <ul>
-                <li><a href="events.html#ch1">&nbsp;Детство</a></li>
-                <li><a href="events.html#ch2">&nbsp;Проблемы со здоровьем</a></li>
-                <li><a href="events.html#ch3">&nbsp;Смена гражданства</a></li>
-                <li><a href="events.html#ch4">&nbsp;Олимпийские игры 2008</a></li>
+            <ul style="list-style-type: none;">
+                <li><a href="index.html">&nbsp;<i class="fa fa-book fa-fw"></i>О событии</a></li>
+                <li><a href="events.html">&nbsp;<i class="fa fa-shield"></i>Биография</a>
+                    <ul>
+                    <li style="list-style-type: none;"><a href="events.html#ch1">&nbsp;<i class="fa fa-shield fa-rotate-270"></i>Детство</a></li>
+                    <li style="list-style-type: none;"><a href="events.html#ch2">&nbsp;<i class="fa fa-shield fa-rotate-270"></i>Проблемы со здоровьем</a></li>
+                    <li style="list-style-type: none;"><a href="events.html#ch3">&nbsp;<i class="fa fa-shield fa-rotate-270"></i>Смена гражданства</a></li>
+                    <li style="list-style-type: none;"><a href="events.html#ch4">&nbsp;<i class="fa fa-shield fa-rotate-270"></i>Олимпийские игры 2008</a></li>
+                </ul>
+                </li>
+                <li><a href="gallery.html">&nbsp;<i class="fa fa-camera-retro fa-lg"></i>Галерея</a></li>
             </ul>
-            </li>
-            <li><a href="gallery.html">&nbsp;Галерея</a></li>
-        </ul>
         </div>
         <div class = "footer">
             Выполнил Иванов В.С.

@@ -17,18 +17,20 @@ using namespace std;
 int main() {
 	mt19937 gen(time(0));
 	
-	cout << "n = 20000" << endl;
+	cout << "n = 5000" << endl;
 	cout << "Search method          " << "UP       " << "BP      " << endl;
 	uniform_int_distribution<int> dist(1, 5000);
 	DigitalSearchTree trie;
 	BST tree;
-	const int size = 20000;
+	const int size = 5000;
 	int arr[size];
-	int target[size];
+	
 	int index;
+	const int size_1 = 2000;
+	int target[size_1];
 	vector<int> h_s;
 	Node_avl* root = nullptr;
-	int up_1 = 0, bp_1 = 0, up_2 = 0, bp_2 = 0, up_3 = 0, bp_3 = 0;
+	int up_3 = 0, bp_3 = 0;
 	int up_4 = 0, bp_4 = 0, up_5 = 0, bp_5 = 0, up_6 = 0, bp_6 = 0;
 	int up_7 = 0, bp_7 = 0, up_8 = 0, bp_8 = 0;
 	for (int i = 0; i < size; i++) {
@@ -45,17 +47,24 @@ int main() {
 	for (int num : h_s) {
 		insertIntoHashTable(num);
 	}
-	for (int j = 0; j < size; j++){
+	//target = 10000;
+	//target = dist(gen);
+	for (int j = 0; j < size_1; j++) {
 		target[j] = dist(gen);
 		//target[j] = j;
 	}
-	for (int a = 0; a < size; a++) {
-		index = search(arr, size, target[a]);
-		if (index ) up_1 += 1;
-		else bp_1 += 1;
-		index = binary_search(arr, size, target[a]);
-		if (index) up_2 += 1;
-		else bp_2 += 1;
+
+	for (int a = 0; a < size_1; a++) {
+		auto temp_ = search(arr, size, target[a]);
+		bool res = temp_.first;
+		int iter = temp_.second;
+		if (res) up_1 += iter;
+		else bp_1 += iter;
+		temp_ = binary_search(arr, size, target[a]);
+		res = temp_.first;
+		iter = temp_.second;
+		if (res) up_2 += iter;
+		else bp_2 += iter;
 		index = fibMonaccianSearch(arr, target[a], n);
 		if (index) up_3 += 1;
 		else bp_3 += 1;
@@ -72,42 +81,26 @@ int main() {
 		if (searchInHashTable(target[a])) up_8 += 1;
 		else bp_8 += 1;
 	}
-	cout << "Sequental search       " << up_1 << "     " << bp_1 << endl;
-	cout << "Usual binary search    " << up_2 << "     " << bp_2 << endl;
-	cout << "Fibonacci search       " << up_3 << "     " << bp_3 << endl;
-	cout << "Interpolation search   " << up_4 << "     " << bp_4 << endl;
-	cout << "Binary tree search     " << up_5 << "     " << bp_5 << endl;
-	cout << "Avl tree search        " << up_6 << "     " << bp_6 << endl;
-	cout << "Digital search         " << up_7 << "     " << bp_7 << endl;
-	cout << "Hash search            " << up_8 << "     " << bp_8 << endl;
-	cout << "n = 40000" << endl;
-	cout << "Search method          " << "UP       " << "BP      " << endl;
-	const int size = 40000;
-	for (int a = 0; a < size; a++) {
-		index = search(arr, size, target[a]);
-		if (index) up_1 += 1;
-		else bp_1 += 1;
-		index = binary_search(arr, size, target[a]);
-		if (index) up_2 += 1;
-		else bp_2 += 1;
-		index = fibMonaccianSearch(arr, target[a], n);
-		if (index) up_3 += 1;
-		else bp_3 += 1;
-		index = interpolation_saerch(arr, size, target[a]);
-		if (index) up_4 += 1;
-		else bp_4 += 1;
-		if (tree.binary_tree_search(target[a])) up_5 += 1;
-		else bp_5 += 1;
-		Node_avl* result_avl = search(root, target[a]);
-		if (result_avl != nullptr) up_6 += 1;
-		else bp_6 += 1;
-		if (trie.search(target[a])) up_7 += 1;
-		else bp_7 += 1;
-		if (searchInHashTable(target[a])) up_8 += 1;
-		else bp_8 += 1;
-	}
-	cout << "Sequental search       " << up_1 << "     " << bp_1 << endl;
-	cout << "Usual binary search    " << up_2 << "     " << bp_2 << endl;
+	/*index = search(arr, size, target);
+	index = binary_search(arr, size, target);
+	index = fibMonaccianSearch(arr, target, n);
+	if (index) up_3 += 1;
+	else bp_3 += 1;
+	index = interpolation_saerch(arr, size, target);
+	if (index) up_4 += 1;
+	else bp_4 += 1;
+	if (tree.binary_tree_search(target)) up_5 += 1;
+	else bp_5 += 1;
+	Node_avl* result_avl = search(root, target);
+	if (result_avl != nullptr) up_6 += 1;
+	else bp_6 += 1;
+	if (trie.search(target)) up_7 += 1;
+	else bp_7 += 1;
+	if (searchInHashTable(target)) up_8 += 1;
+	else bp_8 += 1;*/
+	printf("Sequental search:       %5.d\t%5.d\n", up_1 / size_1, bp_1 / size_1);
+	//cout << "Sequental search       " << up_1/size_1 << "     " << bp_1/size_1 << endl;
+	cout << "Usual binary search    " << up_2/size_1 << "     " << bp_2/size_1 << endl;
 	cout << "Fibonacci search       " << up_3 << "     " << bp_3 << endl;
 	cout << "Interpolation search   " << up_4 << "     " << bp_4 << endl;
 	cout << "Binary tree search     " << up_5 << "     " << bp_5 << endl;
