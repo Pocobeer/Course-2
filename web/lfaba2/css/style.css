@@ -2,6 +2,14 @@
     margin:0;
 }
 
+I B{font-size: 18;
+    color: pink;
+    background-color: green;
+    
+}
+B+I {color: blue;}
+I+DEL{color: orange;}
+p>B{color: springgreen;}
 :root {
     --nav-width: 30%;
 }
@@ -16,10 +24,21 @@ div.nav {
     left: 0;
     width: var(--nav-width);
     height: 90%;
-    background-color:cornsilk;
-    position: absolute;
+    /* background-color:cornsilk; */
+    background: repeating-radial-gradient(#ed2222, #150d0d 350px);
+    position: absolute; 
+    /* text-decoration: none; */
 }
-
+.px-wide{
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        text-shadow: 5px 5px #558ABB;
+        text-decoration: green wavy underline;
+        text-align: end;
+        text-indent: 30%;
+        vertical-align: top;
+        color: #ed2222;
+}
 div.main {
     left: var(--nav-width);
     width: calc(100% - var(--nav-width));
@@ -28,7 +47,16 @@ div.main {
     background-color:beige;
     position: absolute;  
     background: no-repeat center url("images_1/pik_1.jpg");
+    border-image: linear-gradient(#f6b73c, #4d9f0c) 30;
 }
+#gradient {
+    width: 90%;
+    border: 5px solid green;
+    /* border-image: repeating-linear-gradient(45deg, #f33, #3bf, #f33 30px) 60; */
+    padding: 20px;
+    border-top-right-radius: 90px;
+    box-shadow: 40px -16px teal;
+  }
 span[F]{
     color: red;
 }
