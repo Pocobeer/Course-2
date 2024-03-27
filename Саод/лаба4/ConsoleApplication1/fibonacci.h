@@ -1,11 +1,12 @@
 #pragma once
-
+int up_3 = 0, bp_3 = 0;
 // Utility function to find minimum of two elements 
 int min(int x, int y) { return (x <= y) ? x : y; }
 
 /* Returns index of x if present, else returns -1 */
-bool fibMonaccianSearch(int arr[], int x, int n)
+std::pair<bool, int> fibMonaccianSearch(int arr[], int x, int n)
 {
+	int iter = 0;
 	/* Initialize fibonacci numbers */
 	int fibMMm2 = 0; // (m-2)'th Fibonacci No. 
 	int fibMMm1 = 1; // (m-1)'th Fibonacci No. 
@@ -48,13 +49,13 @@ bool fibMonaccianSearch(int arr[], int x, int n)
 
 		/* element found. return index */
 		else
-			return true;
+			return { true,iter };
 	}
 
 	/* comparing the last element with x */
 	if (fibMMm1 && arr[offset + 1] == x)
-		return offset + 1;
+		return { false,offset + 1 };
 
 	/*element not found. return -1 */
-	return false;
+	return { false, iter };
 }

@@ -22,7 +22,7 @@ int main() {
 	uniform_int_distribution<int> dist(1, 5000);
 	DigitalSearchTree trie;
 	BST tree;
-	const int size = 5000;
+	const int size = 20000;
 	int arr[size];
 	
 	int index;
@@ -31,7 +31,7 @@ int main() {
 	vector<int> h_s;
 	Node_avl* root = nullptr;
 	int up_3 = 0, bp_3 = 0;
-	int up_4 = 0, bp_4 = 0, up_5 = 0, bp_5 = 0, up_6 = 0, bp_6 = 0;
+	int  up_5 = 0, bp_5 = 0, up_6 = 0, bp_6 = 0;
 	int up_7 = 0, bp_7 = 0, up_8 = 0, bp_8 = 0;
 	for (int i = 0; i < size; i++) {
 		arr[i] = i * 2;
@@ -65,12 +65,16 @@ int main() {
 		iter = temp_.second;
 		if (res) up_2 += iter;
 		else bp_2 += iter;
-		index = fibMonaccianSearch(arr, target[a], n);
-		if (index) up_3 += 1;
-		else bp_3 += 1;
-		index = interpolation_saerch(arr, size, target[a]);
-		if (index) up_4 += 1;
-		else bp_4 += 1;
+		/*temp_ = fibMonaccianSearch(arr, target[a], n);
+		res = temp_.first;
+		iter = temp_.second;
+		if (res) up_3 += iter;
+		else bp_3 += iter;*/
+		temp_ = interpolation_saerch(arr, size, target[a]);
+		res = temp_.first;
+		iter = temp_.second;
+		if (res) up_4 += iter;
+		else bp_4 += iter;
 		if (tree.binary_tree_search(target[a])) up_5 += 1;
 		else bp_5+=1;
 		Node_avl* result_avl = search(root, target[a]);
@@ -98,9 +102,9 @@ int main() {
 	else bp_7 += 1;
 	if (searchInHashTable(target)) up_8 += 1;
 	else bp_8 += 1;*/
-	printf("Sequental search:       %5.d\t%5.d\n", up_1 / size_1, bp_1 / size_1);
-	//cout << "Sequental search       " << up_1/size_1 << "     " << bp_1/size_1 << endl;
-	cout << "Usual binary search    " << up_2/size_1 << "     " << bp_2/size_1 << endl;
+	//printf("Sequental search:       %5.d\t%5.d\n", up_1 / size_1, bp_1 / size_1);
+	cout << "Sequental search       " << up_1/size_1 << "     " << bp_1/size_1 << endl;
+	cout << "Usual binary search    " << up_2/size_1<< "     " << bp_2/size_1<< endl;
 	cout << "Fibonacci search       " << up_3 << "     " << bp_3 << endl;
 	cout << "Interpolation search   " << up_4 << "     " << bp_4 << endl;
 	cout << "Binary tree search     " << up_5 << "     " << bp_5 << endl;
