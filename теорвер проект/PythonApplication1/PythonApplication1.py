@@ -1,14 +1,16 @@
 import numbers
 import random
-#import matplotlib.pyplot as plt
-#import numpy as np
-#plt.style.use('_mpl-gallery')
+import matplotlib.pyplot as plt
+import numpy as np
+plt.style.use('_mpl-gallery')
 n = int(input("Enter the total number of numbers n: "))
 m = int(input("Enter the number of histogram intervals m: "))
 
 # Create lists to store histogram parameters xi and P(xi)
 xi = [10.3, 12.171, 14.043, 15.914, 17.786, 19.657, 21.529, 23.4]
 Px = [0.2, 0.02, 0.2, 0.18, 0.26, 0.04, 0.1]
+
+
 ki = []
 # Input values of xi and P(xi) for each histogram interval
 #for i in range(m):
@@ -17,17 +19,7 @@ ki = []
 #    xi.append(x)
 #    Px.append(p)
 
-#x=[10.3, 12.171, 14.043, 15.914, 17.786, 19.657, 21.529, 23.4]
-#y = [0.2, 0.02, 0.2, 0.18, 0.26, 0.04, 0.1]
-#if len(x) > len(y):
-#    x = x[:-1]
-#fig, ax = plt.subplots()
-#ax.bar(x, y, width=1, edgecolor="white", linewidth=0.7)
 
-#ax.set(xlim=(0, 8), xticks=np.arange(1, 8),
- #      ylim=(0, 8), yticks=np.arange(1, 8))
-
-#plt.show()50
 for i in range(0,m):
     k = int(n*Px[i])
     ki.append(k)
@@ -69,5 +61,4 @@ for i in range(0,n-1):
             A_l[j+1] = k
 for i in range(0,n):
     print(A_l[i])
-    a+=1
-print(a)
+    
