@@ -59,6 +59,6 @@ for i in range(0,n-1):
             k = A_l[j]
             A_l[j] = A_l[j+1]
             A_l[j+1] = k
-for i in range(0,n):
-    print(A_l[i])
-    
+#for i in range(0,n):
+#    print(A_l[i])
+print(A_l)  
