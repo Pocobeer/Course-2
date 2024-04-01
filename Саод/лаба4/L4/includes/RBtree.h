@@ -38,8 +38,8 @@ public:
         return solve();
     }
     int get_iter() {
-        int temp_i = ITER_COUNT;
-        ITER_COUNT = 0;
+        int temp_i = rotate_count;
+        rotate_count = 0;
         return temp_i;
     }
     void restruct(vector<int>& a) {
@@ -63,7 +63,7 @@ private:
     };
 
     Node* root;
-
+    int rotate_count = 0;
     void leftRotate(Node* x) {
         Node* y = x->right;
         x->right = y->left;
@@ -78,8 +78,9 @@ private:
             x->parent->right = y;
         y->left = x;
         x->parent = y;
+        rotate_count++;
     }
-
+    
     void rightRotate(Node* y) {
         Node* x = y->left;
         y->left = x->right;
@@ -94,6 +95,7 @@ private:
             y->parent->right = x;
         x->right = y;
         y->parent = x;
+        rotate_count++;
     }
 
     void fixInsert(Node* z) {
