@@ -59,14 +59,20 @@ for i in range(0, m):
 
 
 
-for i in range(1,l):
-    rand_val = RND()
-    p_1=rand_val*(n-1)+1
-    p_2=rand_val*(n-1)+1
-    if p_1 != p_2:
-        b = A_l[p_1]
-        A_l[p_1]=A_l[p_2]
-        A_l[p_2] = b
+# for i in range(1,l):
+#     rand_val = RND()
+#     p_1=rand_val*(n-1)+1
+#     p_2=rand_val*(n-1)+1
+#     if p_1 != p_2:
+#         b = A_l[p_1]
+#         A_l[p_1]=A_l[p_2]
+#         A_l[p_2] = b
+
+for i in range(l-1, 0, -1):
+    # выбор случайного индекса
+    j = int(RND() * i)
+    # меняем элементы местами
+    A_l[i], A_l[j] = A_l[j], A_l[i]
 k=0
 a=0
 # for i in range(0,n-1):
