@@ -8,10 +8,36 @@ n = int(input("Enter the total number of numbers n: "))
 m = int(round(n**0.5))
 print("Number of histogram interval: ", m)
 # Create lists to store histogram parameters xi and P(xi)
-xi = [10.3, 12.171, 14.043, 15.914, 17.786, 19.657, 21.529, 23.4]
-Px = [0.2, 0.02, 0.2, 0.18, 0.26, 0.04, 0.1]
-# xi=[]
-# Px=[0]
+#xi = [10.3, 12.171, 14.043, 15.914, 17.786, 19.657, 21.529, 23.4]
+Px = [0.06, 0.08, 0.16, 0.28, 0.26, 0.1, 0.06]
+#Px=[]
+
+#  Генерация случайных чисел, сумма которых равна 1
+# random_sum = 0
+# for i in range(m):
+#     random_number = round(random.random(), 2)
+#     Px.append(random_number)
+#     random_sum += random_number
+
+# # Нормализация случайных чисел
+# for i in range(m):
+#     Px[i] /= random_sum
+xi=[]
+x_min = float(input("Enter min X: "))
+x_max = float(input("Enter max X: "))
+delta = (x_max - x_min) / m
+xi.append(x_min)
+for i in range(m):
+    interval_start = x_min + i * delta
+    interval_end=x_min + (i+1) * delta
+    round_interval_start = round(interval_start, 3)
+    round_interval_end = round(interval_end, 3)
+    interval_start = round_interval_start
+    interval_end = round_interval_end
+    xi.append(interval_end)
+    print(f"Interval {i+1}: {interval_start} - {interval_end}")
+
+
 # Рассчитаем центры интервалов для позиции Px
 center_values = [(a + b) / 2 for a, b in zip(xi, xi[1:])]
 
