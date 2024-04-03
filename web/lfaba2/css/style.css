@@ -69,3 +69,25 @@ div.footer {
     background-color: rgb(255,182,193);
     position: absolute;
 }
+
+tbody tr:nth-child(odd) {
+    background-color: #ddc04c;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #86c045;
+  }
+  
+  tbody tr {
+    background-image: url(noise.png);
+  }
+
+
+table{
+    table-layout: fixed;
+  width: 100%;
+  text-align: right;
+  font-style: italic;
+  border-collapse: collapse;
+  border: 3px solid purple;
+}
