@@ -44,7 +44,6 @@ center_values = [(a + b) / 2 for a, b in zip(xi, xi[1:])]
 # Рассчитаем ширину каждого столбца
 width = [b - a for a, b in zip(xi, xi[1:])]
 
-left=1
 ki = []
 # x = float(input(f"Enter the value of x[1] for interval: "))
 # xi.append(x)
