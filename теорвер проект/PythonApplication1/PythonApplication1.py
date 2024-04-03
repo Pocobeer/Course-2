@@ -2,16 +2,26 @@ import numbers
 import random
 import matplotlib.pyplot as plt
 import numpy as np
-plt.style.use('_mpl-gallery')
+#plt.style.use('_mpl-gallery')
 plt.figure(figsize=(10, 6))
 n = int(input("Enter the total number of numbers n: "))
 m = int(round(n**0.5))
 print("Number of histogram interval: ", m)
 # Create lists to store histogram parameters xi and P(xi)
 #xi = [10.3, 12.171, 14.043, 15.914, 17.786, 19.657, 21.529, 23.4]
-Px = [0.06, 0.08, 0.16, 0.28, 0.26, 0.1, 0.06]
+#Px = [0.06, 0.08, 0.16, 0.28, 0.26, 0.1, 0.06]
 #Px=[]
 
+def generate_numbers(m, n):
+    result = []
+    for _ in range(m - 1):
+        num = random.randint(1, n - sum(result) - (m - len(result)))
+        result.append(num)
+    result.append(n - sum(result))
+    return result
+ki = generate_numbers(m, n)
+
+print("Values of ki:", ki)
 #  Генерация случайных чисел, сумма которых равна 1
 # random_sum = 0
 # for i in range(m):
@@ -44,7 +54,7 @@ center_values = [(a + b) / 2 for a, b in zip(xi, xi[1:])]
 # Рассчитаем ширину каждого столбца
 width = [b - a for a, b in zip(xi, xi[1:])]
 
-ki = []
+Px = []
 # x = float(input(f"Enter the value of x[1] for interval: "))
 # xi.append(x)
 # x_i=x
@@ -60,16 +70,19 @@ ki = []
 #    x_i=x_i+R
 #    xi.append(x)
 #    Px.append(p)
-
-for i in range(0,m):
-    k = int(n*Px[i])
-    ki.append(k)
-
-print("Total number of numbers n:", n)
-print("Number of histogram intervals m:", m)
-print("Histogram parameters xi:", xi)
+def int_to_float(number):
+    return float(number)
+def float_to_int(number):
+    return int(number)
+n_float = int_to_float(n)
+for i in range(m):
+    p = (ki[i]/n_float)
+    Px.append(p)
+#print("Total number of numbers n:", n)
+#print("Number of histogram intervals m:", m)
+#print("Histogram parameters xi:", xi)
 print("Histogram parameters P(xi):", Px)
-print("Values of ki:", ki)
+#print("Values of ki:", ki)
 l=0
 A_l = [None]*n
 def RND():
@@ -100,26 +113,66 @@ for i in range(l-1, 0, -1):
     A_l[i], A_l[j] = A_l[j], A_l[i]
 k=0
 a=0
-# for i in range(0,n-1):
-#     for j in range(0,n-i-1):
-#         if A_l[j] > A_l[j+1]:
-#             k = A_l[j]
-#             A_l[j] = A_l[j+1]
-#             A_l[j+1] = k
+for i in range(0,n-1):
+    for j in range(0,n-i-1):
+        if A_l[j] > A_l[j+1]:
+            k = A_l[j]
+            A_l[j] = A_l[j+1]
+            A_l[j+1] = k
 #for i in range(0,n):
 #    print(A_l[i])
 print(A_l)  
 # Draw the histogram with the updated data
-plt.bar(center_values, Px, width=width, color='skyblue', edgecolor='black')
+# plt.bar(center_values, Px, width=width, color='skyblue', edgecolor='black')
 
-# Set the values for the X and Y axes, and the title
-plt.xlabel('Значения Xi', fontsize=12)
-plt.ylabel('Частота Px', fontsize=12)
-plt.title('Histogramm')
+# # Set the values for the X and Y axes, and the title
+# plt.xlabel('Значения Xi', fontsize=12)
+# plt.ylabel('Частота Px', fontsize=12)
+# plt.title('Histogramm')
 
-plt.xticks(center_values)
-plt.yticks(Px)
-plt.grid(True)
+# plt.xticks(center_values)
+# plt.yticks(Px)
+# plt.grid(True)
 
-# Display the histogram
-plt.show()
+# # Display the histogram
+# plt.show()
+
+# # Вывод простого графика по точкам из массивов Px и xi
+# plt.plot(center_values, Px, marker='o', color='skyblue', linestyle='-', linewidth=2)
+
+# # Установка названий осей X и Y, и заголовка
+# plt.xlabel('Значения Xi', fontsize=12)
+# plt.ylabel('Частота Px', fontsize=12)
+# plt.title('График')
+
+# plt.grid(True)
+
+# # Отображение простого графика
+# plt.show()
+# Вывод выбора графика
+choice = input("Select the graph to display (1 - histogram, 2 - dot plot): ")
+
+if choice == "1":
+    # Вывод гистограммы
+    plt.bar(center_values, Px, width=width, color='skyblue', edgecolor='black')
+    plt.xlabel('Значения Xi', fontsize=12)
+    plt.ylabel('Частота Px', fontsize=12)
+    plt.title('Гистограмма')
+    
+    plt.xticks(center_values)
+    plt.yticks(Px)
+    plt.grid(True)
+    plt.show()
+
+elif choice == "2":
+    # Вывод графика по точкам
+    plt.plot(center_values, Px, marker='o', color='skyblue', linestyle='-', linewidth=2)
+    plt.xlabel('Значения Xi', fontsize=12)
+    plt.ylabel('Частота Px', fontsize=12)
+    plt.title('График')
+    
+    plt.grid(True)
+    plt.show()
+
+else:
+    print("Incorrect selection. Please enter 1 or 2 to select a schedule.")
