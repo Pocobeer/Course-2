@@ -24,10 +24,44 @@ div.nav {
     left: 0;
     width: var(--nav-width);
     height: 90%;
+    overflow: hidden;
     /* background-color:cornsilk; */
-    background: repeating-radial-gradient(#ed2222, #150d0d 350px);
+    background: repeating-radial-gradient(#ed2222, #150d0d 35px);
     position: absolute; 
     /* text-decoration: none; */
+}
+.dropdown {
+  float: left;
+  owerflow: hidden;
+}
+.dropdown .dropbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+.navbar a:hover, .dropdown:hover .dropbtn {
+  background-color: rgb(218, 175, 44);
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background: repeating-radial-gradient(#ed2222, #150d0d 35px);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.dropdown-content a:hover {
+  background-color: #bc4f4f;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
 }
 .px-wide{
         letter-spacing: 4px;
@@ -122,34 +156,38 @@ table{
   display: flex;
   justify-content: center;
 }
-.circle {
-  background-color: yellow;
-  border-radius: 50%;
-  height: 100vh;
-  aspect-ratio: 1 / 1;
-  /*
-    animations declared later in the cascade will override the
-    properties of previously declared animations
-  */
-  /* bounce 'overwrites' the transform set by rise, hence the sun only moves horizontally */
-  animation:
-    4s linear 0s infinite alternate rise,
-    4s linear 0s infinite alternate bounce;
+h1{
+  animation-duration: 3s;
+  animation-name: slidein;
 }
-@keyframes rise {
+@keyframes slidein {
   from {
-    transform: translateY(110vh);
+    margin-left: 100%;
+    width: 300%;
   }
+  
   to {
-    transform: translateY(0);
+    margin-left: 0%;
+    width: 100%;
   }
 }
-
-@keyframes bounce {
-  from {
-    transform: translateX(-50vw);
-  }
-  to {
-    transform: translateX(50vw);
-  }
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+.tooltip:hover::after{
+  content: "Видишь подсказку? А она есть.";
+  position: absolute;
+  white-space: nowrap;
+  padding: 5px;
+  border-radius: 5px;
+  top: 100%;
+  left: 50%;
+  background-color: aliceblue;
+}
+/* .gallery img{
+  transition: transform 1s ease-in-out;
+  } */
+.gallery img:hover{
+  transform: scale(1.2);
 }
