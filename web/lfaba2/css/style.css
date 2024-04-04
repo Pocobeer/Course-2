@@ -45,12 +45,13 @@ div.nav {
   margin: 0;
 }
 .navbar a:hover, .dropdown:hover .dropbtn {
-  background-color: rgb(218, 175, 44);
+  background-color: rgb(249, 105, 53);
 }
 .dropdown-content {
   display: none;
   position: absolute;
-  background: repeating-radial-gradient(#ed2222, #150d0d 35px);
+  /* background: repeating-radial-gradient(#ed2222, #150d0d 35px); */
+  background-color: #e77070;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
@@ -112,9 +113,9 @@ tbody tr:nth-child(odd) {
     background-color: #86c045;
   }
   
-  tbody tr {
-    background-image: url(noise.png);
-  }
+  /* tbody tr {
+    background-image: url("images_1/pik_1.jpg");
+  } */
 
 
 table{
@@ -190,4 +191,11 @@ h1{
   } */
 .gallery img:hover{
   transform: scale(1.2);
+}
+.flex-container {
+  display: flex;
+  height: 500px;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: flex-end;
 }
