@@ -191,6 +191,7 @@ h1{
   } */
 .gallery img:hover{
   transform: scale(1.2);
+  transition: transform 1s ease-in-out;
 }
 .flex-container {
   display: flex;
@@ -198,4 +199,34 @@ h1{
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: flex-end;
+}
+.flex-container .flex_1 {
+  background-color: #e54e4e;
+  font-size: 18px;
+}
+.flex-container .flex_2 {
+  background-color: #4d9f0c;
+  font-size: 8px;
+}
+.flex-container .flex_3 {
+  background-color: #f6b73c;
+  font-size: 16px;
+}
+/*Для смартфонов*/
+@media only screen and (min-width: 320px) and (max-width: 480px) {
+  .main{
+    font-size: 12px;
+  }
+}
+/*Для ipad*/
+@media only screen and (min-width: 320px) and (max-width: 480px) {
+  .main{
+    font-size: 14px;
+  }
+}
+/* Настольные компьютеры и ноутбуки */
+@media only screen  and (min-width: 1080px) {
+  .main{
+    font-size: 18px;
+  }
 }
