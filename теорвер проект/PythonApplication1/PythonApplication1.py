@@ -111,14 +111,14 @@ for i in range(l-1, 0, -1):
     j = int(RND() * i)
     # меняем элементы местами
     A_l[i], A_l[j] = A_l[j], A_l[i]
-k=0
-a=0
-for i in range(0,n-1):
-    for j in range(0,n-i-1):
-        if A_l[j] > A_l[j+1]:
-            k = A_l[j]
-            A_l[j] = A_l[j+1]
-            A_l[j+1] = k
+# k=0
+# a=0
+# for i in range(0,n-1):
+#     for j in range(0,n-i-1):
+#         if A_l[j] > A_l[j+1]:
+#             k = A_l[j]
+#             A_l[j] = A_l[j+1]
+#             A_l[j+1] = k
 #for i in range(0,n):
 #    print(A_l[i])
 print(A_l)  
