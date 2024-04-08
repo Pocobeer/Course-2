@@ -122,7 +122,7 @@ for i in range(l-1, 0, -1):
 #for i in range(0,n):
 #    print(A_l[i])
 print(A_l)  
-# Draw the histogram with the updated data
+# Draw thhe istogram with the updated data
 # plt.bar(center_values, Px, width=width, color='skyblue', edgecolor='black')
 
 # # Set the values for the X and Y axes, and the title
