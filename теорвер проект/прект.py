@@ -7,15 +7,15 @@ plt.figure(figsize=(10, 6))
 n = int(input("Enter the total number of numbers n: "))#Вводим объем выборки
 m = int(round(n**0.5))#Находим количество интервалов
 print("Number of histogram interval: ", m)
-def generate_numbers(m, n):#Функция генерации выборочных значений, попавших в интервалы
-    result = []
-    for _ in range(m - 1):
-        num = random.randint(1, n - sum(result) - (m - len(result)))
-        result.append(num)
-    result.append(n - sum(result))
-    return result
-ki = generate_numbers(m, n)#Собственно вызов функции
-
+# def generate_numbers(m, n):#Функция генерации выборочных значений, попавших в интервалы
+#     result = []
+#     for _ in range(m - 1):
+#         num = random.randint(1, n - sum(result) - (m - len(result)))
+#         result.append(num)
+#     result.append(n - sum(result))
+#     return result
+# ki = generate_numbers(m, n)#Собственно вызов функции
+ki=[5, 7, 12, 10, 7, 5, 4]
 print("Values of ki:", ki)
 xi=[]#Массив значений оси x
 x_min = float(input("Enter min X: "))#Вводим минимальный x
