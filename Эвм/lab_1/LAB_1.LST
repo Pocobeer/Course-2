@@ -1,4 +1,4 @@
-Turbo Assembler	 Version 4.1	    04/12/24 11:37:41	    Page 1
+Turbo Assembler	 Version 4.1	    04/12/24 14:39:08	    Page 1
 lab_1.asm
 
 
@@ -9,98 +9,79 @@ lab_1.asm
       4	    0200			 sseg ends
       5					 ; Определение данных
       6	    0000			 data segment
-      7	    0000  FFFB			 x dw -5
-      8	    0002  ??			 zerx db ?
-      9	    0003  ??			 neg_x db ?
-     10	    0004  ??			 posx db ?
-     11	    0005  0A 0D	69 6E 70 75 74+	 msg1 db 10, 13, 'input	number', '$'
-     12		  20 6E	75 6D 62 65 72+
-     13		  24
-     14	    0014  0A 0D	4E 75 6D 62 65+	 msg2 db 10, 13, 'Number is positive', '$'
-     15		  72 20	69 73 20 70 6F+
-     16		  73 69	74 69 76 65 24
-     17	    0029  0A 0D	4E 75 6D 62 65+	 msg3 db 10, 13, 'Number is negative', '$'
-     18		  72 20	69 73 20 6E 65+
-     19		  67 61	74 69 76 65 24
-     20	    003E  0A 0D	4E 75 6D 62 65+	 msg4 db 10, 13, 'Number is null', '$'
-     21		  72 20	69 73 20 6E 75+
-     22		  6C 6C	24
-     23	    004F			 data ends
-     24
-     25					 ; Макроопределения
-     26					 check_num macro num
-     27					 local _neg, _pos, _zer, myend
-     28					     cmp  num, 0
-     29					     je	_zer
-     30					     jg	_pos
-     31					     jl	_neg
-     32
-     33					     _neg:
-     34						 mov bx, num
-     35						 lea dx, msg3
-     36						 call print_msg
-     37						 jmp myend
-     38					     _pos:
-     39						 mov cx, num
-     40						 lea dx, msg2
-     41						 call print_msg
-     42						 jmp myend
-     43					     _zer:
-     44						 mov dx, 1
-     45						 lea dx, msg4
-     46						 call print_msg
-     47						 jmp myend
-     48					     myend:
-     49
-     50					 endm
-     51
-     52	    0000			 code segment
-     53					 assume	cs:code,ds:data,ss:sseg
-     54	    0000  B8 0000s		 start:	mov ax,data ; настроить сегментный
-     55	    0003  8E D8			  mov ds,ax ; регистр DS	на данные
-     56					  .386
-     57					  check_num x
-Turbo Assembler	 Version 4.1	    04/12/24 11:37:41	    Page 2
+      7					 ;zerx db ?
+      8					 ;neg_x	db ?
+      9					 ;posx db ?
+     10					 ;msg1 db 10, 13, 'input number', '$'
+     11	    0000  0A 0D	4E 75 6D 62 65+	 msg2 db 10, 13, 'Number is positive', '$'
+     12		  72 20	69 73 20 70 6F+
+     13		  73 69	74 69 76 65 24
+     14	    0015  0A 0D	4E 75 6D 62 65+	 msg3 db 10, 13, 'Number is negative', '$'
+     15		  72 20	69 73 20 6E 65+
+     16		  67 61	74 69 76 65 24
+     17	    002A  0A 0D	4E 75 6D 62 65+	 msg4 db 10, 13, 'Number is null', '$'
+     18		  72 20	69 73 20 6E 75+
+     19		  6C 6C	24
+     20	    003B			 data ends
+     21
+     22					 ; Макроопределения
+     23					 check_num macro num, _neg, _pos, _zer
+     24					     cmp  num, 0
+     25					     je	_zer
+     26					     jg	_pos
+     27					     jl	_neg
+     28
+     29
+     30					 endm
+     31
+     32	    0000			 code segment
+     33					 assume	cs:code,ds:data,ss:sseg
+     34	    0000  B8 0000s		 start:	mov ax,data ; настроить сегментный
+     35	    0003  8E D8			  mov ds,ax ; регистр DS	на данные
+     36					  .386
+     37	    0005  B8 0000		  mov ax,0
+     38					  check_num ax,	m1, m2,	m3
+1    39	    0008  3D 0000		     cmp  ax, 0
+1    40	    000B  74 20	90 90		     je	m3
+1    41	    000F  7F 11	90 90		     jg	m2
+1    42	    0013  7C 02	90 90		     jl	m1
+     43	    0017			   m1:
+     44	    0017  8B D8				 mov bx, ax
+     45	    0019  BA 0015r			 lea dx, msg3
+     46	    001C  E8 001E			 call print_msg
+     47	    001F  EB 18	90			 jmp myend
+     48	    0022			     m2:
+     49	    0022  8B C8				 mov cx, ax
+     50	    0024  BA 0000r			 lea dx, msg2
+     51	    0027  E8 0013			 call print_msg
+     52	    002A  EB 0D	90			 jmp myend
+     53	    002D			     m3:
+     54	    002D  BA 0001			 mov dx, 1
+     55	    0030  BA 002Ar			 lea dx, msg4
+     56	    0033  E8 0007			 call print_msg
+     57	    0036  EB 01	90			 jmp myend
+Turbo Assembler	 Version 4.1	    04/12/24 14:39:08	    Page 2
 lab_1.asm
 
 
 
-1    58	    0005  83 3E	0000r 00	     cmp  x, 0
-1    59	    000A  74 24	90 90		     je	??0002
-1    60	    000E  7F 13	90 90		     jg	??0001
-1    61	    0012  7C 02	90 90		     jl	??0000
-1    62	    0016			     ??0000:
-1    63	    0016  8B 1E	0000r			 mov bx, x
-1    64	    001A  BA 0029r			 lea dx, msg3
-1    65	    001D  E8 0020			 call print_msg
-1    66	    0020  EB 1A	90			 jmp ??0003
-1    67	    0023			     ??0001:
-1    68	    0023  8B 0E	0000r			 mov cx, x
-1    69	    0027  BA 0014r			 lea dx, msg2
-1    70	    002A  E8 0013			 call print_msg
-1    71	    002D  EB 0D	90			 jmp ??0003
-1    72	    0030			     ??0002:
-1    73	    0030  BA 0001			 mov dx, 1
-1    74	    0033  BA 003Er			 lea dx, msg4
-1    75	    0036  E8 0007			 call print_msg
-1    76	    0039  EB 01	90			 jmp ??0003
-1    77	    003C			     ??0003:
-     78	    003C  B4 4C			  mov ah,4ch ; завершить программу
-     79	    003E  CD 21			  int 21h ; и выйти в DOS
-     80
-     81	    0040			 print_msg proc
-     82	    0040  50			  push ax
-     83	    0041  B4 09			  mov ah,09h
-     84	    0043  CD 21			  int 21h
-     85	    0045  58			  pop ax
-     86	    0046  C3			  ret
-     87	    0047			 print_msg endp
-     88
-     89	    0047			 code ends
-     90
-     91
-     92					 end start
-Turbo Assembler	 Version 4.1	    04/12/24 11:37:41	    Page 3
+     58	    0039			     myend:
+     59	    0039  B4 4C				 mov ah,4ch ; завершить программу
+     60	    003B  CD 21				 int 21h ; и выйти в DOS
+     61
+     62	    003D			 print_msg proc
+     63	    003D  50			  push ax
+     64	    003E  B4 09			  mov ah,09h
+     65	    0040  CD 21			  int 21h
+     66	    0042  58			  pop ax
+     67	    0043  C3			  ret
+     68	    0044			 print_msg endp
+     69
+     70	    0044			 code ends
+     71
+     72
+     73					 end start
+Turbo Assembler	 Version 4.1	    04/12/24 14:39:08	    Page 3
 Symbol Table
 
 
@@ -108,28 +89,23 @@ Symbol Table
 
 Symbol Name			  Type	 Value
 
-??0000				  Near	 CODE:0016
-??0001				  Near	 CODE:0023
-??0002				  Near	 CODE:0030
-??0003				  Near	 CODE:003C
 ??DATE				  Text	 "04/12/24"
 ??FILENAME			  Text	 "lab_1	  "
-??TIME				  Text	 "11:37:41"
+??TIME				  Text	 "14:39:08"
 ??VERSION			  Number 040A
 @CPU				  Text	 0F0FH
 @CURSEG				  Text	 CODE
 @FILENAME			  Text	 LAB_1
 @WORDSIZE			  Text	 4
-MSG1				  Byte	 DATA:0005
-MSG2				  Byte	 DATA:0014
-MSG3				  Byte	 DATA:0029
-MSG4				  Byte	 DATA:003E
-NEG_X				  Byte	 DATA:0003
-POSX				  Byte	 DATA:0004
-PRINT_MSG			  Near	 CODE:0040
+M1				  Near	 CODE:0017
+M2				  Near	 CODE:0022
+M3				  Near	 CODE:002D
+MSG2				  Byte	 DATA:0000
+MSG3				  Byte	 DATA:0015
+MSG4				  Byte	 DATA:002A
+MYEND				  Near	 CODE:0039
+PRINT_MSG			  Near	 CODE:003D
 START				  Near	 CODE:0000
-X				  Word	 DATA:0000
-ZERX				  Byte	 DATA:0002
 
 Macro Name
 
@@ -137,7 +113,7 @@ CHECK_NUM
 
 Groups & Segments		  Bit Size Align  Combine Class
 
-CODE				  16  0047 Para	  none
-DATA				  16  004F Para	  none
+CODE				  16  0044 Para	  none
+DATA				  16  003B Para	  none
 SSEG				  16  0200 Para	  Stack	  STACK
 
