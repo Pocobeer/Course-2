@@ -25,7 +25,7 @@ local _neg, _pos, _zer, myend
         mov cx, num
         jmp myend
     _zer:
-        mov dx, num
+        mov dx, 1
         jmp myend
     myend:
 

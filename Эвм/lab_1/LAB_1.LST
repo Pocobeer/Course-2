@@ -1,4 +1,4 @@
-Turbo Assembler	 Version 4.1	    03/29/24 12:35:00	    Page 1
+Turbo Assembler	 Version 4.1	    04/12/24 09:59:29	    Page 1
 lab_1.asm
 
 
@@ -9,7 +9,7 @@ lab_1.asm
       4	    0200			 sseg ends
       5					 ; Определение данных
       6	    0000			 data segment
-      7	    0000  0078			 x dw 120
+      7	    0000  0005			 x dw 5
       8	    0002  ??			 zerx db ?
       9	    0003  ??			 neg_x db ?
      10	    0004  ??			 posx db ?
@@ -60,13 +60,13 @@ lab_1.asm
      55	    002C  CD 21			  int 21h ; и выйти в DOS
      56	    002E			 code ends
      57
-Turbo Assembler	 Version 4.1	    03/29/24 12:35:00	    Page 2
+Turbo Assembler	 Version 4.1	    04/12/24 09:59:29	    Page 2
 lab_1.asm
 
 
 
      58					 end start
-Turbo Assembler	 Version 4.1	    03/29/24 12:35:00	    Page 3
+Turbo Assembler	 Version 4.1	    04/12/24 09:59:29	    Page 3
 Symbol Table
 
 
@@ -78,9 +78,9 @@ Symbol Name			  Type	 Value
 ??0001				  Near	 CODE:001D
 ??0002				  Near	 CODE:0024
 ??0003				  Near	 CODE:002A
-??DATE				  Text	 "03/29/24"
+??DATE				  Text	 "04/12/24"
 ??FILENAME			  Text	 "lab_1	  "
-??TIME				  Text	 "12:35:00"
+??TIME				  Text	 "09:59:29"
 ??VERSION			  Number 040A
 @CPU				  Text	 0F0FH
 @CURSEG				  Text	 CODE
