@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{03b6837c-0a9f-4146-bce4-d10ecc19e6f0}</ProjectGuid>
-    <RootNamespace>ConsoleApplication1</RootNamespace>
+    <ProjectGuid>{a974216d-e236-4097-8f45-c7aa18e2b579}</ProjectGuid>
+    <RootNamespace>L5</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -127,18 +127,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ConsoleApplication1.cpp" />
+    <ClCompile Include="L5.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="binaryinsertionsort.h" />
-    <ClInclude Include="counting_sort.h" />
-    <ClInclude Include="Insertion_sort.h" />
-    <ClInclude Include="mergeSort.h" />
-    <ClInclude Include="naturalmergesort.h" />
-    <ClInclude Include="quicksort_1.h" />
-    <ClInclude Include="quicksort_2.h" />
-    <ClInclude Include="selectionsort.h" />
-    <ClInclude Include="shaker_sort.h" />
+    <ClInclude Include="includes\all_includes.h" />
+    <ClInclude Include="includes\count_sort.h" />
+    <ClInclude Include="includes\digit_exchange_sort.h" />
+    <ClInclude Include="includes\fast_sort_iter.h" />
+    <ClInclude Include="includes\fast_sort_rec.h" />
+    <ClInclude Include="includes\heapsort.h" />
+    <ClInclude Include="includes\list_merge_sort.h" />
+    <ClInclude Include="includes\sort_by_insert_in_linked_list.h" />
+    <ClInclude Include="includes\sort_by_shell.h" />
+    <ClInclude Include="includes\tester.h" />
+    <ClInclude Include="includes\two_way_merge_sort.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

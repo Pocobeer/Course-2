@@ -15,36 +15,42 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ConsoleApplication1.cpp">
+    <ClCompile Include="L5.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Insertion_sort.h">
+    <ClInclude Include="includes\all_includes.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="binaryinsertionsort.h">
+    <ClInclude Include="includes\sort_by_insert_in_linked_list.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="shaker_sort.h">
+    <ClInclude Include="includes\sort_by_shell.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="quicksort_1.h">
+    <ClInclude Include="includes\fast_sort_rec.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="quicksort_2.h">
+    <ClInclude Include="includes\fast_sort_iter.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="selectionsort.h">
+    <ClInclude Include="includes\digit_exchange_sort.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="counting_sort.h">
+    <ClInclude Include="includes\heapsort.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="naturalmergesort.h">
+    <ClInclude Include="includes\count_sort.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="mergeSort.h">
+    <ClInclude Include="includes\two_way_merge_sort.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\list_merge_sort.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\tester.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

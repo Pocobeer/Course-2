@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{03b6837c-0a9f-4146-bce4-d10ecc19e6f0}</ProjectGuid>
+    <ProjectGuid>{1f1c4980-a24a-4fe8-bad4-33b4b4799607}</ProjectGuid>
     <RootNamespace>ConsoleApplication1</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -128,17 +128,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ConsoleApplication1.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="binaryinsertionsort.h" />
-    <ClInclude Include="counting_sort.h" />
-    <ClInclude Include="Insertion_sort.h" />
-    <ClInclude Include="mergeSort.h" />
-    <ClInclude Include="naturalmergesort.h" />
-    <ClInclude Include="quicksort_1.h" />
-    <ClInclude Include="quicksort_2.h" />
-    <ClInclude Include="selectionsort.h" />
-    <ClInclude Include="shaker_sort.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
