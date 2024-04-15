@@ -8,58 +8,105 @@
                 width: 75%;
                 border-collapse: collapse;
             }
-            table, th, td {
+            table, td, th {
                 /* border: 1px solid black; */
                 padding: 8px;
             }
+        
             </style>
             </head>
             <body>
             <h1 align = "center">Пупупуп</h1>
-            <div id="output"></div>
+            <div id="output">
+                
+            </div>
             <script src="countries.js"></script>
             <script>
             function makeTableFromCountry(country) {
                 tab="<table width=75% align='center' border = '1'>";
-                var k = 0;
-                var displayed = false;
-                for (const key in country) {
+                // var k = 0;
+                // var displayed = false;
+                // var displayed_places = false;
+                // for (const key in country) {
                     
-                    // if (typeof country[key] === 'object') {
-                    //     tab += "<tr><td colspan='2'>" + key + "</td></tr>";
-                    //     tab += "<tr><td colspan='2'>" + makeTableFromCountry(country[key]) + "</td></tr>";
-                    // } else {
-                    //     tab += "<tr><td>" + key + "</td><td>" + country[key] + "</td></tr>";
-                    // }
-                    if( k < 4 && typeof country[key] === 'string') {
-                        tab += "<tr><td>" + country[key] + "</td></tr>";
-                        k++;
-                    }
-                    for (const key_1 in country) {
-                        if (k==4 && typeof country[key_1] === 'number' && !displayed) {
-                            tab += "<tr><td>" + country[key_1] + "</td></tr>";
-                            displayed = true;
-                        }
-                    }
+                //     // if (typeof country[key] === 'object') {
+                //     //     tab += "<tr><td colspan='2'>" + key + "</td></tr>";
+                //     //     tab += "<tr><td colspan='2'>" + makeTableFromCountry(country[key]) + "</td></tr>";
+                //     // } else {
+                //     //     tab += "<tr><td>" + key + "</td><td>" + country[key] + "</td></tr>";
+                //     // }
+                //     if( k < 4 && typeof country[key] === 'string') {
+                //         tab += "<tr><td>" + country[key] + "</td></tr>";
+                //         k++;
+                //     }
+                //     for (const key_1 in country) {
+                //         if (k==4 && typeof country[key_1] === 'number' && !displayed) {
+                //             tab += "<tr><td>" + country[key_1] + "</td></tr>";
+                //             displayed = true;
+                //         }
+                //     }
+                //     // for(const key_2 in country) {
+                //     //     if (Array.isArray(country[key_2])) {
+                //     //     if (Array.isArray(country[key_2][0])) {
+                //     //         continue
+                //     //     }
+                //     //     else if (k==4 && typeof country[key_2][0] === 'string') {
+                //     //         tab += "<tr><td>" + country[key_2] + "</td></tr>";
+                //     //     }
+                //     //     }
+                //     // }
+                //     if (Array.isArray(country[key])) {
+                //         if (Array.isArray(country[key][0])) {
+                //             continue
+                //         }
+                //         else if( k ==4 && !displayed_places && typeof country[key][0] === 'string') {
+                //         tab += "<tr><td>" + country[key] + "</td></tr>";
+                //         displayed_places = true;
+                //     }
+                //     }
+                    
+                //     // if (displayed_places && typeof country[key] === 'object') {
+                //     //     tab+="<tr><td colspan='2'>" + JSON.stringify(country[key]) + "</td></tr>";
+                //     // }
+                //         // if(typeof country[key] === 'object') {
+                //         //     tab+="<tr><td >" + makeTableFromCountry(country[key]) + "</td></tr>";
+                //         // }
 
-                    if (Array.isArray(country[key])) {
-                        if (Array.isArray(country[key][0])) {
-                            continue
-                        }
-                        else if (k==4 && typeof country[key][0] === 'string') {
-                            tab += "<tr><td>" + country[key] + "</td></tr>";
-                        }
-                        
+                //     //tab += "<tr><td>" + country[key] + "</td></tr>";
+                // }
+                a_1=[] // string
+                a_2=[] // number
+                a_3=[] // array in array
+                a_4=[] // object in array
+                for(i=0; i<country.length; i++) {
+                    if(typeof country[i] === 'string') {
+                        a_1.push(country[i])
                     }
-                    // if (typeof country[key] === 'object') {
-                    //     tab+="<tr><td colspan='2'>" + JSON.stringify(country[key]) + "</td></tr>";
-                    // }
-                        // if(typeof country[key] === 'object') {
-                        //     tab+="<tr><td >" + makeTableFromCountry(country[key]) + "</td></tr>";
-                        // }
-
-                    //tab += "<tr><td>" + country[key] + "</td></tr>";
+                    if(typeof country[i] === 'number') {
+                        a_2.push(country[i])
+                    }
+                    if(typeof country[i] === 'object') {
+                        if (typeof country[i][0] === 'string') {
+                            a_3.push(country[i])
+                        }
+                        else if(typeof country[i][0] === 'undefined') a_4.push(country[i])
+                    }
                 }
+
+                tab += "<th colspan='2'>" + a_1[0] + " - " + a_1[1] + "</th>"
+
+                for (let i = 2; i < 4; i++){
+                    tab+= "<tr><td>" + about[i]  + "</td><td>" + a_1[i] + "</td></tr>"
+                }
+                tab+= "<tr><td>" + about[4] + "</td><td>" + a_2[0] + "</td></tr>"
+                tab+= "<tr><td>" + about[6] + "</td><td>"
+                for(i=0; i<a_3.length; i++) {
+
+                    for(j=0; j<a_3[i].length; j++) {
+                        tab+=  a_3[i][j] + "<br>"
+                    }
+                }
+                tab+=  "</td></tr>"
                 tab += "</table>";
                 return tab;
             }
