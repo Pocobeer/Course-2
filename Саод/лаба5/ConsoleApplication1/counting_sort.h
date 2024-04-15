@@ -21,10 +21,10 @@ void countingSort(std::vector<int>& arr) {
     for (int i = 0; i < range; ++i) {
         for (int j = 0; j < count[i]; ++j) {
             arr[index++] = i + minElement;
-            swaps_7++;
+            comparisons_7++;
         }
     }
     auto end_time = std::chrono::high_resolution_clock::now(); // Остановка таймера
     auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time); // Вычисление времени выполнения в наносекундах
-    std::cout << "Counting sort" << "           " << comparisons_7 << "                   " << swaps_7 << "          " << duration.count() / std::pow(10, 9) << std::endl;
+    std::cout << "Counting sort" << "           " << comparisons_7 << "                " << swaps_7 << "             " << duration.count() / std::pow(10, 9) << std::endl;
 }
