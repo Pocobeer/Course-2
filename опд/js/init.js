@@ -21,7 +21,12 @@ var categoriesSetup = function() {
 }
 var productsSetup = function() {
     let products = new Products();
-    products.getSingleProduct(urlParam('productid'));
+    if($('.products.new').length){
+        products.getNewProducts(8);
+    }
+    if (urlParam('productid')){
+        products.getSingleProduct(urlParam('productid'));
+    }
 }
 
 function loadScript(url, callback) {

@@ -24,11 +24,11 @@ class Categories{
             success: function (data){
                 $(data).each(function(index, product){
                     $('.products').append(
-                        '<div class = "col-md-3"><a href = "/product.html?productid=' 
-                        + product.id + '"><img src = "' + product.image 
-                        + '" class = "img-fluid">' 
-                        + product.title
-                        + '</a></div>' 
+                        '<div class = "col-md-3"><div class = "product"><a href = "/product.html?productid=' 
+                        + product.id + '"><div class = "image"><img src = "' + product.image 
+                        + '" class = "img-fluid"></div><div class = "info"><div class = "title">' 
+                        + product.title + '<br>$' + product.price
+                        + '</div></div></a></div></div>' 
                     )
                 });
             }

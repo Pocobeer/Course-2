@@ -2,6 +2,26 @@ class Products{
     constructor(){
         this.apiUrl = 'https://fakestoreapi.com'
     }
+
+    getNewProducts(limit){
+        $.ajax ({
+            type: 'GET',
+            url: this.apiUrl + '/products?limit='+ limit
+            + "&sort=desc",
+            success: function (data){
+                $(data).each(function(index, product){
+                    $('.products').append(
+                        '<div class = "col-md-3"><div class = "product"><a href = "/product.html?productid=' 
+                        + product.id + '"><div class = "image"><img src = "' + product.image 
+                        + '" class = "img-fluid"></div><div class = "info"><div class = "title">' 
+                        + product.title + '<br>$' + product.price
+                        + '</div></div></a></div></div>' 
+                    )
+                });
+            }
+        })
+    }
+
     getSingleProduct(id){
         $.ajax ({
             type: 'GET',
