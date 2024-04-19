@@ -120,14 +120,6 @@
                 }   
                 function arrayToTableString(array) {
                     let tableString = '<table class = "table-container">';
-                    // Создаем заголовок таблицы на основе ключей первого объекта в массиве
-                    // tableString += '<tr>';
-                    // Object.keys(array[0]).forEach(key => {
-                    //     tableString += `<td>${key}-</td>`;
-                    // });
-                    // tableString += '</tr>';
-
-                    // Добавляем строки для каждого объекта в массиве
                     array.forEach(obj => {
                         tableString += '<tr class = "table-row">';
                         Object.entries(obj).forEach(([key, value]) => {

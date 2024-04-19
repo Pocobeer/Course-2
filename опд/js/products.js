@@ -27,7 +27,9 @@ class Products{
             type: 'GET',
             url: this.apiUrl + '/products/' + id,
             success: function (data){
-                console.log(data);
+                $('.breadcrumb').html(
+                    '<a href ="/">Главная</a><span class = "sep">></span> <a href = "/category.html?category=' + data.category +'">' +toTitleCase(data.category) + '</a><span class = "sep">></span> ' + data.title
+                );
                 $('.product_image').html('<img src = "' + data.image + '"class = "img-fluid">')
                 $('.product_title').html(data.title)
                 $('.product_price').html('$' + data.price.toFixed(2))
