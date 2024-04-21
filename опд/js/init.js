@@ -6,10 +6,19 @@ $.get('/templates/footer.html', function(data) {
     $('#footer-placeholder').replaceWith(data)
 })
 
+// document.querySelector("show-login").addEventListener("click", function() {
+//     document.querySelector(".popup").classList.add("active");
+// });
+
+// document.querySelector(".popup .close-btn").addEventListener("click", function() {
+//     document.querySelector(".popup").classList.remove("active");
+// });
 
 $(function() {
     loadScript('js/categories.js', categoriesSetup);
     loadScript('js/products.js', productsSetup);
+    loadScript('js/user.js', userInfo);
+
 })
 
 var categoriesSetup = function() {
@@ -29,6 +38,10 @@ var productsSetup = function() {
     }
 }
 
+var userInfo = function() {
+    let user = new User();
+    user.getUserInfo();
+}
 function loadScript(url, callback) {
     var head = document.head
     var script = document.createElement('script')

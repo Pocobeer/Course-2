@@ -4,6 +4,95 @@ body{
     font-size: 16px;
 }
 
+.popup{
+    position: absolute;
+    top:-150%;
+    left: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.25);
+    width: 400px;
+    padding: 20px 20px;
+    background: linear-gradient(to bottom, #000000 0%, #4588ec 100%);
+    box-shadow: 2px 2px 5px 5px rgba(0,0,0,0.5);
+    border-radius: 10px;
+    transition: top 0s ease-in-out 0.2s,
+                opacity 0.2s ease-in-out 0s,
+                transform 0.2s ease-in-out 0s;
+}
+
+.popup.active{
+    top: 50%;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    transition: top 0s ease-in-out 0s,
+                opacity 0.2s ease-in-out 0s,
+                transform 0.2s ease-in-out 0s;
+}
+
+.popup .close-btn{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    background: #c0c0c0;
+    text-align: center;
+    line-height: 12px;
+}
+
+.popup .form h2{
+    text-align: center;
+    margin: 10px 0 px 20px;
+    font-size: 25px;
+}
+
+.popup .form .form-element{
+    margin: 15px 0px;
+}
+
+.popup .form .form-element label{
+    font-size: 14px;
+    color: #c0c0c0;
+}
+
+.popup .form .form-element input[type="text"],
+.popup .form .form-element input[type="password"]{
+    margin-top: 5px;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    border: 1px solid #c0c0c0;
+    border-radius: 5px;
+}
+
+.popup .form .form-element input[type="checkbox"]{
+    margin-right: 5px;
+}
+
+.popup .form .form-element button{
+    width: 100%;
+    height: 40px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    background: #4588ec;
+    color: #f2f2f2;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.popup .form .form-element a{
+    display: block;
+    text-align: right;
+    font-size: 14px;
+    color: #c0c0c0;
+    text-decoration: none;
+    
+}
+
 h1{
     font-size: 2rem;
 }
@@ -24,6 +113,7 @@ a{
 
 .text-end a{
     float: right;
+    margin-right: 40px;
 }
 
 .breadcrump {
