@@ -1,25 +1,32 @@
+$(function() {
+    if(localStorage.user == null && $('.auth').length){
+        window.location.href = '/login.html';
+    }
+    
+    loadScript('js/categories.js', categoriesSetup);
+    loadScript('js/products.js', productsSetup);
+    loadScript('js/user.js', userInfo);
+
+})
+
 $.get('/templates/navigation.html', function(data) {
+    if($('.logout').length){
+        localStorage.clear();
+    }
     $('#nav-placeholder').replaceWith(data)
+    if(localStorage.user == null){
+        $('.accountNav').html('<li class = "nav-item"><a class = "nav-link text-white" href = "/login.html">Войти</a></li>')
+    }else{
+        $('.accountNav').html('<li class = "nav-item"><a class = "nav-link text-white" href = "/logout.html">Выйти</a></li><li class = "nav-item"><a class = "nav-link text-white" href = "/account.html">Личный кабинет</a></li>')
+    }
 })
 
 $.get('/templates/footer.html', function(data) {
     $('#footer-placeholder').replaceWith(data)
 })
 
-// document.querySelector("show-login").addEventListener("click", function() {
-//     document.querySelector(".popup").classList.add("active");
-// });
 
-// document.querySelector(".popup .close-btn").addEventListener("click", function() {
-//     document.querySelector(".popup").classList.remove("active");
-// });
 
-$(function() {
-    loadScript('js/categories.js', categoriesSetup);
-    loadScript('js/products.js', productsSetup);
-    loadScript('js/user.js', userInfo);
-
-})
 
 var categoriesSetup = function() {
     let categories = new Categories();
@@ -40,7 +47,16 @@ var productsSetup = function() {
 
 var userInfo = function() {
     let user = new User();
-    user.getUserInfo();
+    $('form.login').submit(function(e){
+        e.preventDefault();
+        var email = $('#email').val();
+        var password = $('#password').val();
+        user.doLogin(email, password);
+    })
+    if ($('.userAccount').length){
+        var userAccount = JSON.parse(localStorage.user);
+        user.getAccountInfo(userAccount);
+    }
 }
 function loadScript(url, callback) {
     var head = document.head

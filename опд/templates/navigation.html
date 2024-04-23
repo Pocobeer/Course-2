@@ -24,56 +24,16 @@
           
       </ul>
       
-      <div class = "text-end">
-        <a id="show-login" class = "nav-link text-white" style="cursor: pointer;"><span class = "badge bg-primary ms-2">Вход</span></a>
+      <div class = "text-end ">
+        <!-- <a id="show-login" class = "nav-link text-white" href = "/login.html" style="cursor: pointer;"><span class = "badge bg-primary ms-2">Вход</span></a> -->
 
         <a class = "nav-link text-white" href = "/cart.html"><i class = "bi bi-bag"></i><span class = "badge bg-primary ms-2">0</span></a>
         <a class = "nav-link text-white" href = "/wishlist.html"><i class = "bi bi-bag-heart"></i><span class = "badge bg-primary ms-2">1</span></a>
-        
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 accountNav"></ul>
       </div>
       
-      <div class = "popup">
-        <div class = "close-btn">&times;</div>
-        <div class = "form">
-          <h2>Вход</h2>
-          <div class = "form-element">
-            <label for = "email">Email</label>
-            <input type = "text" id = "email" placeholder = "Введите email">
-          </div>
-          <div class = "form-element">
-            <label for = "password">Пароль</label>
-            <input type = "password" id = "password" placeholder = "Введите пароль">
-          </div>
-          <div class = "form-element">
-            <div class = "flex-container">
-              <div class="flex-one">
-                <input type = "checkbox" id = "remember-me">
-                <label for = "remember-me">Запомнить меня</label>
-              </div>
-              <div class="flex-two">
-                <a class = "nav-link text-white " href = "#">Забыли пароль?</a>
-              </div>
-              
-            </div>
-          </div>
-          <div class = "form-element">
-            <button>Войти</button>
-          </div>
-          <div class = "form-element">
-            <div class = "signup-link">Нет аккаунта? <a class="nav-link text-white"  href = "#">Регистрация</a></div>
-          </div>
-        </div>
-      </div>
-      <script>
-        document.querySelector("#show-login").addEventListener("click", function() {
-            document.querySelector(".popup").classList.add("active");
-        });
-
-        document.querySelector(".popup .close-btn").addEventListener("click", function() {
-            document.querySelector(".popup").classList.remove("active");
-        });
-
-      </script>
+     
+      
     </div>
   </div>
 </header>

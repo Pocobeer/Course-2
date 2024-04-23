@@ -21,45 +21,51 @@ body{
                 transform 0.2s ease-in-out 0s;
 }
 
-.popup.active{
+// .active{
+//     top: 50%;
+//     opacity: 1;
+//     transform: translate(-50%, -50%) scale(1);
+//     transition: top 0s ease-in-out 0s,
+//                 opacity 0.2s ease-in-out 0s,
+//                 transform 0.2s ease-in-out 0s;
+// }
+.login{
+    // position: absolute;
     top: 50%;
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-    transition: top 0s ease-in-out 0s,
-                opacity 0.2s ease-in-out 0s,
-                transform 0.2s ease-in-out 0s;
+    left: 50%;
+    transform: translate(17%, 10%);
+    width: 75%;
 }
+// .close-btn{
+//     position: absolute;
+//     top: 10px;
+//     right: 10px;
+//     width: 15px;
+//     height: 15px;
+//     border-radius: 15px;
+//     cursor: pointer;
+//     background: #c0c0c0;
+//     text-align: center;
+//     line-height: 12px;
+// }
 
-.popup .close-btn{
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 15px;
-    height: 15px;
-    border-radius: 15px;
-    cursor: pointer;
-    background: #c0c0c0;
-    text-align: center;
-    line-height: 12px;
-}
-
-.popup .form h2{
+.form h2{
     text-align: center;
     margin: 10px 0 px 20px;
     font-size: 25px;
 }
 
-.popup .form .form-element{
+.form .form-element{
     margin: 15px 0px;
 }
 
-.popup .form .form-element label{
+.form .form-element label{
     font-size: 14px;
     color: #c0c0c0;
 }
 
-.popup .form .form-element input[type="text"],
-.popup .form .form-element input[type="password"]{
+.form .form-element input[type="text"],
+.form .form-element input[type="password"]{
     margin-top: 5px;
     display: block;
     width: 100%;
@@ -69,11 +75,11 @@ body{
     border-radius: 5px;
 }
 
-.popup .form .form-element input[type="checkbox"]{
+.form .form-element input[type="checkbox"]{
     margin-right: 5px;
 }
 
-.popup .form .form-element button{
+.form .form-element button{
     width: 100%;
     height: 40px;
     border: none;
@@ -85,7 +91,7 @@ body{
     cursor: pointer;
 }
 
-.popup .form .form-element a{
+.form .form-element a{
     display: block;
     text-align: right;
     font-size: 14px;
@@ -94,7 +100,7 @@ body{
     
 }
 
-.popup .signup-link{
+.signup-link{
     text-align: center;
     a{
         display: inline-block !important;
@@ -113,10 +119,10 @@ body{
     
 }
 
-.flex-two{
-    text-align: right;
+// .flex-two{
+//     text-align: right;
 
-}
+// }
 
 h1{
     font-size: 2rem;
