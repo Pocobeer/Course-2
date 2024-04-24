@@ -1,14 +1,17 @@
 ﻿#include <iostream>
 #include<string>
+#include<malloc.h>
+#include<stddef.h>
 using namespace std;
 class Student {
 	const char *Name;
 	const char *Surname;
-	int Age;
+	
 	int* data;
 	int size;
 	int* p;
 public:
+	int Age;
 	//explicit Student(int n = 5);
 	Student() {
 		data = new int;
@@ -66,6 +69,11 @@ public:
 		}
 		return p[i];
 	}
+	Student* operator ->()
+	{
+		cout << "-> Operator" << endl;
+		return this;
+	}
 	class Grant {
 		
 	public:
@@ -89,13 +97,17 @@ public:
 class Mass {
 	int size;
 	int* p;
+	int test;
 public:
-	explicit Mass(int n = 5);
+	//explicit Mass(int n = 5);
 	Mass(const int arr[], int n) : size(n) {
 		p = new int[size];
 		for (int i = 0; i < size; i++)
 			p[i] = arr[i];
 	}
+	Mass(int tst) :test(tst) {};
+	void* operator new(size_t);
+	void operator delete(void*);
 	~Mass() {
 		delete[]p;
 	}
@@ -106,13 +118,29 @@ public:
 		}
 		return p[i];
 	}
+
 	void Out_arr() {
 		for (int i = 0; i < size; i++) {
 			cout << p[i] << ' ';
 		}
 		cout << endl;
 	}
+	void Outt() {
+		cout << "Nest: " << test << endl;
+	}
 };
+void* Mass::operator new(size_t size_1) {
+	cout << "New operation for class mass, byte need: " << size_1 << endl;
+	void* storage = malloc(size_1);
+	if (NULL == storage) {
+		cout << "Lack of memory" << endl;
+	}
+	return storage;
+}
+void Mass:: operator delete(void* p) {
+	cout << "Delete operation for Mass" << endl;
+	free(p);
+}
 /*void Out_1(Student::Grant& Val) {
 	cout << "Grant: " << Val.Value << endl;
 }
@@ -125,6 +153,9 @@ void Out(Student& stud, Student::Grant& val) {
 int main() {
 	Student Ve("Vladimir", "Ivanov", 17, 22);
 	Student::Grant sal(2000);
+	int aged = 22;
+	Student age_t(aged);
+
 	Student Ve_1 = Ve;
 	Out(Ve,sal);
 	Out(Ve_1, sal);
@@ -133,5 +164,11 @@ int main() {
 	Mass arr(arr_int, 8);
 	arr.Out_arr();
 	cout << arr[1] << endl;
-	cout << arr[9] << endl;
+	cout << age_t->Age << endl;
+	Mass *ptr_test_1 = new Mass(100);
+	ptr_test_1->Outt();
+	Mass* ptr_test_2 = new Mass(200);
+	ptr_test_2->Outt();
+	delete ptr_test_1;
+	delete ptr_test_2;
 }
