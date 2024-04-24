@@ -1,12 +1,12 @@
 $(function() {
     if(localStorage.user == null && $('.auth').length){
-        window.location.href = '/login.html';
+        //window.location.href = '/logout.html';
     }
     
     loadScript('js/categories.js', categoriesSetup);
     loadScript('js/products.js', productsSetup);
     loadScript('js/user.js', userInfo);
-
+    loadScript('js/cart.js', cartInfo);
 })
 
 $.get('/templates/navigation.html', function(data) {
@@ -56,6 +56,18 @@ var userInfo = function() {
     if ($('.userAccount').length){
         var userAccount = JSON.parse(localStorage.user);
         user.getAccountInfo(userAccount);
+    }
+}
+
+var cartInfo = function(){
+    let cart = new Cart();
+    if(localStorage.user != null){
+        var user = JSON.parse(localStorage.user);
+        cart.getCart(user.id);
+        if(localStorage.getItem('cartCount') != 0){
+            var cartItems = JSON.parse(localStorage.cart);
+            cart.getCartDisplay(cartItems);
+        }
     }
 }
 function loadScript(url, callback) {
