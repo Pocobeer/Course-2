@@ -8,8 +8,6 @@ class Student {
 	const char *Surname;
 	
 	int* data;
-	int size;
-	int* p;
 public:
 	int Age;
 	//explicit Student(int n = 5);
@@ -46,15 +44,16 @@ public:
 		++Age;
 		return *this;
 	}
-	/*Student operator ++(int) {
+	/*Student operator++(int) {
+		Student temp(*this);
 		Age++;
-		return *this;
+		return temp;
 	}*/
-	Student& operator++( int) {
+	/*Student& operator++(int) {
 		Student Age_timed = *this;
 		(*this)++;
 		return Age_timed;
-	}
+	}*/
 	Student operator +(const Student& st) {
 		return this->Age + st.Age;
 	}
@@ -62,12 +61,6 @@ public:
 		data = new int;
 		data = st.data;
 		return *this;
-	}
-	int& operator[](int i) {
-		if (i<0 || i > size) {
-			cout << "Arrange from massive" << endl;
-		}
-		return p[i];
 	}
 	Student* operator ->()
 	{
@@ -87,17 +80,19 @@ public:
 		//friend void Out_1(Student&,Student::Grant&);
 	};
 	friend void Out(Student&, Student::Grant&);
-	void Out_arr() {
-		for (int i = 0; i < size; i++) {
-			cout << p[i] << ' ';
-		}
-		cout << endl;
+	void Out_age() {
+		cout << "Age: " << Age << endl;
 	}
 };
+/*Student operator++(Student& st, int) {
+	st.Age++;
+	return st;
+}*/
 class Mass {
 	int size;
 	int* p;
 	int test;
+	
 public:
 	//explicit Mass(int n = 5);
 	Mass(const int arr[], int n) : size(n) {
@@ -111,6 +106,7 @@ public:
 	~Mass() {
 		delete[]p;
 	}
+	
 	int& operator[](int i) {
 		if (i<0 || i > size) {
 			cout << "Arrange from massive" << endl;
@@ -155,7 +151,8 @@ int main() {
 	Student::Grant sal(2000);
 	int aged = 22;
 	Student age_t(aged);
-
+	++age_t;
+	age_t.Out_age();
 	Student Ve_1 = Ve;
 	Out(Ve,sal);
 	Out(Ve_1, sal);
