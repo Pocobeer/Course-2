@@ -1,0 +1,251 @@
+Turbo Assembler	 Version 4.1	    04/25/24 12:26:36	    Page 1
+lab0.asm
+
+
+
+      1	0000			     _STACK  segment para stack
+      2	0000  0400*(??)			     db	     1024 dup(?)
+      3	0400			     _STACK  ends
+      4
+      5
+      6				     String  macro   VarName, VarValue
+      7					     local   after
+      8					     VarName db	     after-VarName-1
+      9						     db	     VarValue
+     10					     after   =	     $
+     11				     endm
+     12
+     13	0000			     data    segment
+     14	0000  0D 0A 24			     CrLf    db	     0Dh, 0Ah, '$'
+     15					     String  asTest1, <'Proverka jelaemaya < tekuwei'>
+1    16	0003  1C			     asTest1 db	     ??0000-asTest1-1
+1    17	0004  50 72 6F 76 65 72	6B+		     db	     'Proverka jelaemaya < tekuwei'
+     18	      61 20 6A 65 6C 61	65+
+     19	      6D 61 79 61 20 3C	20+
+     20	      74 65 6B 75 77 65	69
+     21					     String  asTest2, <'Proverka jelaemaya > tekuwei'>
+1    22	0020  1C			     asTest2 db	     ??0001-asTest2-1
+1    23	0021  50 72 6F 76 65 72	6B+		     db	     'Proverka jelaemaya > tekuwei'
+     24	      61 20 6A 65 6C 61	65+
+     25	      6D 61 79 61 20 3E	20+
+     26	      74 65 6B 75 77 65	69
+     27					     String  asTest3, <'Proverka pustaya stroka'>
+1    28	003D  17			     asTest3 db	     ??0002-asTest3-1
+1    29	003E  50 72 6F 76 65 72	6B+		     db	     'Proverka pustaya stroka'
+     30	      61 20 70 75 73 74	61+
+     31	      79 61 20 73 74 72	6F+
+     32	      6B 61
+     33
+     34					     String   asSrc, <'qwert'>
+1    35	0055  05			     asSrc db	   ??0003-asSrc-1
+1    36	0056  71 77 65 72 74			     db	     'qwert'
+     37	005B  00 FF*(??)		     asRes   db	     0,	255 dup(?)
+     38
+     39	015B  41			     Ch1     db	     'A'
+     40	015C  03			     Len1    db	     3
+     41
+     42	015D  31			     Ch2     db	     '1'
+     43	015E  09			     Len2    db	     9
+     44
+     45	015F  41			     Ch3     db	     'A'
+     46	0160  07			     Len3    db	     7
+     47
+     48	0161			     data    ends
+     49
+     50	0000			     code    segment byte public
+     51					     assume  cs:code, ds:data, ss:_STACK
+     52
+     53					     extrn   PadCh:far
+     54
+     55				     DoTest  macro   N
+     56					     mov     [asRes],	     0
+     57
+Turbo Assembler	 Version 4.1	    04/25/24 12:26:36	    Page 2
+lab0.asm
+
+
+
+     58					     push    ds
+     59					     lea     ax,     [asTest&N]
+     60					     push    ax
+     61					     call    writeln
+     62					     push    ds
+     63					     mov     ax,     offset asRes
+     64					     push    ax
+     65					     push    ds
+     66					     mov     ax,     offset asSrc
+     67					     push    ax
+     68					     mov     al,     [Ch&N]
+     69					     push    ax
+     70					     mov     al,     [Len&N]
+     71					     push    ax
+     72					     call    PadCh
+     73					     add     sp,     4	     ;;удаляем из стека адрес		    +
+     74				     возвращаемой строки
+     75					     push    ds
+     76					     lea     ax,     [asRes]
+     77					     push    ax
+     78					     call    writeln
+     79				     endm
+     80
+     81	0000			     writeln proc    far
+     82	0000  55			     push    bp
+     83	0001  8B EC			     mov     bp,     sp
+     84	0003  1E			     push    ds
+     85
+     86	0004  C5 76 06			     lds     si,     [bp+6]
+     87	0007  B4 40			     mov     ah,     40h
+     88	0009  BB 0001			     mov     bx,     1
+     89	000C  33 C9			     xor     cx,     cx
+     90	000E  8A 0C			     mov     cl,     [si]
+     91	0010  8D 54 01			     lea     dx,     [si+1]
+     92	0013  CD 21			     int     21h
+     93	0015  B4 02			     mov     ah,     02
+     94	0017  B2 0D			     mov     dl,     0Dh
+     95	0019  CD 21			     int     21h
+     96	001B  B2 0A			     mov     dl,     0Ah
+     97	001D  CD 21			     int     21h
+     98
+     99	001F  1F			     pop     ds
+    100	0020  5D			     pop     bp
+    101	0021  CA 0004			     ret     4
+    102	0024			     writeln endp
+    103
+    104	0024			     main    proc
+    105					     ;инициализация сегментного	регистра данных
+    106	0024  B8 0000s			     mov     ax,     data
+    107	0027  8E D8			     mov     ds,     ax
+    108
+    109					     DoTest  1
+1   110	0029  C6 06 005Br 00		     mov     [asRes],	     0
+1   111	002E  1E			     push    ds
+1   112	002F  B8 0003r			     lea     ax,     [asTest1]
+1   113	0032  50			     push    ax
+1   114	0033  0E E8 FFC9		     call    writeln
+Turbo Assembler	 Version 4.1	    04/25/24 12:26:36	    Page 3
+lab0.asm
+
+
+
+1   115	0037  1E			     push    ds
+1   116	0038  B8 005Br			     mov     ax,     offset asRes
+1   117	003B  50			     push    ax
+1   118	003C  1E			     push    ds
+1   119	003D  B8 0055r			     mov     ax,     offset asSrc
+1   120	0040  50			     push    ax
+1   121	0041  A0 015Br			     mov     al,     [Ch1]
+1   122	0044  50			     push    ax
+1   123	0045  A0 015Cr			     mov     al,     [Len1]
+1   124	0048  50			     push    ax
+1   125	0049  0E E8 0000e		     call    PadCh
+1   126	004D  83 C4 04			     add     sp,     4	     ;
+1   127	0050  1E			     push    ds
+1   128	0051  B8 005Br			     lea     ax,     [asRes]
+1   129	0054  50			     push    ax
+1   130	0055  0E E8 FFA7		     call    writeln
+    131					     DoTest  2
+1   132	0059  C6 06 005Br 00		     mov     [asRes],	     0
+1   133	005E  1E			     push    ds
+1   134	005F  B8 0020r			     lea     ax,     [asTest2]
+1   135	0062  50			     push    ax
+1   136	0063  0E E8 FF99		     call    writeln
+1   137	0067  1E			     push    ds
+1   138	0068  B8 005Br			     mov     ax,     offset asRes
+1   139	006B  50			     push    ax
+1   140	006C  1E			     push    ds
+1   141	006D  B8 0055r			     mov     ax,     offset asSrc
+1   142	0070  50			     push    ax
+1   143	0071  A0 015Dr			     mov     al,     [Ch2]
+1   144	0074  50			     push    ax
+1   145	0075  A0 015Er			     mov     al,     [Len2]
+1   146	0078  50			     push    ax
+1   147	0079  0E E8 0000e		     call    PadCh
+1   148	007D  83 C4 04			     add     sp,     4	     ;
+1   149	0080  1E			     push    ds
+1   150	0081  B8 005Br			     lea     ax,     [asRes]
+1   151	0084  50			     push    ax
+1   152	0085  0E E8 FF77		     call    writeln
+    153	0089  C6 06 0055r 00		     mov     [asSrc],	     0
+    154					     DoTest  3
+1   155	008E  C6 06 005Br 00		     mov     [asRes],	     0
+1   156	0093  1E			     push    ds
+1   157	0094  B8 003Dr			     lea     ax,     [asTest3]
+1   158	0097  50			     push    ax
+1   159	0098  0E E8 FF64		     call    writeln
+1   160	009C  1E			     push    ds
+1   161	009D  B8 005Br			     mov     ax,     offset asRes
+1   162	00A0  50			     push    ax
+1   163	00A1  1E			     push    ds
+1   164	00A2  B8 0055r			     mov     ax,     offset asSrc
+1   165	00A5  50			     push    ax
+1   166	00A6  A0 015Fr			     mov     al,     [Ch3]
+1   167	00A9  50			     push    ax
+1   168	00AA  A0 0160r			     mov     al,     [Len3]
+1   169	00AD  50			     push    ax
+1   170	00AE  0E E8 0000e		     call    PadCh
+1   171	00B2  83 C4 04			     add     sp,     4	     ;
+Turbo Assembler	 Version 4.1	    04/25/24 12:26:36	    Page 4
+lab0.asm
+
+
+
+1   172	00B5  1E			     push    ds
+1   173	00B6  B8 005Br			     lea     ax,     [asRes]
+1   174	00B9  50			     push    ax
+1   175	00BA  0E E8 FF42		     call    writeln
+    176
+    177					     ;завершение программы
+    178	00BE  B8 4C00			     mov     ax,     4C00h
+    179	00C1  CD 21			     int     21h
+    180	00C3			     main    endp
+    181
+    182	00C3			     code    ends
+    183
+    184					     end     main
+Turbo Assembler	 Version 4.1	    04/25/24 12:26:36	    Page 5
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??0000				  Number DATA:0020
+??0001				  Number DATA:003D
+??0002				  Number DATA:0055
+??0003				  Number DATA:005B
+??DATE				  Text	 "04/25/24"
+??FILENAME			  Text	 "lab0	  "
+??TIME				  Text	 "12:26:36"
+??VERSION			  Number 040A
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODE
+@FILENAME			  Text	 LAB0
+@WORDSIZE			  Text	 2
+ASRES				  Byte	 DATA:005B
+ASSRC				  Byte	 DATA:0055
+ASTEST1				  Byte	 DATA:0003
+ASTEST2				  Byte	 DATA:0020
+ASTEST3				  Byte	 DATA:003D
+CH1				  Byte	 DATA:015B
+CH2				  Byte	 DATA:015D
+CH3				  Byte	 DATA:015F
+CRLF				  Byte	 DATA:0000
+LEN1				  Byte	 DATA:015C
+LEN2				  Byte	 DATA:015E
+LEN3				  Byte	 DATA:0160
+MAIN				  Near	 CODE:0024
+PADCH				  Far	 CODE:---- Extern
+WRITELN				  Far	 CODE:0000
+
+Macro Name
+
+DOTEST
+STRING
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE				  16  00C3 Byte	  Public
+DATA				  16  0161 Para	  none
+_STACK				  16  0400 Para	  Stack
+
