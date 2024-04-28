@@ -1,4 +1,4 @@
-Turbo Assembler	 Version 4.1	    04/25/24 12:26:36	    Page 1
+Turbo Assembler	 Version 4.1	    04/26/24 10:48:34	    Page 1
 lab0.asm
 
 
@@ -60,7 +60,7 @@ lab0.asm
      55				     DoTest  macro   N
      56					     mov     [asRes],	     0
      57
-Turbo Assembler	 Version 4.1	    04/25/24 12:26:36	    Page 2
+Turbo Assembler	 Version 4.1	    04/26/24 10:48:34	    Page 2
 lab0.asm
 
 
@@ -122,7 +122,7 @@ lab0.asm
 1   112	002F  B8 0003r			     lea     ax,     [asTest1]
 1   113	0032  50			     push    ax
 1   114	0033  0E E8 FFC9		     call    writeln
-Turbo Assembler	 Version 4.1	    04/25/24 12:26:36	    Page 3
+Turbo Assembler	 Version 4.1	    04/26/24 10:48:34	    Page 3
 lab0.asm
 
 
@@ -184,7 +184,7 @@ lab0.asm
 1   169	00AD  50			     push    ax
 1   170	00AE  0E E8 0000e		     call    PadCh
 1   171	00B2  83 C4 04			     add     sp,     4	     ;
-Turbo Assembler	 Version 4.1	    04/25/24 12:26:36	    Page 4
+Turbo Assembler	 Version 4.1	    04/26/24 10:48:34	    Page 4
 lab0.asm
 
 
@@ -202,7 +202,7 @@ lab0.asm
     182	00C3			     code    ends
     183
     184					     end     main
-Turbo Assembler	 Version 4.1	    04/25/24 12:26:36	    Page 5
+Turbo Assembler	 Version 4.1	    04/26/24 10:48:34	    Page 5
 Symbol Table
 
 
@@ -214,9 +214,9 @@ Symbol Name			  Type	 Value
 ??0001				  Number DATA:003D
 ??0002				  Number DATA:0055
 ??0003				  Number DATA:005B
-??DATE				  Text	 "04/25/24"
+??DATE				  Text	 "04/26/24"
 ??FILENAME			  Text	 "lab0	  "
-??TIME				  Text	 "12:26:36"
+??TIME				  Text	 "10:48:34"
 ??VERSION			  Number 040A
 @CPU				  Text	 0101H
 @CURSEG				  Text	 CODE

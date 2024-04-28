@@ -94,6 +94,7 @@ class Mass {
 	int test;
 	
 public:
+	Mass() {};
 	//explicit Mass(int n = 5);
 	Mass(const int arr[], int n) : size(n) {
 		p = new int[size];
@@ -103,6 +104,7 @@ public:
 	Mass(int tst) :test(tst) {};
 	void* operator new(size_t);
 	void operator delete(void*);
+	
 	~Mass() {
 		delete[]p;
 	}
@@ -125,6 +127,7 @@ public:
 		cout << "Nest: " << test << endl;
 	}
 };
+//static void* (*new_ptr)(size_t);
 void* Mass::operator new(size_t size_1) {
 	cout << "New operation for class mass, byte need: " << size_1 << endl;
 	void* storage = malloc(size_1);
@@ -137,6 +140,7 @@ void Mass:: operator delete(void* p) {
 	cout << "Delete operation for Mass" << endl;
 	free(p);
 }
+//void* (Mass::*new_ptr)(size_t) = &Mass::operator new;
 /*void Out_1(Student::Grant& Val) {
 	cout << "Grant: " << Val.Value << endl;
 }
@@ -146,10 +150,11 @@ void Out(Student& stud) {
 void Out(Student& stud, Student::Grant& val) {
 	cout << "Name: " << stud.Name << "\nSurname: " << stud.Surname << "\nAge: " << stud.Age << "\nSalary: " << val.Value << endl;
 }
-int main() {
+void(*ptr_test)(Student& stud, Student::Grant& val) = &Out;
+int main() { 
 	Student Ve("Vladimir", "Ivanov", 17, 22);
 	Student::Grant sal(2000);
-	int aged = 22;
+	int aged = 23;
 	Student age_t(aged);
 	++age_t;
 	age_t.Out_age();
@@ -164,8 +169,9 @@ int main() {
 	cout << age_t->Age << endl;
 	Mass *ptr_test_1 = new Mass(100);
 	ptr_test_1->Outt();
-	Mass* ptr_test_2 = new Mass(200);
+	Mass* ptr_test_2 = new Mass(3.14);
 	ptr_test_2->Outt();
 	delete ptr_test_1;
 	delete ptr_test_2;
+	(*ptr_test)(Ve_1, sal);
 }
