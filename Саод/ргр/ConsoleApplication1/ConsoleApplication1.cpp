@@ -3,85 +3,66 @@
 
 using namespace std;
 
-const int N = 8; // Размер доски
-
-// Структура для представления клетки на доске
-struct Cell {
-    int row;
-    int col;
+// Структура для хранения позиции фигурки
+struct Position {
+    int x, y;
+    Position(int _x, int _y) : x(_x), y(_y) {}
 };
 
-// Функция для проверки, находится ли данная клетка в угрозе бишопов
-bool isUnderAttack(int row, int col, const vector<Cell>& bishops) {
-    for (const auto& bishop : bishops) {
-        if (abs(row - bishop.row) == abs(col - bishop.col)) {
-            return true;
-        }
+// Функция для проверки, можно ли поставить фигурку на данную позицию
+bool isSafe(int x, int y, vector<Position>& positions) {
+    for (const auto& pos : positions) {
+        // Проверка, находится ли текущая позиция под угрозой от уже установленных фигурок
+        if (x == pos.x || y == pos.y || abs(x - pos.x) == abs(y - pos.y) ||
+            (abs(x - pos.x) == 1 && abs(y - pos.y) == 2) ||
+            (abs(x - pos.x) == 2 && abs(y - pos.y) == 1))
+            return false;
     }
-    return false;
+    return true;
 }
 
-// Функция для нахождения расстановки архиепископов на доске
-bool findBishopsPlacement(int row, vector<Cell>& bishops, vector<vector<bool>>& board) {
-    if (row >= N) {
-        return true; // Все строки проверены
+// Функция для рекурсивного поиска расстановок
+void findConfigurations(int n, int row, vector<Position>& positions, vector<vector<Position>>& configurations) {
+    // Если достигнут конец доски, добавляем текущую расстановку в результат
+    if (row == n) {
+        configurations.push_back(positions);
+        return;
     }
 
-    for (int col = 0; col < N; col++) {
-        if (!isUnderAttack(row, col, bishops) && !board[row][col]) {
-            // Помечаем все атакуемые бишопами клетки
-            for (int i = 0; i < N; i++) {
-                if (!board[i][col]) board[i][col] = true;
-                if (!board[row][i]) board[row][i] = true;
-                int j = row + i, k = col + i;
-                if (j < N && k < N && !board[j][k]) board[j][k] = true;
-                j = row - i, k = col + i;
-                if (j >= 0 && k < N && !board[j][k]) board[j][k] = true;
-                j = row + i, k = col - i;
-                if (j < N && k >= 0 && !board[j][k]) board[j][k] = true;
-                j = row - i, k = col - i;
-                if (j >= 0 && k >= 0 && !board[j][k]) board[j][k] = true;
-            }
-
-            // Добавляем текущего бишопа в список
-            bishops.push_back({ row, col });
-
-            // Рекурсивно ищем расстановку для следующей строки
-            if (findBishopsPlacement(row + 1, bishops, board)) {
-                return true;
-            }
-
-            // Если расстановка не удалась, убираем текущего бишопа из списка и отмечаем его клетки как свободные
-            for (int i = 0; i < N; i++) {
-                if (!board[i][col]) board[i][col] = false;
-                if (!board[row][i]) board[row][i] = false;
-                int j = row + i, k = col + i;
-                if (j < N && k < N && !board[j][k]) board[j][k] = false;
-                j = row - i, k = col + i;
-                if (j >= 0 && k < N && !board[j][k]) board[j][k] = false;
-                j = row + i, k = col - i;
-                if (j < N && k >= 0 && !board[j][k]) board[j][k] = false;
-                j = row - i, k = col - i;
-                if (j >= 0 && k >= 0 && !board[j][k]) board[j][k] = false;
-            }
-            bishops.pop_back();
+    // Пробуем поставить фигурку в каждую клетку текущего ряда
+    for (int col = 0; col < n; ++col) {
+        if (isSafe(row, col, positions)) {
+            positions.push_back(Position(row, col)); // Добавляем фигурку
+            findConfigurations(n, row + 1, positions, configurations); // Переходим к следующему ряду
+            positions.pop_back(); // Удаляем фигурку перед возвратом
         }
     }
-
-    return false; // Не удалось найти подходящую расстановку
 }
 
+// Функция для вывода всех возможных расстановок
+void printConfigurations(vector<vector<Position>>& configurations) {
+    int count = 1;
+    for (const auto& config : configurations) {
+        cout << "Configuration " << count++ << ":\n";
+        for (const auto& pos : config) {
+            cout << "(" << pos.x << "," << pos.y << ") ";
+        }
+        cout << "\n\n";
+    }
+}
 int main() {
-    vector<Cell> bishops; // Список расположений архиепископов
-    vector<vector<bool>> board(N, vector<bool>(N, false)); // Доска, на которой отмечены клетки, атакуемые архиепископами
+    int n = 8; // Размер доски
+    vector<Position> positions; // Вектор для хранения позиций фигурок
+    vector<vector<Position>> configurations; // Вектор для хранения всех расстановок
+    findConfigurations(n, 0, positions, configurations);
 
-    // Находим расстановку архиепископов
-    findBishopsPlacement(0, bishops, board);
-
-    // Выводим результат
-    cout << "Расстановка архиепископов:" << endl;
-    for (const auto& bishop : bishops) {
-        cout << "(" << bishop.row << ", " << bishop.col << ")" << endl;
+    if (!configurations.empty()) {
+        cout << "Minimum number of figures: " << configurations[0].size() << "\n";
+        cout << "Number of configurations: " << configurations.size() << "\n";
+        printConfigurations(configurations);
+    }
+    else {
+        cout << "No valid configurations found.\n";
     }
 
     return 0;
