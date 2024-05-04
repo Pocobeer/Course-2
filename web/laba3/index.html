@@ -16,7 +16,6 @@
             </style>
             </head>
             <body>
-            <!-- <h1 align = "center">Пупупуп</h1> -->
             <div id="output">
                 
             </div>
@@ -24,56 +23,6 @@
             <script>
             function makeTableFromCountry(country) {
                 tab="<table width=75% align='center'>";
-                // var k = 0;
-                // var displayed = false;
-                // var displayed_places = false;
-                // for (const key in country) {
-                    
-                //     // if (typeof country[key] === 'object') {
-                //     //     tab += "<tr><td colspan='2'>" + key + "</td></tr>";
-                //     //     tab += "<tr><td colspan='2'>" + makeTableFromCountry(country[key]) + "</td></tr>";
-                //     // } else {
-                //     //     tab += "<tr><td>" + key + "</td><td>" + country[key] + "</td></tr>";
-                //     // }
-                //     if( k < 4 && typeof country[key] === 'string') {
-                //         tab += "<tr><td>" + country[key] + "</td></tr>";
-                //         k++;
-                //     }
-                //     for (const key_1 in country) {
-                //         if (k==4 && typeof country[key_1] === 'number' && !displayed) {
-                //             tab += "<tr><td>" + country[key_1] + "</td></tr>";
-                //             displayed = true;
-                //         }
-                //     }
-                //     // for(const key_2 in country) {
-                //     //     if (Array.isArray(country[key_2])) {
-                //     //     if (Array.isArray(country[key_2][0])) {
-                //     //         continue
-                //     //     }
-                //     //     else if (k==4 && typeof country[key_2][0] === 'string') {
-                //     //         tab += "<tr><td>" + country[key_2] + "</td></tr>";
-                //     //     }
-                //     //     }
-                //     // }
-                //     if (Array.isArray(country[key])) {
-                //         if (Array.isArray(country[key][0])) {
-                //             continue
-                //         }
-                //         else if( k ==4 && !displayed_places && typeof country[key][0] === 'string') {
-                //         tab += "<tr><td>" + country[key] + "</td></tr>";
-                //         displayed_places = true;
-                //     }
-                //     }
-                    
-                //     // if (displayed_places && typeof country[key] === 'object') {
-                //     //     tab+="<tr><td colspan='2'>" + JSON.stringify(country[key]) + "</td></tr>";
-                //     // }
-                //         // if(typeof country[key] === 'object') {
-                //         //     tab+="<tr><td >" + makeTableFromCountry(country[key]) + "</td></tr>";
-                //         // }
-
-                //     //tab += "<tr><td>" + country[key] + "</td></tr>";
-                // }
                 a_1=[] // string
                 a_2=[] // number
                 a_3=[] // array in array
@@ -122,6 +71,7 @@
                     let tableString = '<table class = "table-container">';
                     array.forEach(obj => {
                         tableString += '<tr class = "table-row">';
+                        console.log(obj)
                         Object.entries(obj).forEach(([key, value]) => {
                             tableString += `<td class = "table-cell"><strong>${key}</strong> - ${value}</td>`;
                         });
