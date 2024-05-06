@@ -24,60 +24,11 @@
             <script>
             function makeTableFromCountry(country) {
                 tab="<table width=75% align='center'>";
-                // var k = 0;
-                // var displayed = false;
-                // var displayed_places = false;
-                // for (const key in country) {
-                    
-                //     // if (typeof country[key] === 'object') {
-                //     //     tab += "<tr><td colspan='2'>" + key + "</td></tr>";
-                //     //     tab += "<tr><td colspan='2'>" + makeTableFromCountry(country[key]) + "</td></tr>";
-                //     // } else {
-                //     //     tab += "<tr><td>" + key + "</td><td>" + country[key] + "</td></tr>";
-                //     // }
-                //     if( k < 4 && typeof country[key] === 'string') {
-                //         tab += "<tr><td>" + country[key] + "</td></tr>";
-                //         k++;
-                //     }
-                //     for (const key_1 in country) {
-                //         if (k==4 && typeof country[key_1] === 'number' && !displayed) {
-                //             tab += "<tr><td>" + country[key_1] + "</td></tr>";
-                //             displayed = true;
-                //         }
-                //     }
-                //     // for(const key_2 in country) {
-                //     //     if (Array.isArray(country[key_2])) {
-                //     //     if (Array.isArray(country[key_2][0])) {
-                //     //         continue
-                //     //     }
-                //     //     else if (k==4 && typeof country[key_2][0] === 'string') {
-                //     //         tab += "<tr><td>" + country[key_2] + "</td></tr>";
-                //     //     }
-                //     //     }
-                //     // }
-                //     if (Array.isArray(country[key])) {
-                //         if (Array.isArray(country[key][0])) {
-                //             continue
-                //         }
-                //         else if( k ==4 && !displayed_places && typeof country[key][0] === 'string') {
-                //         tab += "<tr><td>" + country[key] + "</td></tr>";
-                //         displayed_places = true;
-                //     }
-                //     }
-                    
-                //     // if (displayed_places && typeof country[key] === 'object') {
-                //     //     tab+="<tr><td colspan='2'>" + JSON.stringify(country[key]) + "</td></tr>";
-                //     // }
-                //         // if(typeof country[key] === 'object') {
-                //         //     tab+="<tr><td >" + makeTableFromCountry(country[key]) + "</td></tr>";
-                //         // }
-
-                //     //tab += "<tr><td>" + country[key] + "</td></tr>";
-                // }
                 a_1=[] // string
                 a_2=[] // number
                 a_3=[] // array in array
                 a_4=[] // object in array
+                console.log(country);
                 for(i=0; i<country.length; i++) {
                     if(typeof country[i] === 'string') {
                         a_1.push(country[i])
@@ -112,12 +63,12 @@
                 //console.log(a_4)
                 const entires = Object.entries(a_4);
 
-                for (const key in a_4) {
-                    if(a_4.hasOwnProperty(key)){
-                        console.log(key + ':', a_4[key]);
-                        console.log(entires[key].length)
-                    }
-                }   
+                // for (const key in a_4) {
+                //     if(a_4.hasOwnProperty(key)){
+                //         console.log(key + ':', a_4[key]);
+                //         console.log(entires[key].length)
+                //     }
+                // }   
                 function arrayToTableString(array) {
                     let tableString = '<table class = "table-container">';
                     array.forEach(obj => {
@@ -141,6 +92,7 @@
             }
             
             countriesTable = countries.map(makeTableFromCountry);
+            console.log(countriesTable);
             outputElement = document.getElementById("output");
             
             countriesTable.forEach(function(info) {
