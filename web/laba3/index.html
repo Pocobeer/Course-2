@@ -16,7 +16,6 @@
             </style>
             </head>
             <body>
-            <!-- <h1 align = "center">Пупупуп</h1> -->
             <div id="output">
                 
             </div>
@@ -73,6 +72,7 @@
                     let tableString = '<table class = "table-container">';
                     array.forEach(obj => {
                         tableString += '<tr class = "table-row">';
+                        console.log(obj)
                         Object.entries(obj).forEach(([key, value]) => {
                             tableString += `<td class = "table-cell"><strong>${key}</strong> - ${value}</td>`;
                         });
