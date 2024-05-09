@@ -1,77 +1,123 @@
-﻿// ConsoleApplication1.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
-
-#include <iostream>
-
-int main()
-{
-    std::cout << "Hello World!\n";
-}
-
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
-
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
-#include<iostream>
-#include<fstream>
-#include<stdlib.h>
-#include<string.h>
-#include<ctype.h>
+﻿#include <iostream>
+#include <string>
+#include <unordered_map>
 
 using namespace std;
 
-int isKeyword(char buffer[]) {
-    char keywords[32][10] = { "auto","break","case","char","const","continue","default",
-    "do","double","else","enum","extern","float","for","goto",
-    "if","int","long","register","return","short","signed",
-    "sizeof","static","struct","switch","typedef","union",
-    "unsigned","void","volatile","while" };
-    int i, flag = 0;
-    for (i = 0; i < 32; ++i) {
-        if (strcmp(keywords[i], buffer) == 0) {
-            flag = 1;
-            break;
+// Базовый класс для всех лексем
+class Lexeme {
+
+    string name;
+
+public:
+    Lexeme(const string& name) : name(name) {}
+    virtual string getClass() const = 0;
+};
+
+// Класс для идентификаторов
+class Identifier : public Lexeme {
+public:
+    Identifier(const string& name) : Lexeme(name) {}
+    string getClass() const override {
+        return "Идентификатор";
+    }
+};
+
+// Класс для ключевых слов
+class Keyword : public Lexeme {
+public:
+    Keyword(const string& name) : Lexeme(name) {}
+    string getClass() const {
+        return "Ключевое слово";
+    }
+};
+
+// Класс для знаков операций
+class Operator : public Lexeme {
+public:
+    Operator(const string& name) : Lexeme(name) {}
+    string getClass() const {
+        return "Знак операции";
+    }
+};
+
+// Класс для литералов
+class Literal : public Lexeme {
+public:
+    Literal(const string& name) : Lexeme(name) {}
+    string getClass() const {
+        return "Литерал";
+    }
+};
+
+// Класс для разделителей
+class Delimiter : public Lexeme {
+public:
+    Delimiter(const string& name) : Lexeme(name) {}
+    string getClass() const {
+        return "Разделитель";
+    }
+};
+
+// Класс для анализатора лексем
+class LexicalAnalyzer {
+private:
+    unordered_map<string, Lexeme*> lexemes;
+
+public:
+    LexicalAnalyzer() {
+        string identifiers[] = { "int", "float", "char", "string", "bool", "double",
+    "long", "short", "unsigned", "signed", "void", "struct", "class", "enum",
+    "typedef", "namespace", "const", "static", "extern", "auto" };//Идентификаторы
+        string keywords[] = { "if", "else", "while", "for", "return", 
+            "switch", "case", "break", "continue", "do", "class", "public", 
+            "private", "protected", "virtual" };//Ключевые слова
+        string operators[] = { "+", "-", "*", "/", "=", "==", "!=", "<", ">", 
+            "<=", ">=", "&&", "||", "++", "--", "+=", "-=", "*=", "/=" };//Операторы
+        string literals[] = { "123", "3.14", "'a'", "\"Hello\"", "true", "false", 
+            "0xFF", "0b1010", "1.23e4", "0" };//Литералы(константные значения)
+        string delimiters[] = { ";", ",", "(", ")", "{", "}", "[", "]", ":", 
+            ".", "->", "::", "#", "//", "/*", "*/" };//Разделители
+        for (const string& identifier : identifiers) {
+            lexemes[identifier] = new Identifier(identifier);
+        }
+        for (const string& keyword : keywords) {
+            lexemes[keyword] = new Keyword(keyword);
+        }
+        for (const string& operator_ : operators) {
+            lexemes[operator_] = new Operator(operator_);
+        }
+        for (const string& literal : literals) {
+            lexemes[literal] = new Literal(literal);
+        }
+        for (const string& delimiter : delimiters) {
+			lexemes[delimiter] = new Delimiter(delimiter);
         }
     }
-    return flag;
-}
+
+    ~LexicalAnalyzer() = default;
+
+    void analyzeLexeme(const string& lexeme) {
+        if (lexemes.find(lexeme) != lexemes.end()) {
+            cout << "Лексема: " << lexeme << " - Класс: " << lexemes[lexeme]->getClass() << endl;
+        }
+        else {
+            cout << "Лексема: " << lexeme << " - Класс: Неизвестный" << endl;
+        }
+    }
+};
 
 int main() {
-    char ch, buffer[15], operators[] = "+-*/%=";
-    ifstream fin("program.txt");
-    int i, j = 0;
-    if (!fin.is_open()) {
-        cout << "error while opening the file\n";
-        exit(0);
-    }
-    while (!fin.eof()) {
-        ch = fin.get();
+    setlocale(LC_ALL, "Russian");
+    LexicalAnalyzer analyzer;
 
-        for (i = 0; i < 6; ++i) {
-            if (ch == operators[i])
-                cout << ch << " is operator\n";
-        }
+    // Пример анализа лексем
+    analyzer.analyzeLexeme("int");
+    analyzer.analyzeLexeme("if");
+    analyzer.analyzeLexeme("/");
+    analyzer.analyzeLexeme("123");
+    analyzer.analyzeLexeme("(");
+    analyzer.analyzeLexeme("xyz"); // Неизвестная лексема
 
-        if (isalnum(ch)) {
-            buffer[j++] = ch;
-        }
-        else if ((ch == ' ' || ch == '\n') && (j != 0)) {
-            buffer[j] = '\0';
-            j = 0;
-
-            if (isKeyword(buffer) == 1)
-                cout << buffer << " is keyword\n";
-            else
-                cout << buffer << " is indentifier\n";
-        }
-
-    }
-    fin.close();
     return 0;
 }

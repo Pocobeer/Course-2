@@ -1,5 +1,5 @@
-Turbo Assembler	 Version 4.1	    05/09/24 15:37:54	    Page 1
-lowe.asm
+Turbo Assembler	 Version 4.1	    05/09/24 15:40:13	    Page 1
+lab2_p.asm
 
 
 
@@ -60,14 +60,14 @@ lowe.asm
      55	002E  CA 000C			     ret     12		     ; выход с удалением	параметров Ch1,
      56								     ; Ch2 и адреса S (Res удалять нельзя!)
      57	0031			     PadCh  endp
-Turbo Assembler	 Version 4.1	    05/09/24 15:37:54	    Page 2
-lowe.asm
+Turbo Assembler	 Version 4.1	    05/09/24 15:40:13	    Page 2
+lab2_p.asm
 
 
 
      58	0031			     code   ends
      59					    end
-Turbo Assembler	 Version 4.1	    05/09/24 15:37:54	    Page 3
+Turbo Assembler	 Version 4.1	    05/09/24 15:40:13	    Page 3
 Symbol Table
 
 
@@ -76,12 +76,12 @@ Symbol Table
 Symbol Name			  Type	 Value
 
 ??DATE				  Text	 "05/09/24"
-??FILENAME			  Text	 "lowe	  "
-??TIME				  Text	 "15:37:54"
+??FILENAME			  Text	 "lab2_p  "
+??TIME				  Text	 "15:40:13"
 ??VERSION			  Number 040A
 @CPU				  Text	 0101H
 @CURSEG				  Text	 CODE
-@FILENAME			  Text	 LOWE
+@FILENAME			  Text	 LAB2_P
 @WORDSIZE			  Text	 2
 CH1				  Text	 byte  ptr [bp+8]
 EXIT				  Near	 CODE:002C

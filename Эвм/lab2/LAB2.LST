@@ -1,5 +1,5 @@
-Turbo Assembler	 Version 4.1	    05/09/24 15:37:55	    Page 1
-lab0.asm
+Turbo Assembler	 Version 4.1	    05/09/24 15:40:14	    Page 1
+lab2.asm
 
 
 
@@ -57,7 +57,7 @@ lab0.asm
      52	0027			     code    ends
      53
      54					     end     main
-Turbo Assembler	 Version 4.1	    05/09/24 15:37:55	    Page 2
+Turbo Assembler	 Version 4.1	    05/09/24 15:40:14	    Page 2
 Symbol Table
 
 
@@ -66,12 +66,12 @@ Symbol Table
 Symbol Name			  Type	 Value
 
 ??DATE				  Text	 "05/09/24"
-??FILENAME			  Text	 "lab0	  "
-??TIME				  Text	 "15:37:55"
+??FILENAME			  Text	 "lab2	  "
+??TIME				  Text	 "15:40:14"
 ??VERSION			  Number 040A
 @CPU				  Text	 0101H
 @CURSEG				  Text	 CODE
-@FILENAME			  Text	 LAB0
+@FILENAME			  Text	 LAB2
 @WORDSIZE			  Text	 2
 CH1				  Byte	 DATA:0106
 LEN1				  Byte	 DATA:0107

@@ -1,6 +1,6 @@
-tasm.exe lowe.asm /l
-tasm.exe lab0.asm/l
+tasm.exe lab2_p.asm /l
+tasm.exe lab2.asm/l
 pause
-tlink lab0.obj+lowe.obj
+tlink lab2.obj+lab2_p.obj
 pause
-td.exe lab0.exe
+td.exe lab2.exe

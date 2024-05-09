@@ -1,0 +1,88 @@
+Turbo Assembler	 Version 4.1	    05/09/24 17:05:26	    Page 1
+lab_3.asm
+
+
+
+      1	0000			     cseg    segment
+      2					     assume cs:cseg,ds:cseg
+      3
+      4				     ; аргументы функции
+      5	0000  3F99999A 404001A3	  +  x	dd  1.2, 3.0001, 0.1, 2.99, 4.288, 6.789, 7.987, 10.021
+      6	      3DCCCCCD 403F5C29	  +
+      7	      4089374C 40D93F7D	  +
+      8	      40FF9581 41205604
+      9				     ; результат вычисления функции
+     10	0020  ????????		     z dd ?
+     11	0024			     beg:
+     12	0024  8C C8			 mov	 ax,cs	     ;Настроить сегментные
+     13	0026  8E D8			 mov	 ds,ax	     ;регистры
+     14	0028  9B DB E3			 finit		     ;инициализировать сопроцессор
+     15	002B  9B D9 E8			 fld1		     ;загружаем максимальную погрешность
+     16	002E  9B D9 06 0000r		 fld	 x	     ;загрузить х1
+     17					 ; Настраиваем счетчик
+     18	0033  B5 00			 mov ch, 0
+     19	0035  B1 07			 mov cl, 7
+     20					 ; Сохраняем результат
+     21	0037  B7 00			 mov bh, 0
+     22	0039  B3 07			 mov bl, 7
+     23	003B  2A D9			 sub bl,cl
+     24	003D			     Repeated:
+     25	003D  9B D9 C0			 fld	 st(0)	     ;образовать копию x(i)			    ;st	    +
+     26				     (0)-копия х,st(1)-теущий х, st(2)-res
+     27	0040  9B D9 FC			 frndint	     ;Округлить до целого x1(i)		      ;st   +
+     28				     (0)-округленная	копия х,st(1)-теущий х, st(2)-res
+     29	0043  9B DE E9			 fsubp	 st(1),st(0) ;Вычитание вещественное с			    +
+     30				     выталкиванием		;st(0)-до ближайшего целового х,st	    +
+     31				     (1)-res
+     32	0046  9B D9 E1			 fabs		     ;Модуль					   ;st		    +
+     33				     (0)-модуль до ближайшего	целового,st(1)-res
+     34	0049  9B D8 D1			 fcom	st(1)	     ;Сравниваем текущую масимальную	    +
+     35				     погрешность	;st(0)-до ближайшего целового,st(1)-res
+     36					 .286
+     37	004C  9B DF E0			 fstsw ax	     ;Записываем значения кодов условия
+     38	004F  9E			 sahf		     ;загрузить коды во флаговый	регистр
+     39	0050  77 08			 ja	Processing   ;если >= переходим на финальную		    +
+     40				     обработку
+     41	0052			     NewEps:
+     42	0052  D9 C9			 fxch	 st(1)							     ;st(0)-res,st(1)-до  +
+     43				     ближайшего целового
+     44	0054  B7 00			 mov bh, 0
+     45	0056  B3 07			 mov bl, 7
+     46	0058  2A D9			 sub bl,cl
+     47	005A			     Processing:
+     48	005A  D9 F6			 fdecstp	     ;Уменьшаем указатель стека	на 1
+     49	005C  E2 DF			 loop Repeated
+     50	005E			     Exit:
+     51	005E  D9 1E 0020r		 fstp	 z	     ;сохранить результат
+     52	0062  B8 4C00			 mov	 ax,4c00h    ;вернуться в DOS
+     53	0065  CD 21			 int 21h
+     54	0067			     cseg ends
+     55					 end beg
+Turbo Assembler	 Version 4.1	    05/09/24 17:05:26	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "05/09/24"
+??FILENAME			  Text	 "lab_3	  "
+??TIME				  Text	 "17:05:26"
+??VERSION			  Number 040A
+@CPU				  Text	 0707H
+@CURSEG				  Text	 CSEG
+@FILENAME			  Text	 LAB_3
+@WORDSIZE			  Text	 2
+BEG				  Near	 CSEG:0024
+EXIT				  Near	 CSEG:005E
+NEWEPS				  Near	 CSEG:0052
+PROCESSING			  Near	 CSEG:005A
+REPEATED			  Near	 CSEG:003D
+X				  Dword	 CSEG:0000
+Z				  Dword	 CSEG:0020
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CSEG				  16  0067 Para	  none
+
