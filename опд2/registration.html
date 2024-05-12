@@ -14,33 +14,35 @@
         <form class = "login" style="width: 75%;">
           <!-- <div class = "close-btn">&times;</div> -->
           <div class = "form">
-            <h2>Вход</h2>
+            <h2>Регистрация</h2>
             <div class = "loginMsg"></div>
             <div class = "form-element">
+                <label for = "name">Имя</label>
+                <input type = "text" id = "name" name = "name" class = "form-control" placeholder = "Введите имя" >
+            </div>
+            <div class = "form-element">
+                <label for = "surname">Фамилия</label>
+                <input type = "surname" id = "surname" name = "surname" class = "form-control" placeholder = "Введите фамилию" >
+            </div>
+            <div class = "form-element">
               <label for = "email">Email</label>
-              <input type = "text" id = "email" name = "email" class = "form-control" placeholder = "Введите email" value="john@gmail.com">
+              <input type = "text" id = "email" name = "email" class = "form-control" placeholder = "Введите email">
             </div>
             <div class = "form-element">
               <label for = "password">Пароль</label>
-              <input type = "password" id = "password" name = "password" class = "form-control" placeholder = "Введите пароль" value="m38rmF$">
+              <input type = "password" id = "password" name = "password" class = "form-control" placeholder = "Введите пароль">
             </div>
             <div class = "form-element">
               <div class = "flex-container">
-                <div class="flex-one">
-                  <input type = "checkbox" id = "remember-me">
-                  <label for = "remember-me">Запомнить меня</label>
-                </div>
                 <!-- <div class="flex-two">
                   <a class = "nav-link text-white " href = "#">Забыли пароль?</a>
                 </div> -->
               </div>
             </div>
             <div class = "form-element">
-              <button>Войти</button>
+              <button>Зарегистрироваться</button>
             </div>
-            <div class = "form-element">
-              <div class = "signup-link">Нет аккаунта? <a  href = "registration.html" style="color: black;">Регистрация</a></div>
-            </div>
+            
           </div>
         </form>
     <br>
@@ -58,6 +60,6 @@
     <div id = "footer-placeholder"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/init.js"></script>
+    <!-- <script src="/js/init.js"></script> -->
 </body>
 </html>

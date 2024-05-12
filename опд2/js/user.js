@@ -31,7 +31,7 @@ class User{
                 if(localStorage.getItem('user') != null){
                     window.location.href = '/index.html';
                 }else{
-                    $('.loginMsg').html('<div class = "alert alert-danger role = "alert">Неправильное имя пользователя или пароль</div>');
+                   // $('.loginMsg').html('<div class = "alert alert-danger role = "alert">Неправильное имя пользователя или пароль</div>');
                 }
             },
         });
