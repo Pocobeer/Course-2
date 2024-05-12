@@ -2,13 +2,7 @@ _STACK  segment para stack
         db      1024 dup(?)
 _STACK  ends
  
- 
-;String  macro   VarName, VarValue
- ;       local   after
- ;       VarName db      after-VarName-1
-;                db      VarValue
- ;       after   =       $
-;endm
+
  
 data    segment
  
@@ -16,7 +10,7 @@ data    segment
         Res   db      0, 255 dup('$')
  
         Ch1     db      'A'
-        Len1    db      9
+        Len1    db      10
  
 data    ends
  

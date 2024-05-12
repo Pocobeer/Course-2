@@ -3,67 +3,61 @@
 
 using namespace std;
 
-// Структура для хранения позиции фигурки
 struct Position {
     int x, y;
-    Position(int _x, int _y) : x(_x), y(_y) {}
 };
 
-// Функция для проверки, можно ли поставить фигурку на данную позицию
-bool isSafe(int x, int y, vector<Position>& positions) {
-    for (const auto& pos : positions) {
-        // Проверка, находится ли текущая позиция под угрозой от уже установленных фигурок
-        if (x == pos.x || y == pos.y || abs(x - pos.x) == abs(y - pos.y) ||
-            (abs(x - pos.x) == 1 && abs(y - pos.y) == 2) ||
-            (abs(x - pos.x) == 2 && abs(y - pos.y) == 1))
-            return false;
-    }
-    return true;
+bool isValid(int x, int y, int n) {
+    return x >= 0 && x < n && y >= 0 && y < n;
 }
 
-// Функция для рекурсивного поиска расстановок
-void findConfigurations(int n, int row, vector<Position>& positions, vector<vector<Position>>& configurations) {
-    // Если достигнут конец доски, добавляем текущую расстановку в результат
-    if (row == n) {
-        configurations.push_back(positions);
-        return;
+void markThreatened(vector<vector<bool>>& board, int x, int y, int n) {
+    int dx[] = { 2, 1, -1, -2, -2, -1, 1, 2 };
+    int dy[] = { 1, 2, 2, 1, -1, -2, -2, -1 };
+
+    // Помечаем клетки, угрожаемые конем
+    for (int i = 0; i < 8; ++i) {
+        int nx = x + dx[i];
+        int ny = y + dy[i];
+        if (isValid(nx, ny, n)) {
+            board[nx][ny] = true;
+        }
     }
 
-    // Пробуем поставить фигурку в каждую клетку текущего ряда
-    for (int col = 0; col < n; ++col) {
-        if (isSafe(row, col, positions)) {
-            positions.push_back(Position(row, col)); // Добавляем фигурку
-            findConfigurations(n, row + 1, positions, configurations); // Переходим к следующему ряду
-            positions.pop_back(); // Удаляем фигурку перед возвратом
+    // Помечаем клетки, угрожаемые слоном
+    for (int i = -n; i <= n; ++i) {
+        int nx = x + i;
+        int ny1 = y + i;
+        int ny2 = y - i;
+        if (isValid(nx, ny1, n)) {
+            board[nx][ny1] = true;
+        }
+        if (isValid(nx, ny2, n)) {
+            board[nx][ny2] = true;
         }
     }
 }
 
-// Функция для вывода всех возможных расстановок
-void printConfigurations(vector<vector<Position>>& configurations) {
-    int count = 1;
-    for (const auto& config : configurations) {
-        cout << "Configuration " << count++ << ":\n";
-        for (const auto& pos : config) {
-            cout << "(" << pos.x << "," << pos.y << ") ";
+int minKnights(int n) {
+    vector<vector<bool>> board(n, vector<bool>(n, false));
+    int knights = 0;
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            if (!board[i][j]) {
+                markThreatened(board, i, j, n);
+                knights++;
+            }
         }
-        cout << "\n\n";
     }
+
+    return knights;
 }
+
 int main() {
-    int n = 8; // Размер доски
-    vector<Position> positions; // Вектор для хранения позиций фигурок
-    vector<vector<Position>> configurations; // Вектор для хранения всех расстановок
-    findConfigurations(n, 0, positions, configurations);
+    int n = 8; // Размер доски 8*8
 
-    if (!configurations.empty()) {
-        cout << "Minimum number of figures: " << configurations[0].size() << "\n";
-        cout << "Number of configurations: " << configurations.size() << "\n";
-        printConfigurations(configurations);
-    }
-    else {
-        cout << "No valid configurations found.\n";
-    }
+    cout << "Minimum number of pieces required on an " << n << "x" << n << " chessboard: " << minKnights(n) << endl;
 
     return 0;
 }

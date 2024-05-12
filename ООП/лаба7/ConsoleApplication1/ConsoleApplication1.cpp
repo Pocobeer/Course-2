@@ -101,6 +101,26 @@ public:
 	}
 };
 
+class A {
+	int a;
+public:
+	A() = default;
+	A(int a) :a(a) {};
+	virtual int Get() {
+		return a;
+	}
+};
+class B : public A
+{
+	int b;
+public:
+	B() = default;
+	B(int b) :b(b) {};
+	int Get() {
+		return b;
+	}
+};
+
 
 int main() {
 	Word w_1("Pupupu");
@@ -128,8 +148,14 @@ int main() {
 	h_1->show();
 	h_1 = dynamic_cast<Student*>(h_1);
 	h_1->show();
-	Human h;
-	Human& h_ref = h;
-	Employee& emp_ref = dynamic_cast<Employee&>(h_ref);
-	emp_ref.show();
+	Employee emp;
+	Employee& emp_ref = emp;
+	Human& h_ref = emp;
+	
+	//Employee& emp_ref = dynamic_cast<Employee&>(h_ref);
+	//emp_ref.show();
+	B bb;
+	B& bb_ref = bb;
+	A& A_ref = bb;
+	dynamic_cast<B&>(A_ref).Get();
 }

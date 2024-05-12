@@ -3,7 +3,7 @@
 
  00000H 003FFH 00400H _STACK             
  00400H 00507H 00108H DATA               
- 00508H 0055FH 00058H CODE               
+ 00508H 0055CH 00055H CODE               
 
 Program entry point at 0050:0008
 Warning: No stack
