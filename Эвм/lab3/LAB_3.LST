@@ -1,4 +1,4 @@
-Turbo Assembler	 Version 4.1	    05/10/24 14:19:55	    Page 1
+Turbo Assembler	 Version 4.1	    05/12/24 19:28:28	    Page 1
 lab_3.asm
 
 
@@ -17,7 +17,7 @@ lab_3.asm
      12	    0024  8C C8			     mov     ax,cs	 ;Настроить сегментные
      13	    0026  8E D8			     mov     ds,ax	 ;регистры
      14	    0028  9B DB	E3		     finit		 ;инициализировать сопроцессор
-     15	    002B  9B D9	EB		     fldpi		  ;загружаем максимальную погрешность
+     15	    002B  9B D9	E8		     fld1		 ;загружаем максимальную погрешность
      16	    002E  BE 0000r		     lea si, [x]	 ;загружаем массив
      17					     ; Настраиваем счетчик
      18	    0031  B5 00			     mov ch, 0
@@ -60,13 +60,13 @@ lab_3.asm
      55	    0064  B8 4C00		     mov     ax,4c00h	 ;вернуться в	DOS
      56	    0067  CD 21			     int 21h
      57	    0069			 cseg ends
-Turbo Assembler	 Version 4.1	    05/10/24 14:19:55	    Page 2
+Turbo Assembler	 Version 4.1	    05/12/24 19:28:28	    Page 2
 lab_3.asm
 
 
 
      58					     end beg
-Turbo Assembler	 Version 4.1	    05/10/24 14:19:55	    Page 3
+Turbo Assembler	 Version 4.1	    05/12/24 19:28:28	    Page 3
 Symbol Table
 
 
@@ -74,9 +74,9 @@ Symbol Table
 
 Symbol Name			  Type	 Value
 
-??DATE				  Text	 "05/10/24"
+??DATE				  Text	 "05/12/24"
 ??FILENAME			  Text	 "lab_3	  "
-??TIME				  Text	 "14:19:55"
+??TIME				  Text	 "19:28:28"
 ??VERSION			  Number 040A
 @CPU				  Text	 0F0FH
 @CURSEG				  Text	 CSEG
