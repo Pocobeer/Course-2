@@ -59,37 +59,36 @@
       </script> -->
     <div id = "footer-placeholder"></div>
     <!-- <script>
-        document.getElementById("registration-form").addEventListener("submit", function(event) {
-            event.preventDefault(); // Предотвращаем стандартное поведение отправки формы
+      document.getElementById("registration-form").addEventListener("submit", function(event) {
+          event.preventDefault(); // Prevent form submission
+          
+          // Collect form data
+          const formData = {
+              name: document.getElementById("name").value,
+              surname: document.getElementById("surname").value,
+              email: document.getElementById("email").value,
+              password: document.getElementById("password").value
+          };
 
-            // Получаем данные из формы
-            const formData = new FormData(event.target);
-
-            // Преобразуем данные в объект
-            const data = {};
-            formData.forEach((value, key) => {
-                data[key] = value;
-            });
-
-            // Отправляем POST-запрос
-            fetch('https://localhost:7034/api/User/Register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Успешно:', data);
-                // Действия после успешной отправки
-            })
-            .catch((error) => {
-                console.error('Ошибка:', error);
-                // Действия в случае ошибки
-            });
-        });
-    </script> -->
+          // Send POST request to server
+          fetch('https://fakestoreapi.com/users', {
+              method: "POST",
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(formData)
+          })
+          .then(res => res.json())
+          .then(json => {
+              // Сохраняем информацию о пользователе в локальное хранилище
+              localStorage.setItem('user', JSON.stringify(json));
+              console.log('Пользователь успешно зарегистрирован:', json);
+              // Перенаправляем пользователя на главную страницу
+              window.location.href = "index.html";
+          })
+          .catch(error => console.error('Ошибка при регистрации:', error));
+      });
+  </script> -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> -->
     <!-- <script src="/js/init.js"></script> -->

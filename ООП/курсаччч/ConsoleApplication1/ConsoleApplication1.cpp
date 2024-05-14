@@ -13,8 +13,6 @@ public:
     Lexeme(const string& name) : name(name) {}
     virtual string getClass() const = 0;
 };
-
-// Класс для идентификаторов
 class Identifier : public Lexeme {
 public:
     Identifier(const string& name) : Lexeme(name) {}
@@ -22,8 +20,6 @@ public:
         return "Идентификатор";
     }
 };
-
-// Класс для ключевых слов
 class Keyword : public Lexeme {
 public:
     Keyword(const string& name) : Lexeme(name) {}
@@ -31,8 +27,6 @@ public:
         return "Ключевое слово";
     }
 };
-
-// Класс для знаков операций
 class Operator : public Lexeme {
 public:
     Operator(const string& name) : Lexeme(name) {}
@@ -40,8 +34,6 @@ public:
         return "Знак операции";
     }
 };
-
-// Класс для литералов
 class Literal : public Lexeme {
 public:
     Literal(const string& name) : Lexeme(name) {}
@@ -49,8 +41,6 @@ public:
         return "Литерал";
     }
 };
-
-// Класс для разделителей
 class Delimiter : public Lexeme {
 public:
     Delimiter(const string& name) : Lexeme(name) {}
@@ -58,8 +48,6 @@ public:
         return "Разделитель";
     }
 };
-
-// Класс для анализатора лексем
 class LexicalAnalyzer {
 private:
     unordered_map<string, Lexeme*> lexemes;
@@ -110,8 +98,6 @@ public:
 int main() {
     setlocale(LC_ALL, "Russian");
     LexicalAnalyzer analyzer;
-
-    // Пример анализа лексем
     analyzer.analyzeLexeme("int");
     analyzer.analyzeLexeme("if");
     analyzer.analyzeLexeme("/");

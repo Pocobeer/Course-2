@@ -9,57 +9,72 @@
 </head>
 <body>
     
-    <div id = "nav-placeholder"></div>
+    <div id="nav-placeholder"></div>
     
-        <form class = "login" style="width: 75%;">
-          <!-- <div class = "close-btn">&times;</div> -->
-          <div class = "form">
+    <form class="login" style="width: 75%;" id="registration-form">
+        <div class="form">
             <h2>Регистрация</h2>
-            <div class = "loginMsg"></div>
-            <div class = "form-element">
-                <label for = "name">Имя</label>
-                <input type = "text" id = "name" name = "name" class = "form-control" placeholder = "Введите имя" >
+            <div class="loginMsg"></div>
+            <div class="form-element">
+                <label for="name">Имя</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Введите имя">
             </div>
-            <div class = "form-element">
-                <label for = "surname">Фамилия</label>
-                <input type = "surname" id = "surname" name = "surname" class = "form-control" placeholder = "Введите фамилию" >
+            <div class="form-element">
+                <label for="surname">Фамилия</label>
+                <input type="text" id="surname" name="surname" class="form-control" placeholder="Введите фамилию">
             </div>
-            <div class = "form-element">
-              <label for = "email">Email</label>
-              <input type = "text" id = "email" name = "email" class = "form-control" placeholder = "Введите email">
+            <div class="form-element">
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email" class="form-control" placeholder="Введите email">
             </div>
-            <div class = "form-element">
-              <label for = "password">Пароль</label>
-              <input type = "password" id = "password" name = "password" class = "form-control" placeholder = "Введите пароль">
+            <div class="form-element">
+                <label for="password">Пароль</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Введите пароль">
             </div>
-            <div class = "form-element">
-              <div class = "flex-container">
-                <!-- <div class="flex-two">
-                  <a class = "nav-link text-white " href = "#">Забыли пароль?</a>
-                </div> -->
-              </div>
+            <div class="form-element">
+                <div class="flex-container"></div>
             </div>
-            <div class = "form-element">
-              <button>Зарегистрироваться</button>
+            <div class="form-element">
+                <button type="submit" id="register-btn">Зарегистрироваться</button>
             </div>
-            
-          </div>
-        </form>
+        </div>
+    </form>
     <br>
     <br>
-      <!-- <script>
-        document.querySelector("#show-login").addEventListener("click", function() {
-            document.querySelector(".popup").classList.add("active");
-        });
-
-        document.querySelector(".popup .close-btn").addEventListener("click", function() {
-            document.querySelector(".popup").classList.remove("active");
-        });
-
-      </script> -->
-    <div id = "footer-placeholder"></div>
+    <div id="footer-placeholder"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- <script src="/js/init.js"></script> -->
+    <script>
+        document.getElementById("registration-form").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission
+            
+            // Collect form data
+            const formData = {
+                name: document.getElementById("name").value,
+                surname: document.getElementById("surname").value,
+                email: document.getElementById("email").value,
+                password: document.getElementById("password").value
+            };
+
+            // Send POST request to server
+            fetch('https://fakestoreapi.com/users', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(res => res.json())
+            .then(json => {
+                // Сохраняем информацию о пользователе в локальное хранилище
+                localStorage.setItem('user', JSON.stringify(json));
+                console.log('Пользователь успешно зарегистрирован:', json);
+                // Перенаправляем пользователя на главную страницу
+                window.location.href = "index.html";
+            })
+            .catch(error => console.error('Ошибка при регистрации:', error));
+        });
+    </script>
+    <script src="/js/init.js"></script>
 </body>
 </html>
