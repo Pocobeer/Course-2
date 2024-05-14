@@ -8,7 +8,7 @@
     <!-- <link href="/css/sass/styles.css" rel="stylesheet"> -->
 </head>
 <body>
-    <script SRC = "post.js"></script>
+    <!-- <script SRC = "post.js"></script> -->
     <div id = "nav-placeholder"></div>
     
         <form id = "registration-form" class = "login" style="width: 75%;">
@@ -58,37 +58,44 @@
 
       </script> -->
     <div id = "footer-placeholder"></div>
-    <!-- <script>
+    <script>
       document.getElementById("registration-form").addEventListener("submit", function(event) {
-          event.preventDefault(); // Prevent form submission
-          
-          // Collect form data
-          const formData = {
-              name: document.getElementById("name").value,
-              surname: document.getElementById("surname").value,
-              email: document.getElementById("email").value,
-              password: document.getElementById("password").value
-          };
+        event.preventDefault(); // Prevent form submission
 
-          // Send POST request to server
-          fetch('https://fakestoreapi.com/users', {
-              method: "POST",
-              headers: {
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(formData)
-          })
-          .then(res => res.json())
-          .then(json => {
-              // Сохраняем информацию о пользователе в локальное хранилище
-              localStorage.setItem('user', JSON.stringify(json));
-              console.log('Пользователь успешно зарегистрирован:', json);
-              // Перенаправляем пользователя на главную страницу
-              window.location.href = "index.html";
-          })
-          .catch(error => console.error('Ошибка при регистрации:', error));
+        // Collect form data
+        const formData = {
+            firstName: document.getElementById("name").value,
+            lastName: document.getElementById("surname").value,
+            email: document.getElementById("email").value,
+            password: document.getElementById("password").value
+        };
+
+        // Send POST request to server
+        fetch('https://localhost:7034/api/User/Register', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(res => {
+            if (res.ok) {
+                return res.json(); // если ответ от сервера успешный, возвращаем JSON
+            } else {
+                throw new Error('Ошибка при регистрации: ' + res.statusText); // если ответ не успешный, выбрасываем ошибку
+            }
+        })
+        .then(json => {
+            // Проверяем успешность регистрации по полученному JSON
+            // В вашем случае, сервер должен отправлять JSON с информацией о регистрации
+            // После успешной регистрации вы можете обновить страницу или перенаправить пользователя на другую страницу
+            console.log('Пользователь успешно зарегистрирован:', json);
+            // Ваш код обработки успешной регистрации
+        })
+        .catch(error => console.error(error)); // Обрабатываем ошибки
       });
-  </script> -->
+
+  </script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> -->
     <!-- <script src="/js/init.js"></script> -->
