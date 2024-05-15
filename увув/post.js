@@ -25,7 +25,7 @@ function sendRequest(method, url, body = null) {
     });
 }
 
-const api_url = 'https://jsonplaceholder.typicode.com/users';
+const api_url = 'https://localhost:7034/api/User/Register';
 
 // Пример использования функции для отправки GET-запроса
 sendRequest('GET', api_url)
@@ -33,6 +33,6 @@ sendRequest('GET', api_url)
     .catch(err => console.log(err));
 
 // Пример использования функции для отправки POST-запроса
-sendRequest('POST', api_url, { name: 'Alex', email: 'alex@ya.ru' })
-    .then(data => console.log(data))
-    .catch(err => console.log(err));
+// sendRequest('POST', api_url, { name: 'Alex', email: 'alex@ya.ru' })
+//     .then(data => console.log(data))
+//     .catch(err => console.log(err));
