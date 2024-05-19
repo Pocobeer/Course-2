@@ -1,4 +1,4 @@
-Turbo Assembler	 Version 4.1	    05/12/24 19:28:28	    Page 1
+Turbo Assembler	 Version 4.1	    05/15/24 14:08:58	    Page 1
 lab_3.asm
 
 
@@ -18,55 +18,56 @@ lab_3.asm
      13	    0026  8E D8			     mov     ds,ax	 ;регистры
      14	    0028  9B DB	E3		     finit		 ;инициализировать сопроцессор
      15	    002B  9B D9	E8		     fld1		 ;загружаем максимальную погрешность
-     16	    002E  BE 0000r		     lea si, [x]	 ;загружаем массив
-     17					     ; Настраиваем счетчик
-     18	    0031  B5 00			     mov ch, 0
-     19	    0033  B1 07			     mov cl, 7
-     20					     ; Сохраняем результат
-     21	    0035  B7 00			     mov bh, 0;	текущий индекс
-     22	    0037  B3 00			     mov bl, 0;индекс минимального числа
-     23
-     24	    0039			 Repeated:
-     25	    0039  FE C7			     inc bh
-     26	    003B  9B D9	04		     fld dword ptr [si]	 ;загрузить х
-     27	    003E  83 C6	04		     add si, 4
-     28	    0041  9B D9	C0		     fld     st(0)	 ;образовать копию x(i)				;st +
-     29					 (0)-копия	х,st(1)-теущий х, st(2)-res
-     30	    0044  9B D9	FC		     frndint		 ;Округлить до целого x1(i)			    +
-     31					 ;st(0)-округленная копия х,st(1)-теущий	х, st(2)-res
-     32	    0047  9B DE	E9		     fsubp   st(1),st(0) ;Вычитание вещественное с		    +
-     33					 выталкиванием	    ;st(0)-до	ближайшего целового х,st +
-     34					 (1)-res
-     35	    004A  9B D9	E1		     fabs		 ;Модуль					       ;st	    +
-     36					 (0)-модуль до ближайшего целового,st(1)-res
-     37	    004D  9B D8	D1		     fcom   st(1)	 ;Сравниваем текущую масимальную	    +
-     38					 погрешность	    ;st(0)-до	ближайшего целового,st(1)-res
-     39					     .386
-     40	    0050  9B DF	E0		     fstsw ax		 ;Записываем значения	кодов условия
-     41	    0053  9E			     sahf		 ;загрузить коды во флаговый регистр
-     42	    0054  77 06	90 90		     ja	    Processing	 ;если >= переходим на финальную	    +
-     43					 обработку
-     44	    0058			 NewEps:
-     45	    0058  D9 C9			     fxch    st(1)							 ;st(0)-res,st	    +
-     46					 (1)-до ближайшего целового
-     47
-     48	    005A  8A DF			     mov bl, bh
-     49
-     50	    005C			 Processing:
-     51	    005C  DD D8			     fstp st(0)		    ;Уменьшаем	указатель стека  на 1
-     52	    005E  E2 D9			     loop Repeated
-     53	    0060			 Exit:
-     54	    0060  D9 1E	0020r		     fstp    z		 ;сохранить результат
-     55	    0064  B8 4C00		     mov     ax,4c00h	 ;вернуться в	DOS
-     56	    0067  CD 21			     int 21h
-     57	    0069			 cseg ends
-Turbo Assembler	 Version 4.1	    05/12/24 19:28:28	    Page 2
+     16					     .386
+     17	    002E  66| BB 00000000	     mov ebx,0
+     18	    0034  BB 0000r		     lea bx, [x]	 ;загружаем адрес	 массива
+     19	    0037  66| BE FFFFFFFF	     mov esi,-1	;текущий	индекс элемента массива
+     20
+     21					     ; Настраиваем счетчик
+     22	    003D  B9 0007		     mov cx, 7
+     23					     ; Сохраняем результат
+     24	    0040  66| BF 00000000	     mov edi, 0;индекс минимального числа
+     25
+     26	    0046			 Repeated:
+     27	    0046  66| 46		     inc esi
+     28	    0048  67| D9 04 B3		     fld dword ptr [ebx+esi*4]	;загрузить х
+     29
+     30	    004C  D9 C0			     fld     st(0)	 ;образовать копию x(i)				;st +
+     31					 (0)-копия	х,st(1)-теущий х, st(2)-res
+     32	    004E  D9 FC			     frndint		 ;Округлить до целого x1(i)			    +
+     33					 ;st(0)-округленная копия х,st(1)-теущий	х, st(2)-res
+     34	    0050  DE E9			     fsubp   st(1),st(0) ;Вычитание вещественное с		    +
+     35					 выталкиванием	    ;st(0)-до	ближайшего целового х,st +
+     36					 (1)-res
+     37	    0052  D9 E1			     fabs		 ;Модуль					       ;st	    +
+     38					 (0)-модуль до ближайшего целового,st(1)-res
+     39	    0054  D8 D1			     fcom   st(1)	 ;Сравниваем текущую масимальную	    +
+     40					 погрешность	    ;st(0)-до	ближайшего целового,st(1)-res
+     41	    0056  9B DF	E0		     fstsw ax		 ;Записываем значения	кодов условия
+     42	    0059  9E			     sahf		 ;загрузить коды во флаговый регистр
+     43	    005A  77 07	90 90		     ja	    Processing	 ;если >= переходим на финальную	    +
+     44					 обработку
+     45	    005E			 NewEps:
+     46	    005E  D9 C9			     fxch    st(1)							 ;st(0)-res,st	    +
+     47					 (1)-до ближайшего целового
+     48
+     49	    0060  66| 8B FE		     mov edi, esi
+     50
+     51	    0063			 Processing:
+     52	    0063  DD D8			     fstp st(0)		    ;Уменьшаем	указатель стека  на 1
+     53	    0065  E2 DF			     loop Repeated
+     54	    0067			 Exit:
+     55	    0067  D9 1E	0020r		     fstp    z		 ;сохранить результат
+     56	    006B  B8 4C00		     mov     ax,4c00h	 ;вернуться в	DOS
+     57	    006E  CD 21			     int 21h
+Turbo Assembler	 Version 4.1	    05/15/24 14:08:58	    Page 2
 lab_3.asm
 
 
 
-     58					     end beg
-Turbo Assembler	 Version 4.1	    05/12/24 19:28:28	    Page 3
+     58	    0070			 cseg ends
+     59					     end beg
+Turbo Assembler	 Version 4.1	    05/15/24 14:08:58	    Page 3
 Symbol Table
 
 
@@ -74,23 +75,23 @@ Symbol Table
 
 Symbol Name			  Type	 Value
 
-??DATE				  Text	 "05/12/24"
+??DATE				  Text	 "05/15/24"
 ??FILENAME			  Text	 "lab_3	  "
-??TIME				  Text	 "19:28:28"
+??TIME				  Text	 "14:08:58"
 ??VERSION			  Number 040A
 @CPU				  Text	 0F0FH
 @CURSEG				  Text	 CSEG
 @FILENAME			  Text	 LAB_3
 @WORDSIZE			  Text	 4
 BEG				  Near	 CSEG:0024
-EXIT				  Near	 CSEG:0060
-NEWEPS				  Near	 CSEG:0058
-PROCESSING			  Near	 CSEG:005C
-REPEATED			  Near	 CSEG:0039
+EXIT				  Near	 CSEG:0067
+NEWEPS				  Near	 CSEG:005E
+PROCESSING			  Near	 CSEG:0063
+REPEATED			  Near	 CSEG:0046
 X				  Dword	 CSEG:0000
 Z				  Dword	 CSEG:0020
 
 Groups & Segments		  Bit Size Align  Combine Class
 
-CSEG				  16  0069 Para	  none
+CSEG				  16  0070 Para	  none
 

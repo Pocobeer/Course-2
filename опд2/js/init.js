@@ -44,20 +44,22 @@ var productsSetup = function() {
         products.getSingleProduct(urlParam('productid'));
     }
 }
-
 var userInfo = function() {
     let user = new User();
-    $('form.login').submit(function(e){
+    
+    $('form.login').off('submit').on('submit', function(e) {
         e.preventDefault();
         var email = $('#email').val();
         var password = $('#password').val();
         user.doLogin(email, password);
-    })
-    if ($('.userAccount').length){
-        var userAccount = JSON.parse(localStorage.user);
+    });
+
+    if ($('.userAccount').length) {
+        var userAccount = JSON.parse(localStorage.getItem('user'));
         user.getAccountInfo(userAccount);
     }
-}
+};
+
 
 var cartInfo = function(){
     let cart = new Cart();
