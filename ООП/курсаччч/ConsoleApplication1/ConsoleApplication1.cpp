@@ -97,7 +97,11 @@ public:
 
 int main() {
     setlocale(LC_ALL, "Russian");
+    string input;
     LexicalAnalyzer analyzer;
+    cout << "Введите лексему, которую хотите проанализировать: ";
+    cin >> input;
+    analyzer.analyzeLexeme(input);
     analyzer.analyzeLexeme("int");
     analyzer.analyzeLexeme("if");
     analyzer.analyzeLexeme("/");
