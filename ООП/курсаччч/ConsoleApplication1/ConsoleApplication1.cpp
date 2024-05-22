@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 #include <string>
-#include <unordered_map>
+#include <map>
 
 using namespace std;
 
@@ -50,7 +50,7 @@ public:
 };
 class LexicalAnalyzer {
 private:
-    unordered_map<string, Lexeme*> lexemes;
+    map<string, Lexeme*> lexemes;
 
 public:
     LexicalAnalyzer() {
@@ -93,21 +93,28 @@ public:
             cout << "Лексема: " << lexeme << " - Класс: Неизвестный" << endl;
         }
     }
+    /*void Out() {
+for (const auto& lexeme : lexemes) {
+			cout << "Лексема: " << lexeme.first << " - Класс: " << lexeme.second->getClass() << endl;
+		}
+    }*/
 };
 
 int main() {
     setlocale(LC_ALL, "Russian");
+
     string input;
     LexicalAnalyzer analyzer;
+    //analyzer.Out();
     cout << "Введите лексему, которую хотите проанализировать: ";
     cin >> input;
     analyzer.analyzeLexeme(input);
-    analyzer.analyzeLexeme("int");
+    /*analyzer.analyzeLexeme("int");
     analyzer.analyzeLexeme("if");
     analyzer.analyzeLexeme("/");
     analyzer.analyzeLexeme("123");
     analyzer.analyzeLexeme("(");
-    analyzer.analyzeLexeme("xyz"); // Неизвестная лексема
+    analyzer.analyzeLexeme("xyz"); // Неизвестная лексема*/
 
     return 0;
 }

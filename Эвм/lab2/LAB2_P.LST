@@ -1,4 +1,4 @@
-Turbo Assembler	 Version 4.1	    05/10/24 12:09:34	    Page 1
+Turbo Assembler	 Version 4.1	    05/21/24 20:35:53	    Page 1
 lab2_p.asm
 
 
@@ -60,14 +60,14 @@ lab2_p.asm
      55	002B  CA 000C			     ret     12		     ; выход с удалением	параметров Ch1,
      56								     ; Ch2 и адреса S (Res удалять нельзя!)
      57	002E			     PadCh  endp
-Turbo Assembler	 Version 4.1	    05/10/24 12:09:34	    Page 2
+Turbo Assembler	 Version 4.1	    05/21/24 20:35:53	    Page 2
 lab2_p.asm
 
 
 
      58	002E			     code   ends
      59					    end
-Turbo Assembler	 Version 4.1	    05/10/24 12:09:34	    Page 3
+Turbo Assembler	 Version 4.1	    05/21/24 20:35:53	    Page 3
 Symbol Table
 
 
@@ -75,9 +75,9 @@ Symbol Table
 
 Symbol Name			  Type	 Value
 
-??DATE				  Text	 "05/10/24"
+??DATE				  Text	 "05/21/24"
 ??FILENAME			  Text	 "lab2_p  "
-??TIME				  Text	 "12:09:34"
+??TIME				  Text	 "20:35:53"
 ??VERSION			  Number 040A
 @CPU				  Text	 0101H
 @CURSEG				  Text	 CODE
