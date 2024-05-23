@@ -1,0 +1,110 @@
+<mxfile host="app.diagrams.net" modified="2024-05-23T19:14:28.827Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 YaBrowser/24.4.0.0 Safari/537.36" etag="4u89bEszVv3fnfSbEfRA" version="24.4.4" type="device">
+  <diagram name="Страница — 1" id="4W3LdOPRhLoT-cSfUb7j">
+    <mxGraphModel dx="1121" dy="639" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="O6GAEjAdB6TwAKuf3Ore-1" target="O6GAEjAdB6TwAKuf3Ore-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-1" value="Начало" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="30" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="O6GAEjAdB6TwAKuf3Ore-2" target="O6GAEjAdB6TwAKuf3Ore-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-2" value="mov ax,cs&lt;div&gt;mov ds,ax&lt;/div&gt;&lt;div&gt;finit&lt;/div&gt;&lt;div&gt;fld1&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="140" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="O6GAEjAdB6TwAKuf3Ore-3" target="O6GAEjAdB6TwAKuf3Ore-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-3" value="Инициализация указателя на массив x и начальных значений&lt;div&gt;mov ebx, 0&lt;/div&gt;&lt;div&gt;lea bx, [x]&lt;/div&gt;&lt;div&gt;mov esi, -1&lt;/div&gt;&lt;div&gt;mov cx,7&lt;/div&gt;&lt;div&gt;mov edi, 0&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="230" width="140" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="O6GAEjAdB6TwAKuf3Ore-4" target="O6GAEjAdB6TwAKuf3Ore-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-4" value="Увеличение текущего индекса&amp;nbsp;&lt;div&gt;inc esi&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="380" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="O6GAEjAdB6TwAKuf3Ore-5" target="O6GAEjAdB6TwAKuf3Ore-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-5" value="Загрузка текущего элемента массива&lt;div&gt;fld dword ptr[ebx + esi*4]&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="470" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="O6GAEjAdB6TwAKuf3Ore-7" target="O6GAEjAdB6TwAKuf3Ore-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-7" value="Создание копии текущего элемента&lt;div&gt;fld st(0)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="560" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="O6GAEjAdB6TwAKuf3Ore-8" target="O6GAEjAdB6TwAKuf3Ore-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-8" value="Округление копии до ближайшего целого числа&lt;div&gt;frndint&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="650" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="O6GAEjAdB6TwAKuf3Ore-9" target="O6GAEjAdB6TwAKuf3Ore-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-9" value="Вычитание округленной копии из оригинала&lt;div&gt;fsubp st(1), st(0)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="740" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="O6GAEjAdB6TwAKuf3Ore-10" target="O6GAEjAdB6TwAKuf3Ore-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-10" value="Взятие модуля разности&lt;div&gt;fabs&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="830" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="O6GAEjAdB6TwAKuf3Ore-12" target="O6GAEjAdB6TwAKuf3Ore-13">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-32" y="1020" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="O6GAEjAdB6TwAKuf3Ore-12" target="O6GAEjAdB6TwAKuf3Ore-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-12" value="Сравнение текущей максимальной погрешности с новой погрешностью&lt;div&gt;fcom st(1)&lt;/div&gt;&lt;div&gt;fstsw ax&lt;/div&gt;&lt;div&gt;sahf&lt;/div&gt;&lt;div&gt;ja Processing&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="25" y="920" width="250" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="O6GAEjAdB6TwAKuf3Ore-13">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="150" y="360" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="-109" y="1170" />
+              <mxPoint x="-109" y="360" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-13" value="Уменьшение указателя стека и переход к следующему элементу массива если не все элементы обработаны&lt;div&gt;fstp st(0)&lt;/div&gt;&lt;div&gt;loop Repeated&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-90" y="1090" width="115" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-14" value="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="-5" y="988" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-15" value="0" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="170" y="1118" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="O6GAEjAdB6TwAKuf3Ore-16" target="O6GAEjAdB6TwAKuf3Ore-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-16" value="Обновление текущей максимальной погрешности и индекса, если новая погрешность меньше&lt;div&gt;fxch st(1)&lt;/div&gt;&lt;div&gt;mov edi, esi&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="1148" width="120" height="142" as="geometry" />
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="O6GAEjAdB6TwAKuf3Ore-17" target="O6GAEjAdB6TwAKuf3Ore-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-17" value="Сохранение индекса элемента с минимальной погрешностью в переменную z&lt;div&gt;fstp z&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="1330" width="120" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="O6GAEjAdB6TwAKuf3Ore-18" value="Завершение программы&lt;div&gt;mov ax, 4c00h&lt;/div&gt;&lt;div&gt;int 21h&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="1460" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

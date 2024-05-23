@@ -1,4 +1,4 @@
-Turbo Assembler	 Version 4.1	    05/15/24 14:08:58	    Page 1
+Turbo Assembler	 Version 4.1	    05/23/24 22:18:51	    Page 1
 lab_3.asm
 
 
@@ -60,14 +60,14 @@ lab_3.asm
      55	    0067  D9 1E	0020r		     fstp    z		 ;сохранить результат
      56	    006B  B8 4C00		     mov     ax,4c00h	 ;вернуться в	DOS
      57	    006E  CD 21			     int 21h
-Turbo Assembler	 Version 4.1	    05/15/24 14:08:58	    Page 2
+Turbo Assembler	 Version 4.1	    05/23/24 22:18:51	    Page 2
 lab_3.asm
 
 
 
      58	    0070			 cseg ends
      59					     end beg
-Turbo Assembler	 Version 4.1	    05/15/24 14:08:58	    Page 3
+Turbo Assembler	 Version 4.1	    05/23/24 22:18:51	    Page 3
 Symbol Table
 
 
@@ -75,9 +75,9 @@ Symbol Table
 
 Symbol Name			  Type	 Value
 
-??DATE				  Text	 "05/15/24"
+??DATE				  Text	 "05/23/24"
 ??FILENAME			  Text	 "lab_3	  "
-??TIME				  Text	 "14:08:58"
+??TIME				  Text	 "22:18:51"
 ??VERSION			  Number 040A
 @CPU				  Text	 0F0FH
 @CURSEG				  Text	 CSEG
