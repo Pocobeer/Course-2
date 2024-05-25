@@ -1,6 +1,7 @@
 class User {
     constructor() {
-        this.apiUrl = 'https://localhost:7034/api/User/Login';
+        this.apiLoginUrl = 'https://localhost:7034/api/User/Login';
+        this.apiRegisterUrl = 'https://localhost:7034/api/User/Register';
     }
 
     getAccountInfo() {
@@ -22,16 +23,14 @@ class User {
 
         $.ajax({
             type: 'POST',
-            url: this.apiUrl,
+            url: this.apiLoginUrl,
             data: JSON.stringify({ email: email, password: password }),
             contentType: 'application/json',
             success: (data) => {
                 console.log('Ответ от сервера:', data);
                 
-                // Проверка успешного логина на основе ответа сервера
                 if (data === "Login is success") {
-                    // Сохранение информации о пользователе в локальное хранилище (дополнительно)
-                    const user = { email: email }; // Предположим, что у нас есть только email для сохранения
+                    const user = { email: email };
                     localStorage.setItem('user', JSON.stringify(user));
                     window.location.href = '/index.html';
                 } else {
@@ -41,6 +40,28 @@ class User {
             error: (xhr, status, error) => {
                 console.error('Ошибка входа:', error);
                 $('.loginMsg').html('<div class="alert alert-danger" role="alert">Произошла ошибка при входе. Пожалуйста, попробуйте еще раз.</div>');
+            }
+        });
+    }
+
+    doRegister(firstName, lastName, email, password) {
+        $.ajax({
+            type: 'POST',
+            url: this.apiRegisterUrl,
+            data: JSON.stringify({email: email, password: password, firstname: firstName, lastname: lastName}),
+            contentType: 'application/json',
+            success: (data) => {
+                console.log('Ответ от сервера:', data);
+                // Предположим, что сервер возвращает объект с полем "message"
+                if (data === "Register is success") {
+                    window.location.href = '/login.html';
+                } else {
+                    $('.registrationMsg').html('<div class="alert alert-danger" role="alert">Ошибка регистрации: ' + data.message + '</div>');
+                }
+            },
+            error: (xhr, status, error) => {
+                console.error('Ошибка регистрации:', error);
+                $('.registrationMsg').html('<div class="alert alert-danger" role="alert">Произошла ошибка при регистрации. Пожалуйста, попробуйте еще раз.</div>');
             }
         });
     }

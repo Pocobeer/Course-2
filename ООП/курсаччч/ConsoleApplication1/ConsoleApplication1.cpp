@@ -1,120 +1,103 @@
 ﻿#include <iostream>
 #include <string>
-#include <map>
+#include <set>
+#include <cctype>
+#include <fstream>
+#include <tuple>
 
 using namespace std;
 
-// Базовый класс для всех лексем
-class Lexeme {
+enum State { START, IDENTIFIER, LITERAL, OPERATOR, DELIMITER, UNKNOWN };
 
-    string name;
-
-public:
-    Lexeme(const string& name) : name(name) {}
-    virtual string getClass() const = 0;
-};
-class Identifier : public Lexeme {
-public:
-    Identifier(const string& name) : Lexeme(name) {}
-    string getClass() const override {
-        return "Идентификатор";
-    }
-};
-class Keyword : public Lexeme {
-public:
-    Keyword(const string& name) : Lexeme(name) {}
-    string getClass() const {
-        return "Ключевое слово";
-    }
-};
-class Operator : public Lexeme {
-public:
-    Operator(const string& name) : Lexeme(name) {}
-    string getClass() const {
-        return "Знак операции";
-    }
-};
-class Literal : public Lexeme {
-public:
-    Literal(const string& name) : Lexeme(name) {}
-    string getClass() const {
-        return "Литерал";
-    }
-};
-class Delimiter : public Lexeme {
-public:
-    Delimiter(const string& name) : Lexeme(name) {}
-    string getClass() const {
-        return "Разделитель";
-    }
-};
 class LexicalAnalyzer {
 private:
-    map<string, Lexeme*> lexemes;
-
+    set<string> keywords = { "if", "else", "while", "for", "return", "switch", "case",
+                            "break", "continue", "do", "class", "public", "private",
+                            "protected", "virtual" };
+    set<string> operators = { "+", "-", "*", "/", "=", "==", "!=", "<", ">", "<=", ">=",
+                             "&&", "||", "++", "--", "+=", "-=", "*=", "/=" };
 public:
-    LexicalAnalyzer() {
-        string identifiers[] = { "int", "float", "char", "string", "bool", "double",
-    "long", "short", "unsigned", "signed", "void", "struct", "class", "enum",
-    "typedef", "namespace", "const", "static", "extern", "auto" };//Идентификаторы
-        string keywords[] = { "if", "else", "while", "for", "return", 
-            "switch", "case", "break", "continue", "do", "class", "public", 
-            "private", "protected", "virtual" };//Ключевые слова
-        string operators[] = { "+", "-", "*", "/", "=", "==", "!=", "<", ">", 
-            "<=", ">=", "&&", "||", "++", "--", "+=", "-=", "*=", "/=" };//Операторы
-        string literals[] = { "123", "3.14", "'a'", "\"Hello\"", "true", "false", 
-            "0xFF", "0b1010", "1.23e4", "0" };//Литералы(константные значения)
-        string delimiters[] = { ";", ",", "(", ")", "{", "}", "[", "]", ":", 
-            ".", "->", "::", "#", "//", "/*", "*/" };//Разделители
-        for (const string& identifier : identifiers) {
-            lexemes[identifier] = new Identifier(identifier);
+    pair<string, State> transition(State current, char input, string lexeme) {
+        switch (current) {
+        case START:
+            if (isalpha(input) || input == '_') return { "Идентификатор", IDENTIFIER };
+            if (isdigit(input)) return { "Литерал", LITERAL };
+            if (input == '+' || input == '-' || input == '*' || input == '/' ||
+                input == '=' || input == '<' || input == '>' || input == '!' ||
+                input == '&' || input == '|') return { "Знак операции", OPERATOR };
+            if (input == ';' || input == ',' || input == '(' || input == ')' ||
+                input == '{' || input == '}' || input == '[' || input == ']' ||
+                input == ':' || input == '.' || input == '#') return { "Разделитель", DELIMITER };
+            break;
+        case IDENTIFIER:
+            if (isalnum(input) || input == '_') return { "Идентификатор", IDENTIFIER };
+            break;
+        case LITERAL:
+            if (isdigit(input)) return { "Литерал", LITERAL };
+            break;
+        case OPERATOR:
+            return { "Знак операции", OPERATOR };
+        case DELIMITER:
+            return { "Разделитель", DELIMITER };
+        default:
+            return { "Неизвестный", UNKNOWN };
         }
-        for (const string& keyword : keywords) {
-            lexemes[keyword] = new Keyword(keyword);
-        }
-        for (const string& operator_ : operators) {
-            lexemes[operator_] = new Operator(operator_);
-        }
-        for (const string& literal : literals) {
-            lexemes[literal] = new Literal(literal);
-        }
-        for (const string& delimiter : delimiters) {
-			lexemes[delimiter] = new Delimiter(delimiter);
-        }
+        return { "Неизвестный", UNKNOWN };
     }
 
-    ~LexicalAnalyzer() = default;
+    string analyzeLexeme(const string& lexeme) {
+        State currentState = START;
+        string currentClass = "Неизвестный";
+        for (char ch : lexeme) {
+            tie(currentClass, currentState) = transition(currentState, ch, lexeme);
+            if (currentState == UNKNOWN) return "Неизвестный";
+        }
 
-    void analyzeLexeme(const string& lexeme) {
-        if (lexemes.find(lexeme) != lexemes.end()) {
-            cout << "Лексема: " << lexeme << " - Класс: " << lexemes[lexeme]->getClass() << endl;
+        if (currentState == IDENTIFIER && keywords.find(lexeme) != keywords.end()) {
+            return "Ключевое слово";
         }
-        else {
-            cout << "Лексема: " << lexeme << " - Класс: Неизвестный" << endl;
-        }
+
+        return currentClass;
     }
-    /*void Out() {
-for (const auto& lexeme : lexemes) {
-			cout << "Лексема: " << lexeme.first << " - Класс: " << lexeme.second->getClass() << endl;
-		}
-    }*/
 };
 
 int main() {
     setlocale(LC_ALL, "Russian");
 
-    string input;
+    string inputFileName, outputFileName;
+    cout << "Введите имя входного файла: ";
+    cin >> inputFileName;
+    cout << "Введите имя выходного файла: ";
+    cin >> outputFileName;
+
+    ifstream inputFile(inputFileName);
+    ofstream outputFile(outputFileName);
+
+    if (!inputFile.is_open()) {
+        cout << "Не удалось открыть входной файл." << endl;
+        return 1;
+    }
+
+    if (!outputFile.is_open()) {
+        cout << "Не удалось открыть выходной файл." << endl;
+        return 1;
+    }
+
     LexicalAnalyzer analyzer;
-    //analyzer.Out();
-    cout << "Введите лексему, которую хотите проанализировать: ";
-    cin >> input;
-    analyzer.analyzeLexeme(input);
-    /*analyzer.analyzeLexeme("int");
-    analyzer.analyzeLexeme("if");
-    analyzer.analyzeLexeme("/");
-    analyzer.analyzeLexeme("123");
-    analyzer.analyzeLexeme("(");
-    analyzer.analyzeLexeme("xyz"); // Неизвестная лексема*/
+    string lexeme;
+    while (inputFile >> lexeme) {
+        string result = analyzer.analyzeLexeme(lexeme);
+        cout << "Лексема: " << lexeme << " - Класс: " << result << endl;
+    }
+    while (inputFile >> lexeme) {
+        string result = analyzer.analyzeLexeme(lexeme);
+        outputFile << "Лексема: " << lexeme << " - Класс: " << result << endl;
+    }
+
+    inputFile.close();
+    outputFile.close();
+
+    cout << "Анализ завершен. Результаты сохранены в " << outputFileName << endl;
 
     return 0;
 }

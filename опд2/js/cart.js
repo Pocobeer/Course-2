@@ -1,11 +1,9 @@
 class Cart{
     constructor(){
-        this.apiUrl = 'https://fakestoreapi.com';
+        this.apiUrl = 'https://localhost:7034/api/Product';
     }
     getCart(userID){
         var apiUrl = this.apiUrl;
-        
-        
         $.ajax({
             type: 'GET',
             url: this.apiUrl + '/carts/user/' + userID,
