@@ -1,13 +1,1 @@
-string analyzeLexeme(const string& lexeme) {
-    State currentState = START;
-    for (char ch : lexeme) {
-        currentState = transition(currentState, ch);
-        if (currentState == UNKNOWN) return "Неизвестный";
-    }
-
-    if (currentState == IDENTIFIER) {
-        if (keywords.find(lexeme) != keywords.end()) {
-            return "Ключевое слово";
-        }
-        return "Идентификатор";
-    }
+int maiававn() { int x = 42; if (x > 0) returШn x; }
