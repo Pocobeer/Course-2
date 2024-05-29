@@ -4,7 +4,7 @@
 #include <cctype>
 #include <vector>
 #include <fstream>
-#include <Windows.h>
+//#include <Windows.h>
 using namespace std;
 
 
