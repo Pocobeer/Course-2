@@ -7,24 +7,22 @@
 //#include <Windows.h>
 using namespace std;
 
-
 enum State {
     S0, // Начальное состояние
     I,  // Идентификаторы и ключевые слова
     L,  // Литералы 
     O,  // Операторы
     S,  // Разделители
+    C,  // Комментарий
     F,  // Конечное состояние
     E   // Ошибочное состояние
 };
-
 
 const map<wstring, wstring> keywords = {
     {L"int", L"KEYWORD"}, {L"float", L"KEYWORD"}, {L"if", L"KEYWORD"},
     {L"else", L"KEYWORD"}, {L"while", L"KEYWORD"}, {L"return", L"KEYWORD"},
     {L"char", L"KEYWORD"}, {L"double", L"KEYWORD"}, {L"for", L"KEYWORD"}, {L"void", L"KEYWORD"}
 };
-
 
 const map<wchar_t, wstring> operators = {
     {L'+', L"OPERATOR"}, {L'-', L"OPERATOR"}, {L'*', L"OPERATOR"},
@@ -33,14 +31,12 @@ const map<wchar_t, wstring> operators = {
 };
 
 const map<wchar_t, wstring> separators = {
-    /*{L' ', L"SEPARATOR"}, */{L'\n', L"SEPARATOR"}, {L'\t', L"SEPARATOR"},
+    {L'\n', L"SEPARATOR"}, {L'\t', L"SEPARATOR"},
     {L'(', L"SEPARATOR"}, {L')', L"SEPARATOR"}, {L'{', L"SEPARATOR"},
     {L'}', L"SEPARATOR"}, {L';', L"SEPARATOR"}, {L',', L"SEPARATOR"}
 };
 
-
 const wstring invalidSymbols = L"@#$абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
-
 
 class Token {
 public:
@@ -48,7 +44,6 @@ public:
     virtual wstring getValue() const = 0;
     virtual ~Token() = default;
 };
-
 
 class IdentifierToken : public Token {
 private:
@@ -68,7 +63,6 @@ public:
     }
 };
 
-
 class LiteralToken : public Token {
 private:
     wstring value;
@@ -82,7 +76,6 @@ public:
     }
 };
 
-
 class OperatorToken : public Token {
 private:
     wchar_t value;
@@ -95,7 +88,6 @@ public:
         return wstring(1, value);
     }
 };
-
 
 class SeparatorToken : public Token {
 private:
@@ -116,6 +108,7 @@ State transition(State current, wchar_t input) {
     case S0:
         if (iswalpha(input) || input == L'_') return I;
         if (iswdigit(input)) return L;
+        if (input == L'/') return C;
         if (operators.count(input)) return O;
         if (separators.count(input)) return S;
         return F;
@@ -124,16 +117,20 @@ State transition(State current, wchar_t input) {
         return F;
     case L:
         if (iswdigit(input)) return L;
+        if (iswalpha(input) || input == L'_') return E; // Если после цифр идут буквы или '_', переходим в ошибочное состояние
         return F;
     case O:
+        if (input == L'/') return C; // Переход в состояние комментария
         return F;
+    case C:
+        if (input == L'\n') return S0; // Комментарий завершается новой строкой
+        return C; // Оставаться в состоянии комментария
     case S:
         return F;
     default:
         return F;
     }
 }
-
 
 void createToken(const wstring& token, size_t position, size_t tokenNumber, vector<pair<Token*, wstring>>& tokens) {
     bool hasInvalid = false;
@@ -145,7 +142,7 @@ void createToken(const wstring& token, size_t position, size_t tokenNumber, vect
     }
 
     if (hasInvalid) {
-        wcout << L"Токен: \"" << token << L"\", ошибка: наличие недопустимых символов (Токен №" << tokenNumber << L")" << endl;
+        wcout << L"Токен: " << token << L", ошибка: наличие недопустимых символов (Токен №" << tokenNumber << L")" << endl;
         return; // Пропускаем токен с недопустимыми символами
     }
 
@@ -182,7 +179,6 @@ void createToken(const wstring& token, size_t position, size_t tokenNumber, vect
     tokens.push_back(make_pair(new IdentifierToken(token), tokenType));
 }
 
-
 void lexicalAnalysis(const wstring& input) {
     State currentState = S0;
     wstring token;
@@ -195,15 +191,34 @@ void lexicalAnalysis(const wstring& input) {
         wchar_t ch = input[i];
         State nextState = transition(currentState, ch);
 
-        if (nextState == F) {
+        if (nextState == F || nextState == E) {
             if (!token.empty()) {
-                createToken(token, position, tokenNumber++, tokens);
+                if (nextState == E) {
+                    wcout << L"Токен: " << token + ch << L", ошибка: требуется идентификатор (Токен №" << tokenNumber++ << L")" << endl;
+                    token.clear();
+                    while (i < input.length() && !iswspace(input[i]) && separators.find(input[i]) == separators.end() && operators.find(input[i]) == operators.end()) {
+                        ++i;
+                        //token += input[i];
+                    }
+                    currentState = S0;
+                    continue;
+                }
+                else {
+                    createToken(token, position, tokenNumber++, tokens);
+                }
             }
             token.clear();
             currentState = transition(S0, ch);
             position = i;
-            if (currentState != F) {
+            if (currentState != F && currentState != C && !iswspace(ch)) {
                 token += ch;
+            }
+
+        }
+        else if (nextState == C) {
+            currentState = C;
+            while (i < input.length() && input[i] != L'\n') {
+                ++i;
             }
         }
         else {
@@ -211,10 +226,9 @@ void lexicalAnalysis(const wstring& input) {
             currentState = nextState;
         }
 
-        
         if (invalidSymbols.find(ch) != wstring::npos) {
             if (!token.empty()) {
-                wcout << L"Токен: \"" << token << L"\", ошибка: наличие недопустимых символов (Токен №" << tokenNumber++ << L")" << endl;
+                wcout << L"Токен: " << token << L", ошибка: наличие недопустимых символов (Токен №" << tokenNumber++ << L")" << endl;
                 token.clear();
             }
             while (i + 1 < input.length() && separators.find(input[i + 1]) == separators.end() && operators.find(input[i + 1]) == operators.end()) {
@@ -229,57 +243,16 @@ void lexicalAnalysis(const wstring& input) {
     }
 
     for (const auto& t : tokens) {
-        wcout << L"Токен: \"" << t.first->getValue() << L"\", тип: " << t.first->getType() << endl;
+        wcout << L"Токен: " << t.first->getValue() << L", тип: " << t.first->getType() << endl;
         delete t.first;
     }
 }
 
-
-
 int main() {
     setlocale(LC_ALL, "RUS");
-    wstring input = L"int maiававn() pupu22 { int x = 42; if (x > 0) returШn x; }";
+    wstring input = L"int maiававn() Pnt_22 22pytr { int x = 42; if (x > 0) returШn x; } // Это комментарий\n if (x > 0) return x; // Еще один комментарий\n }";
     wcout << L"Строка для показа работы программы: " << input << endl;
-    //wcout << input << endl;
+    cout << "Итоги анализа: " << endl;
     lexicalAnalysis(input);
-    /*int n;
-    wstring input_file, output_file;
-    cout << "Каким образом вы хотите протестировать анализатор? 1 - с помощью примера исходной строки 2 - с использованием файлов:" << endl;
-    cin >> n;
-    if (n == 1) {
-        wstring input = L"int maiававn() { int x = 42; if (x > 0) returШn x; }";
-        wcout << L"Строка для показа работы программы: " << input << endl;
-        //wcout << input << endl;
-        lexicalAnalysis(input);
-    }
-    if (n == 2) {
-        wcout << L"Введите название входного файла: " << endl;
-        wcin >> input_file;
-        wcout << L"Введите название выходного файла: " << endl;
-        wcin >> output_file;
-
-        wifstream inputfile(input_file, ios::in | ios::binary);
-        if (!inputfile.is_open()) {
-            wcerr << L"Ошибка открытия файла для чтения: " << input_file << endl;
-            return 1;
-        }
-
-        wofstream outputfile(output_file, ios::out | ios::binary);
-        if (!outputfile.is_open()) {
-            wcerr << L"Ошибка открытия файла для записи: " << output_file << endl;
-            inputfile.close();
-            return 1;
-        }
-
-        wstring line;
-        while (getline(inputfile, line)) {
-            wcout << L"Строка из файла: " << line << endl;
-            // Выполнение лексического анализа для каждой строки из файла
-            lexicalAnalysis(line);
-        }
-
-        inputfile.close();
-        outputfile.close();
-    }*/
     return 0;
 }
