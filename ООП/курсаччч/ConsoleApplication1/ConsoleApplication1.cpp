@@ -120,7 +120,7 @@ State transition(State current, wchar_t input) {
         if (iswalpha(input) || input == L'_') return E; // Если после цифр идут буквы или '_', переходим в ошибочное состояние
         return F;
     case O:
-        if (input == L'/') return C; // Переход в состояние комментария
+        //if (input == L'/') return C; // Переход в состояние комментария
         return F;
     case C:
         if (input == L'\n') return S0; // Комментарий завершается новой строкой
@@ -250,7 +250,7 @@ void lexicalAnalysis(const wstring& input) {
 
 int main() {
     setlocale(LC_ALL, "RUS");
-    wstring input = L"int maiававn() Pnt_22 22pytr { int x = 42; if (x > 0) returШn x; } // Это комментарий\n if (x > 0) return x; // Еще один комментарий\n }";
+    wstring input = L"int maiававn() Pnt_22 22pytr { int x = 42; if (x > 0) return x; } // Это комментарий\n if (x > 0) return x; // Еще один комментарий\n }";
     wcout << L"Строка для показа работы программы: " << input << endl;
     cout << "Итоги анализа: " << endl;
     lexicalAnalysis(input);
