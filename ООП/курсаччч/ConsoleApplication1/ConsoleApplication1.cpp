@@ -120,7 +120,7 @@ State transition(State current, wchar_t input) {
         if (iswalpha(input) || input == L'_') return E; // Если после цифр идут буквы или '_', переходим в ошибочное состояние
         return F;
     case O:
-        if (input == L'/') return C; // Переход в состояние комментария
+        //if (input == L'/') return C; // Переход в состояние комментария
         return F;
     case C:
         if (input == L'\n') return S0; // Комментарий завершается новой строкой
