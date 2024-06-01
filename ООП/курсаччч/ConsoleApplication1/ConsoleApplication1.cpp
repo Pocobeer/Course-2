@@ -36,13 +36,13 @@ const map<wchar_t, wstring> separators = {
     {L'}', L"SEPARATOR"}, {L';', L"SEPARATOR"}, {L',', L"SEPARATOR"}
 };
 
-const wstring invalidSymbols = L"@#$абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
+const wstring invalidSymbols = L"абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ@#$";
 
 class Token {
 public:
     virtual wstring getType() const = 0;
     virtual wstring getValue() const = 0;
-    virtual ~Token() = default;
+    //virtual ~Token() = default;
 };
 
 class IdentifierToken : public Token {
@@ -250,7 +250,7 @@ void lexicalAnalysis(const wstring& input) {
 
 int main() {
     setlocale(LC_ALL, "RUS");
-    wstring input = L"int maiававn() Pnt_22 22pytr { int x = 42; if (x > 0) returШn x; } // Это комментарий\n if (x > 0) return x; // Еще один комментарий\n }";
+    wstring input = L"int maiававn() Pnt_22 22pytr { int x = 42; if (x > 0) return x; } // Это комментарий\n if (x > 0) return x; // Еще один комментарий\n }";
     wcout << L"Строка для показа работы программы: " << input << endl;
     cout << "Итоги анализа: " << endl;
     lexicalAnalysis(input);
