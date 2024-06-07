@@ -5,6 +5,8 @@
 #include<stack>
 #include<algorithm>
 #include<vector>
+#include<functional>
+#include<queue>
 using namespace std;
 template <class T> class List1 {
 protected:
@@ -21,7 +23,7 @@ public:
 	void Search(T);
 };
 template <class T> void List1 <T>::Out() {
-	for(int i=0; i<=top; i++) {
+	for (int i = 0; i <= top; i++) {
 		cout << "Element:" << st[i] << " " << endl;
 	}
 }
@@ -56,45 +58,15 @@ template<typename T> void List1<T>::Search(T var) {
 		cout << "Not Found" << endl;
 	}
 }
-template<typename T, typename n> struct Symbol {
-protected:
-	T value;
-	n number;
 
-public:
-	Symbol() {};
-	Symbol(char ch, int n) : value(ch), number(n) {};
-	friend void out(const Symbol <T, int> & sym);
-};
-template <typename T, int max_lenght = 15> struct String : public Symbol <T,int> {
-	T data[max_lenght];
-	int lenght;
-public:
-	String() {};
-	String(T, int);
-	void out();
-};
-template <class T, int max_lenght> String <T, max_lenght>::String(T var, int max_lenght) {
-	lenght = max_lenght;
+int numnum(int num) {
+	return num * num;
 }
-template <class T, int max_lenght> void out(const Symbol <T, int> & sym) {
-	using Symbol <T, int>::out();
-	this->Symbol <T, int>::out();
-	cout << sym.data << endl;
-}
-class Person {
+class Ex_11 {
 public:
-	string Name;
-	int Age;
-	double Salary;
-	Person(string Name, int age, double salary) : Name(Name), Age(age), Salary(salary) {};
-};
-class Student {
-public:
-	string Name;
-	int Age;
-	int Marks;
-	Student(string Name, int age, int marks) :Name(Name), Age(age), Marks(marks) {};
+	int id;
+	string nam;
+	Ex_11(int id, string nam) : id(id), nam(nam) {};
 };
 int main() {
 	List1 <int> a;
@@ -107,15 +79,7 @@ int main() {
 	//a.Del();
 	a.Out();
 	a.Search(20);
-	Symbol <char, int> b('v', 11);
-	String <char, 10> c('v', 10);
-	c.out();
-	Symbol <char, int> *d = &c;
-	out(b);
-	out(c);
-	out(*d);
-	return 0;
-	list <int> v={ 10, 20,20, 30, 40 };
+	list <int> v = {10, 20,20, 30, 40};
 	auto f_list = find(v.begin(), v.end(), 20);
 	int f_count = count(v.begin(), v.end(), 20);
 	deque <int> s = { 10, 20,20, 30, 40 };
@@ -144,21 +108,66 @@ int main() {
 	else {
 		cout << "Not Found" << endl;
 	}
-	vector <Person> person = { {"Vall", 20, 1000.0}, {"Val", 21, 2000.0}, {"Va", 22, 3000.0} };
-	vector <Student> student = { {"V234", 20, 4}, {"Vafwel", 21, 3}, {"Vall", 22, 5} };
-	auto f1 = search(person.begin(), person.end(),student.begin(), student.end(),
-		[](const Person& pe, const Student& st) {
-			return pe.Name == st.Name; });
-	int count_4 = count_if(person.begin(), person.end(), [](const Student& st) {
-		return st.Marks == 4; });
-	int count_5 = count_if(person.begin(), person.end(), [](const Student& st) {
-		return st.Marks == 5; });
+	
 	vector <int> ex_8_1 = { 1,2,3,4,5,6 };
 	vector <int> ex_8_2 = { 7,8,9,13,14 };
-	vector <int> ex_8;
-	merge(ex_8_1.begin(), ex_8_1.end(), ex_8_2.begin(), ex_8_2.end(), ex_8);
+	vector <int> ex_8(ex_8_1.size() + ex_8_2.size());
+	merge(ex_8_1.begin(), ex_8_1.end(), ex_8_2.begin(), ex_8_2.end(), ex_8.begin());
 	for (int i = 0; i < ex_8.size(); i++) {
 		cout << ex_8[i] << " ";
 	}
-
+	cout << endl;
+	
+	list <int> ex_9_1 = { 1,2,3,4 };
+	list <int > ex_9_1_1(ex_9_1.size());
+	function<int(int)> nn2 = numnum;
+	transform(ex_9_1.begin(), ex_9_1.end(), ex_9_1_1.begin(), nn2);
+	for (int nnum : ex_9_1_1) {
+		cout << nnum << " ";
+	}
+	cout << endl;
+	deque <int> ex_9_2 = { 5,6,7,8 };
+	deque <int> ex_9_2_1(ex_9_2.size());
+	transform(ex_9_2.begin(), ex_9_2.end(), ex_9_2_1.begin(), nn2);
+	for (int nnum : ex_9_2_1) {
+		cout << nnum << " ";
+	}
+	vector <int> ex_11 = { 3,4,5,6,1,2,54 };
+	auto iter_1{ ex_11.begin() };
+	cout << *iter_1 << endl;
+	*iter_1 = 100;
+	cout << ex_11[0] << endl;
+	queue <int> ex_11_2 ;
+	ex_11_2.push(10);
+	ex_11_2.push(20);
+	ex_11_2.push(30);
+	ex_11_2.push(40);
+	ex_11_2.push(50);
+	ex_11_2.push(60);
+	queue <int> it_ex_11_2;
+	while (!it_ex_11_2.empty()) {
+		cout << it_ex_11_2.front() << " ";
+		it_ex_11_2.pop();
+	}
+	vector <Ex_11> objve;
+	Ex_11 obj_1(1, "Vall");
+	objve.push_back(obj_1);
+	queue <Ex_11> objqu;
+	for (int i = 0; i < objve.size(); i++) {
+		objqu.push(objve[i]);
+	}
+	while (!objqu.empty()) {
+		Ex_11 obj = objqu.front();
+		cout << obj.id << " " << obj.nam << endl;
+		objqu.pop();
+	}
+	list <Ex_11> objli;
+	Ex_11 obj_2(2, "Val");
+	objli.push_back(obj_1);
+	objli.push_back(obj_2);
+	list<Ex_11>::reverse_iterator rit;
+	for (rit = objli.rbegin(); rit != objli.rend(); rit++) {
+		cout << rit->id << " " << rit->nam << endl;
+	}
+	return 0;
 }
