@@ -1,53 +1,67 @@
-code    segment byte public
-        assume  cs:code,ds:nothing
-        public  PadCh
- 
- 
-;function PadCh(S: string; C: char; Len: byte): string,
-;Возвращает строку,  в которой S смещена влево, а остаток строки заполнен символами С.
-;Для этого знаки С включаются справа от конца S до тех пор  пока общая длина строки не
-;станет равной Len. Если S длиннее чем Len, то строка не изменяется.
-;Если S пустая строка, то возвращается строка из Len символов С.
-PadCh   proc    far
-; адреса параметров в стеке:
-S       equ     dword ptr [bp+10]       ;  адрес строки S:string
-Ch1     equ     byte  ptr [bp+8]        ;  адрес параметра С :Char
-Len     equ     byte  ptr [bp+6]        ;  адрес параметра Len:Byte
-Res     equ     dword ptr [bp+14]       ;  адрес строки результата
-        push    bp                      ; сохранение bp
-        mov     bp,     sp      ; настройка bp на вершину стека
-        push    ds              ; сохранение ds
-        les     di,     [Res]   ; es:di:=адрес результата
-        lds     si,     [S]     ; ds:si:=адрес исходной
-                                ; строки
-        cld                     ; очистка флага направления (инкремент)
-        lodsb                   ; al:=(ds:[si]), si:=si+1 (al - длина S)
-        stosb                   ; копируем длину строки S в Res
-        mov     ah,     al      ; сохраняем длину строки S
-        cmp     al,     [Len]   ; сравниваем длину S с Len
-        jae     StoreLen        ; если S >= Len, то копируем S и выходим
+; PadCh.asm - Динамическая библиотека с функцией PadCh
 
-        
- Pad:
+.386
+.model flat, stdcall
+option casemap:none
 
-        
-        mov al, [Len]
-        mov es: [di-1], al        ; Дополняем строку
-        mov cl, ah
-        rep     movsb           ; записать очередной символ результата Res
-StoreLen:
-        mov cl, [Len]
-        sub     cl,     ah      ; S длиннее, чем Len
-         
-        mov     al,     [Ch1]   ; добавляем очередной символ
-        ;Копируем строку
-        rep     stosb
+; Экспортируемая функция
+public PadCh
 
- 
-Exit:   pop     ds              ; восстановить ds
-        pop     bp              ; восстановить bp
-        ret     12              ; выход с удалением параметров Ch1,
-                                ; Ch2 и адреса S (Res удалять нельзя!)
-PadCh  endp
-code   ends
-       end
+; Функция PadCh
+PadCh proc pS:DWORD, pCh:BYTE, Len:BYTE, pRes:DWORD
+    ; pS - адрес строки S
+    ; pCh - символ для заполнения
+    ; Len - длина результирующей строки
+    ; pRes - адрес результата
+
+    push ebp
+    mov ebp, esp
+    push edi
+    push esi
+
+    ; Получаем длину строки S
+    mov esi, [ebp + 8] ; Адрес строки S
+    movzx ecx, byte ptr [esi] ; Длина строки S
+    mov edi, [ebp + 16] ; Адрес результата
+
+    ; Если длина S больше или равна Len, копируем S
+    cmp ecx, [ebp + 12] ; Сравниваем с Len
+    jge .copy_string
+
+    ; Если S пустая, заполняем результат символами pCh
+    test ecx, ecx
+    jz .fill_with_char
+
+.copy_string:
+    ; Копируем строку S в результат
+    mov eax, ecx
+    mov [edi], al ; Записываем длину
+    inc edi
+    mov ecx, eax
+    rep movsb
+
+    ; Заполняем остаток строки символами pCh
+    movzx ecx, byte ptr [ebp + 12] ; Получаем Len
+    sub ecx, eax ; Остаток
+    mov al, [ebp + 9] ; Получаем символ для заполнения
+.fill_loop:
+    stosb
+    loop .fill_loop
+    jmp .done
+
+.fill_with_char:
+    ; Заполняем строку символами pCh
+    movzx ecx, byte ptr [ebp + 12] ; Получаем Len
+    mov al, [ebp + 9] ; Получаем символ для заполнения
+.fill_loop_empty:
+    stosb
+    loop .fill_loop_empty
+
+.done:
+    pop esi
+    pop edi
+    pop ebp
+    ret 12 ; Удаляем параметры
+PadCh endp
+
+end
